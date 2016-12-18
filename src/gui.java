@@ -41,9 +41,12 @@ public class gui extends JFrame {
 		
 		panel1 = new JPanel();
 		panel2 = new JPanel();
+		panel3 = new JPanel();
 		
 		
 		label2 = new JLabel("Second");
+		label3 = new JLabel("Third");
+		
 		
 		// add chart in JPanel
 		jPanel01 jP = new jPanel01();
@@ -57,10 +60,12 @@ public class gui extends JFrame {
 		panel1.add(new JLabel("Select"), BorderLayout.SOUTH);
 		
 		panel2.add(label2);
+		panel3.add(label3);
 		
 		
 		tabbedPane.add("�µ�", panel1);
 		tabbedPane.add("second", panel2);
+		tabbedPane.add("Third", panel3);
 		//tabbedPane.add("Th)
 		
 		//��ũ�� ������ ���
