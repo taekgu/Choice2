@@ -34,6 +34,7 @@ public class gui extends JFrame {
 	{
 		//���� ������ ����
 		//erfsaf
+		//testet
 
 
 
