@@ -33,10 +33,6 @@ public class gui extends JFrame {
 	public gui() throws IOException, SQLException
 	{
 		//���� ������ ����
-		//erfsaf
-		//testet
-
-
 
 		tabbedPane  = new JTabbedPane();
 		
