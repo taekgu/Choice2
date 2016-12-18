@@ -32,7 +32,8 @@ public class gui extends JFrame {
 	
 	public gui() throws IOException, SQLException
 	{
-		//·£´ý µ¥ÀÌÅÍ »ý¼º
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		//erfsaf
 
 
 
@@ -61,20 +62,20 @@ public class gui extends JFrame {
 		panel2.add(label2);
 		
 		
-		tabbedPane.add("¿Âµµ", panel1);
+		tabbedPane.add("ï¿½Âµï¿½", panel1);
 		tabbedPane.add("second", panel2);
 		//tabbedPane.add("Th)
 		
-		//½ºÅ©¸° »çÀÌÁî ¾ò±â
+		//ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension di  = tk.getScreenSize();
-		//ÇÁ·¹ÀÓ »ý¼º
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		jF = new JFrame();
 		jF.add(tabbedPane);
 		jF.setSize((int)di.getWidth(),(int)di.getWidth()-200); // Full Screen
 		//jF.setSize(800, 600);
-		jF.setTitle("Choice Tech"); // Ã¢ Á¦¸ñ
-		jF.setExtendedState(JFrame.MAXIMIZED_BOTH); // ÃÖ´ëÈ­
+		jF.setTitle("Choice Tech"); // Ã¢ ï¿½ï¿½ï¿½ï¿½
+		jF.setExtendedState(JFrame.MAXIMIZED_BOTH); // ï¿½Ö´ï¿½È­
 		jF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		jF.setVisible(true);
 		
