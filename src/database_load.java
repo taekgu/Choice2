@@ -10,7 +10,7 @@ public class database_load {
 		try {
 			Connection con = null;
 			String dbURL =  "jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
-			con = DriverManager.getConnection(dbURL,"root", "jx2doublej");
+			con = DriverManager.getConnection(dbURL,"root", "123");
 
 			//MyExcuteQuery("SHOW DATABASES;");
 			java.sql.Statement st = null;
@@ -21,9 +21,9 @@ public class database_load {
 			
 			rs.next();
 			int i = 0, j = 0;
-			for (i = 0; i < 3; i++) // 3ÀÏ
+			for (i = 0; i < 3; i++) // 3ï¿½ï¿½
 			{
-				for(j = 0; j<694; j++) // ÇÏ·ç¿¡ 694¹ø
+				for(j = 0; j<694; j++) // ï¿½Ï·ç¿¡ 694ï¿½ï¿½
 				{
 					String str1 = rs.getNString(1);
 					String str2 = rs.getNString(3);
@@ -52,10 +52,10 @@ public class database_load {
 				j++;
 				i = (int)(j / 694);
 			}*/
-			//Äõ¸®¸¦ ´øÁö´Â 3°¡Áö ¹æ¹ý
-			//1. execute -> Å×ÀÌºí »ý¼º, ¼öÁ¤ »èÁ¦ µî µ¥ÀÌÅÍº£ÀÌ½º °ü¸® ¸í·É¾î
-			//2. excuteUpdate -> ·¹ÄÚµå »ðÀÔ, ¼öÁ¤, »èÁ¦µî µ¥ÀÌÅÍ Á¶ÀÛ ¸í·É¾î
-			//3. excuteQuery -> ·¹ÄÚµå Á¶È¸, Å×ÀÌºí Á¶È¸ µî Á¶È¸ ¸í·É¾î
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+			//1. execute -> ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½É¾ï¿½
+			//2. excuteUpdate -> ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½É¾ï¿½
+			//3. excuteQuery -> ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½È¸, ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½È¸ ï¿½ï¿½ ï¿½ï¿½È¸ ï¿½ï¿½É¾ï¿½
 			
 		} catch (SQLException sqex) {
 			System.out.println("SQLException: " + sqex.getMessage());
