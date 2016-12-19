@@ -10,7 +10,7 @@ public class database_load {
 		try {
 			Connection con = null;
 			String dbURL =  "jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
-			con = DriverManager.getConnection(dbURL,"root", "123");
+			con = DriverManager.getConnection(dbURL,"root", "1234");
 
 			//MyExcuteQuery("SHOW DATABASES;");
 			java.sql.Statement st = null;
