@@ -9,6 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.ComboBoxModel;
@@ -42,6 +45,10 @@ public class gui extends JFrame {
 	
 	//------------------MAP-----------------------
 		
+	Connection con;
+	java.sql.Statement st;
+	ResultSet rs;
+	
 	private JComboBox combo_d = new JComboBox();
 	private JComboBox combo_u = new JComboBox();
 	private JButton D_Button = new JButton();
@@ -56,6 +63,18 @@ public class gui extends JFrame {
 	public gui() throws IOException, SQLException
 	{
 		//���� ������ ����
+		
+		try {
+			con = DriverManager.getConnection("jdbc:mysql://localhost","root", "1234");
+			st = con.createStatement();
+			rs = st.executeQuery("use testschema");
+			
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		icon = new ImageIcon("Seoul.JPG");
 
@@ -127,25 +146,50 @@ public class gui extends JFrame {
 	
 	public void setUser(){
 		
-    	D_Button.setText("전체 날짜");
-    	D_Button.setBounds(0, 0, 100, 50);
-    	D_Button.addActionListener(new MyActionListener());
-		
-    	combo_d.addItem("date1");
-    	combo_d.setBounds(0, 50, 100, 50);
-		combo_d.addItem("date2");
-		combo_d.addItem("date3");
-		combo_d.setVisible(false);
-		
-		U_Button.setText("전체User");
-		U_Button.setBounds(0, 500, 100, 50);
-		U_Button.addActionListener(new MyActionListener());
-    	
-		combo_u.addItem("user1");
-		combo_u.setBounds(0, 550, 100, 50);
-		combo_u.addItem("user2");
-		combo_u.addItem("user3");
-		combo_u.setVisible(false);
+		try {
+			st = con.createStatement();
+			
+			String buf_f = null;
+			rs = st.executeQuery("select distinct date from tp");
+			
+			D_Button.setText("전체 날짜");
+	    	D_Button.setBounds(0, 0, 100, 50);
+	    	D_Button.addActionListener(new MyActionListener());
+	    	combo_d.setBounds(0, 50, 100, 50);
+			while(rs.next()){
+				if(rs.getString("date").substring(0, 10).equals(buf_f))
+				{
+					continue;
+				}else{
+					buf_f = rs.getString("date").substring(0, 10);
+					combo_d.addItem(buf_f);
+					System.out.println("test : "+buf_f);
+				}
+				
+			}
+			combo_d.setVisible(false);
+			
+			
+			rs = st.executeQuery("select distinct id from tp");
+			
+			U_Button.setText("전체User");
+			U_Button.setBounds(0, 500, 100, 50);
+			U_Button.addActionListener(new MyActionListener());
+			combo_u.setBounds(0, 550, 100, 50);
+			while(rs.next()){
+				combo_u.addItem(rs.getString("id"));
+				System.out.println("test : "+rs.getString("id"));
+				
+			}
+			combo_u.setVisible(false);
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
     	
 		T_Button.setText("전체 온도");
 		T_Button.setBounds(0, 950, 100, 50);
@@ -197,7 +241,7 @@ public class gui extends JFrame {
             	setTitle(b.getText());
             	//combo.setVisible(false);
             	// InnerClassListener의 멤버나 JFrame의 멤버 호출
-            	showMap2(2);
+            	showMap(2);
             }
 
         }
@@ -220,25 +264,6 @@ public class gui extends JFrame {
     	
     }
     
-    private void showMap2(int temp_f){
-	
-    	Map_panel.setVisible(false);
-    	jF.getContentPane().remove(Map_panel);
-    	
-		p2 = new Map();
-		Map_panel = p2.Map_init(temp_f);
-		Map_panel.setBounds(100, 0, 1820, 1000);
-		Map_panel.setVisible(true);
-	
-		panel2.add(Map_panel);
-		tabbedPane.add("Map", panel2);
-		tabbedPane.add("Third", panel3);
-		jF.add(tabbedPane);
-    	
-    }
-    
-  
-
 	public void start() throws SQLException
 	{
 		

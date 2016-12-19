@@ -11,6 +11,9 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
@@ -24,6 +27,12 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class Map extends JFrame{
 	
+	Connection con;
+	java.sql.Statement st;
+	java.sql.Statement wt;
+	ResultSet rs;
+	ResultSet ws;
+			
 	//------------------MAP-----------------------
 	
 	private JComboBox combo_d = new JComboBox();
@@ -48,6 +57,19 @@ public class Map extends JFrame{
     }
         
     public JPanel Map_init(int temp_f){
+    	
+    	try {
+			con = DriverManager.getConnection("jdbc:mysql://localhost","root", "1234");
+			st = con.createStatement();
+			rs = st.executeQuery("use testschema");
+			
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     	map_panel = new JPanel() {
 			public void paintComponent(Graphics g) {
                 g.drawImage(icon.getImage(), 0, 0, 1820,1000,this);
@@ -59,10 +81,41 @@ public class Map extends JFrame{
     	if(temp_f == 0){
 
     	}else if(temp_f == 1){
-    		setMAap(100,100,0);
-    		setMAap(200,200,0);
-    		setMAap(300,300,0);    		
+    		
+			try {
+				st = con.createStatement();
+				//wt = con.createStatement();
+				rs = st.executeQuery("select * from tp");
+				//ws = wt.executeQuery("select gps_har from tp");
+				while(rs.next()){
+					System.out.println("gps_lat : "+(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639));
+					System.out.println("gps_har : "+(int)((rs.getFloat("gps_har") - 126.6566)/0.0003632));
+					setMAap((int)((rs.getFloat("gps_har") - 126.6566)/0.0003632),(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639),0);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+    		
+    		
     	}else if(temp_f == 2){
+    		
+    		try {
+				st = con.createStatement();
+				//wt = con.createStatement();
+				rs = st.executeQuery("select * from tp where temp >37.3 ");
+				//ws = wt.executeQuery("select gps_har from tp");
+				while(rs.next()){
+					System.out.println("gps_lat : "+(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639));
+					System.out.println("gps_har : "+(int)((rs.getFloat("gps_har") - 126.6566)/0.0003632));
+					setMAap((int)((rs.getFloat("gps_har") - 126.6566)/0.0003632),(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639),0);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		
     		setMAap(100,500,0);
     		setMAap(200,600,0);
     		setMAap(300,700,0);  
