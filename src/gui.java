@@ -64,12 +64,14 @@ public class gui extends JFrame {
 		panel1.add(new JLabel("Select"), BorderLayout.SOUTH);
 		
 		p2.setMAap(100, 100);
+		p2.setMAap(200, 200);
+		p2.setMAap(300, 300);
 
 		panel3.add(label3);
 		
 		
 		tabbedPane.add("�µ�", panel1);
-		tabbedPane.add("second", panel2);
+		tabbedPane.add("Map", panel2);
 		tabbedPane.add("Third", panel3);
 		//tabbedPane.add("Th)
 		
