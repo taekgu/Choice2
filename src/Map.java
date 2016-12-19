@@ -80,6 +80,7 @@ public class Map extends JFrame{
     	    
     	if(temp_f == 0){
 
+    		//전체
     	}else if(temp_f == 1){
     		
 			try {
@@ -98,7 +99,7 @@ public class Map extends JFrame{
 			}
 
     		
-    		
+    		//고온
     	}else if(temp_f == 2){
     		
     		try {
@@ -109,7 +110,7 @@ public class Map extends JFrame{
 				while(rs.next()){
 					System.out.println("gps_lat : "+(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639));
 					System.out.println("gps_har : "+(int)((rs.getFloat("gps_har") - 126.6566)/0.0003632));
-					setMAap((int)((rs.getFloat("gps_har") - 126.6566)/0.0003632),(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639),0);
+					setMAap_up((int)((rs.getFloat("gps_har") - 126.6566)/0.0003632),(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639),0);
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -125,6 +126,15 @@ public class Map extends JFrame{
     }
           
     public void setMAap(int a, int b, int cnt){
+    	
+    	jb[cnt] = new JButton(new ImageIcon("check.png"));
+    	jb[cnt].setBounds(a+100, b, 30, 30);
+    	jb[cnt].setBorderPainted(false);
+    	jb[cnt].setContentAreaFilled(false);
+    	map_panel.add(jb[cnt]);
+    }
+    
+    public void setMAap_up(int a, int b, int cnt){
     	
     	jb[cnt] = new JButton(new ImageIcon("check.png"));
     	jb[cnt].setBounds(a+100, b, 30, 30);
