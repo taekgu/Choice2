@@ -3,6 +3,7 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,43 +20,52 @@ import javax.swing.JPanel;
 
 public class Map extends JFrame{
 	
-	Container ctp;
+	JPanel map_panel;
 	JButton[] jb = new JButton[1000];
-	
-	MyPanel panel;
+	JButton go;
 	int b_num = 0;
-    ImageIcon i = new ImageIcon("Seoul.JPG");
-    Image im = i.getImage();
+	ImageIcon icon;
+	
     public Map(){
-        this.setTitle("이미지 그리기 연습");
+    	super("Map");
+    	this.setTitle("SEOUL MAP");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        //((JFrame) ctp).getContentPane();
-        panel = new MyPanel();
-        panel.setLayout(new FlowLayout());
-        
-        
-        this.add(panel);
         this.setSize(1800,1000);
-        this.setVisible(true);
-    }
-    class MyPanel extends JPanel{
-            
-        public void paintComponent(Graphics g){
-            super.paintComponent(g);
-            g.drawImage(im,0,0,getWidth(),getHeight(),this);
-            setMAap(150,150);
-
-        }
+    	icon = new ImageIcon("Seoul.JPG");
+    	    
+    	
     }
     
-    private void setMAap(int a, int b){
-    	jb[b_num] = new JButton(new ImageIcon("check.png"));
-    	jb[b_num].setBorderPainted(false);
-    	jb[b_num].setContentAreaFilled(false);
-    	jb[b_num].setSize(30,30);
-        jb[b_num].setLocation(a,b);
-        panel.add(jb[b_num]);
-        b_num++;
+    private void Map_init(){
+    	map_panel = new JPanel() {
+            public void paintComponent(Graphics g) {
+                g.drawImage(icon.getImage(), 0, 0, 1800,1000,this);
+            };
+
+    	};
+    	map_panel.setLayout(null);
+    	
+    	//디비로 값 받아와서 
+
+    	setMAap(160,160);
+    	setMAap(300,300);
+    	
+    	add(map_panel);
+    	setVisible(true);
     }
+    
+   
+    private void setMAap(int a, int b){
+    	jb[0] = new JButton(new ImageIcon("check.png"));
+    	jb[0].setBounds(a, b, 30, 30);
+    	jb[0].setBorderPainted(false);
+    	jb[0].setContentAreaFilled(false);
+    	//jb[b_num].setSize(30,30);
+        //jb[b_num].setLocation(a,b);
+    	map_panel.add(jb[0]);
+        b_num++;
+          
+    }
+        
+  
 }
