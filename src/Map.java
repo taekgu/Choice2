@@ -20,7 +20,8 @@ import javax.swing.JPanel;
 public class Map extends JFrame{
 	
 	Container ctp;
-	JButton[] jb;
+	JButton[] jb = new JButton[1000];
+	
 	MyPanel panel;
 	int b_num = 0;
     ImageIcon i = new ImageIcon("Seoul.JPG");
@@ -30,7 +31,6 @@ public class Map extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         //((JFrame) ctp).getContentPane();
-        jb = new JButton[1000];
         panel = new MyPanel();
         panel.setLayout(new FlowLayout());
         
@@ -50,8 +50,10 @@ public class Map extends JFrame{
     }
     
     private void setMAap(int a, int b){
-    	jb[b_num] = new JButton("제발");
-    	jb[b_num].setSize(15,15);
+    	jb[b_num] = new JButton(new ImageIcon("check.png"));
+    	jb[b_num].setBorderPainted(false);
+    	jb[b_num].setContentAreaFilled(false);
+    	jb[b_num].setSize(30,30);
         jb[b_num].setLocation(a,b);
         panel.add(jb[b_num]);
         b_num++;
