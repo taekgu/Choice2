@@ -31,7 +31,11 @@ public class database_load {
 					temp7h[i][j] = flo;
 					
 					if (i == 0)
+					{
 						System.out.println("Date : " + str1 + " //  Temperature : " +  flo + " //  GPS : " + str2);
+						if 
+					}
+						
 
 						//System.out.println(flo + " // " + temp7h[0][j]);
 

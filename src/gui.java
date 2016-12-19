@@ -3,6 +3,8 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
@@ -37,19 +39,14 @@ public class gui extends JFrame {
 		//���� ������ ����
 
 		tabbedPane  = new JTabbedPane();
-		
-		
-		
-		
-		panel1 = new JPanel();
+				
+		panel1 = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
 		panel2 = new JPanel();
 		panel3 = new JPanel();
 		
-		
-
 		label3 = new JLabel("Third");
-		
-		
+				
 		// add chart in JPanel
 		jPanel01 jP = new jPanel01();
 		Map p2 = new Map();
