@@ -29,6 +29,7 @@ public class database_load {
 					String str2 = rs.getNString(3);
 					Float flo = rs.getFloat(2);
 					temp7h[i][j] = flo;
+					
 					if (i == 0)
 						System.out.println("Date : " + str1 + " //  Temperature : " +  flo + " //  GPS : " + str2);
 

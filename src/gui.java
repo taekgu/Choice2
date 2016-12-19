@@ -38,7 +38,7 @@ public class gui extends JFrame {
 
 		tabbedPane  = new JTabbedPane();
 		
-		jPanel01 p1 = new jPanel01();
+		
 		
 		
 		panel1 = new JPanel();
@@ -46,12 +46,14 @@ public class gui extends JFrame {
 		panel3 = new JPanel();
 		
 		
-		label2 = new JLabel("Second");
+
 		label3 = new JLabel("Third");
 		
 		
 		// add chart in JPanel
 		jPanel01 jP = new jPanel01();
+		Map p2 = new Map();
+		panel2 = p2.Map_init();
 		panel1.setLayout(new java.awt.BorderLayout());
 		
 	
@@ -61,7 +63,8 @@ public class gui extends JFrame {
 		panel1.add(CP, BorderLayout.CENTER);
 		panel1.add(new JLabel("Select"), BorderLayout.SOUTH);
 		
-		panel2.add(label2);
+		p2.setMAap(100, 100);
+
 		panel3.add(label3);
 		
 		

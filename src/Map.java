@@ -18,8 +18,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class Map extends JFrame{
 	
+
 	JPanel map_panel;
 	JButton[] jb = new JButton[1000];
 	JButton go;
@@ -27,19 +29,13 @@ public class Map extends JFrame{
 	ImageIcon icon;
 	
     public Map(){
-    	super("Map");
-    	this.setTitle("SEOUL MAP");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(1800,1000);
     	icon = new ImageIcon("Seoul.JPG");
-    	    
-    	
     }
     
-    private void Map_init(){
+    public JPanel Map_init(){
     	map_panel = new JPanel() {
-            public void paintComponent(Graphics g) {
-                g.drawImage(icon.getImage(), 0, 0, 1800,1000,this);
+			public void paintComponent(Graphics g) {
+                g.drawImage(icon.getImage(), 0, 0, 1920,1000,this);
             };
 
     	};
@@ -47,15 +43,17 @@ public class Map extends JFrame{
     	
     	//디비로 값 받아와서 
 
-    	setMAap(160,160);
-    	setMAap(300,300);
+    	//setMAap(160,160);
+    	//setMAap(300,300);
     	
-    	add(map_panel);
-    	setVisible(true);
+    
+    	
+    	return map_panel;
     }
     
    
-    private void setMAap(int a, int b){
+    public void setMAap(int a, int b){
+    	
     	jb[0] = new JButton(new ImageIcon("check.png"));
     	jb[0].setBounds(a, b, 30, 30);
     	jb[0].setBorderPainted(false);
