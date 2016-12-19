@@ -22,7 +22,7 @@ public class test_main {
 		
 		new gui();
 		database_load.dload();
-		new Map();
+		//new Map();
 		
 	}
 }
