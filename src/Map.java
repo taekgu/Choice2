@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.Graphics;
@@ -17,15 +18,22 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Map extends JFrame{
-    ImageIcon i = new ImageIcon("soul.png");
+	
+	Container ctp;
+	JButton[] jb;
+	MyPanel panel;
+	int b_num = 0;
+    ImageIcon i = new ImageIcon("Seoul.JPG");
     Image im = i.getImage();
-    Map(){
+    public Map(){
         this.setTitle("이미지 그리기 연습");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        MyPanel panel = new MyPanel();
+        //((JFrame) ctp).getContentPane();
+        jb = new JButton[1000];
+        panel = new MyPanel();
         panel.setLayout(new FlowLayout());
-        panel.add(new JButton("Hello"));
+        
         
         this.add(panel);
         this.setSize(1800,1000);
@@ -36,6 +44,16 @@ public class Map extends JFrame{
         public void paintComponent(Graphics g){
             super.paintComponent(g);
             g.drawImage(im,0,0,getWidth(),getHeight(),this);
+            setMAap(150,150);
+
         }
+    }
+    
+    private void setMAap(int a, int b){
+    	jb[b_num] = new JButton("제발");
+    	jb[b_num].setSize(15,15);
+        jb[b_num].setLocation(a,b);
+        panel.add(jb[b_num]);
+        b_num++;
     }
 }
