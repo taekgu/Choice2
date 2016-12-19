@@ -47,7 +47,7 @@ public class Map extends JFrame{
     	icon = new ImageIcon("Seoul.JPG");
     }
         
-    public JPanel Map_init(boolean temp_f){
+    public JPanel Map_init(int temp_f){
     	map_panel = new JPanel() {
 			public void paintComponent(Graphics g) {
                 g.drawImage(icon.getImage(), 0, 0, 1820,1000,this);
@@ -56,15 +56,17 @@ public class Map extends JFrame{
     	};
     	map_panel.setLayout(null);
     	    
-    	if(temp_f == true){
+    	if(temp_f == 0){
+
+    	}else if(temp_f == 1){
     		setMAap(100,100,0);
     		setMAap(200,200,0);
-    		setMAap(300,300,0);
-    	}else if(temp_f == false){
-    		jb[0].setVisible(false);
-    		
+    		setMAap(300,300,0);    		
+    	}else if(temp_f == 2){
+    		setMAap(100,500,0);
+    		setMAap(200,600,0);
+    		setMAap(300,700,0);  
     	}
-    	
     	
     	return map_panel;
     }

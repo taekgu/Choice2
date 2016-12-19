@@ -87,6 +87,15 @@ public class gui extends JFrame {
 		
 		//--------MAP--------------------------------------------------------------------------
 						
+		
+		p2 = new Map();
+		Map_panel = p2.Map_init(0);
+		Map_panel.setBounds(100, 0, 1820, 1000);
+		Map_panel.setVisible(true);
+		
+		panel2.add(Map_panel);
+		
+		
 		setUser();
 		
 		
@@ -180,7 +189,7 @@ public class gui extends JFrame {
             if (b.getText().equals("전체 온도")){
             	b.setText("고온");
             	//combo.setVisible(true);
-            	showMap(true);
+            	showMap(1);
       
             }      	
             else if(b.getText().equals("고온")){
@@ -188,17 +197,21 @@ public class gui extends JFrame {
             	setTitle(b.getText());
             	//combo.setVisible(false);
             	// InnerClassListener의 멤버나 JFrame의 멤버 호출
-            	showMap2(true);
+            	showMap2(2);
             }
 
         }
     }
     
-    private void showMap(boolean temp_f){
+    private void showMap(int temp_f){
+    	
+    	Map_panel.setVisible(false);
+    	jF.getContentPane().remove(Map_panel);
     	
     	p2 = new Map();
 		Map_panel = p2.Map_init(temp_f);
 		Map_panel.setBounds(100, 0, 1820, 1000);
+		Map_panel.setVisible(true);
 		
 		panel2.add(Map_panel);
 		tabbedPane.add("Map", panel2);
@@ -207,20 +220,20 @@ public class gui extends JFrame {
     	
     }
     
-private void showMap2(boolean temp_f){
+    private void showMap2(int temp_f){
 	
-		jF.removeAll();
-		
-		panel2.revalidate();
-		panel2.repaint();
+    	Map_panel.setVisible(false);
+    	jF.getContentPane().remove(Map_panel);
+    	
 		p2 = new Map();
 		Map_panel = p2.Map_init(temp_f);
-		Map_panel.setBounds(0, 0, 1820, 1000);
-		
-		tabbedPane.add("testst", panel2);
-		
+		Map_panel.setBounds(100, 0, 1820, 1000);
+		Map_panel.setVisible(true);
+	
+		panel2.add(Map_panel);
+		tabbedPane.add("Map", panel2);
+		tabbedPane.add("Third", panel3);
 		jF.add(tabbedPane);
-		//this.setContentPane(jF);
     	
     }
     
