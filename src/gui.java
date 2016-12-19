@@ -77,10 +77,13 @@ public class gui extends JFrame {
 
 		
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost","root", "1234");
+			//sb
+			//con = DriverManager.getConnection("jdbc:mysql://localhost","root", "1234"); 
+			con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234");
 			st = con.createStatement();
-			rs = st.executeQuery("use testschema");
-			
+			//sb
+			//rs = st.executeQuery("use testschema");
+			rs = st.executeQuery("use newschema");
 			
 			
 		} catch (SQLException e) {
