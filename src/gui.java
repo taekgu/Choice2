@@ -18,6 +18,7 @@ import javax.swing.JTabbedPane;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+
 public class gui extends JFrame {
 	
 	private static final long serialVersionUID = 5193460907470526697L;
@@ -30,6 +31,12 @@ public class gui extends JFrame {
 	//private JLabel label1;
 	private JLabel label2;
 	private JLabel label3;
+	
+	//------------------MAP-----------------------
+	
+	private JComboBox combo = new JComboBox();
+	private JLabel label = new JLabel();
+	//--------------------------------
 
 	
 	public gui() throws IOException, SQLException
@@ -37,10 +44,7 @@ public class gui extends JFrame {
 		//���� ������ ����
 
 		tabbedPane  = new JTabbedPane();
-		
-		
-		
-		
+				
 		panel1 = new JPanel();
 		panel2 = new JPanel();
 		panel3 = new JPanel();
@@ -63,9 +67,27 @@ public class gui extends JFrame {
 		panel1.add(CP, BorderLayout.CENTER);
 		panel1.add(new JLabel("Select"), BorderLayout.SOUTH);
 		
+		
+		//--------MAP--------------------------------------------------------------------------
+		
+		
+		label.setText("사용자 목록");
+		
+		combo.addItem("user1");
+		combo.addItem("user2");
+		combo.addItem("user3");
+		
+		panel2.add(label);
+		panel2.add(combo);
+		//combo.addActionListener((ActionListener) this);
+		
+		//DATA MAT SHOW
 		p2.setMAap(100, 100);
 		p2.setMAap(200, 200);
 		p2.setMAap(300, 300);
+		p2.setMAap(105, 105);
+		
+		//----------------------------------------------------------------------------------------------
 
 		panel3.add(label3);
 		
