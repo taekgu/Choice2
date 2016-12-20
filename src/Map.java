@@ -56,16 +56,16 @@ public class Map extends JFrame{
     	icon = new ImageIcon("Seoul.JPG");
     }
         
-    public JPanel Map_init(int temp_f){
+    public JPanel Map_init(String m_date, String m_user, String m_temp){
     	
     	try {
     		//sb
-			//con = DriverManager.getConnection("jdbc:mysql://localhost","root", "1234"); 
-			con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234");
+			con = DriverManager.getConnection("jdbc:mysql://localhost","root", "1234"); 
+			//con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234");
 			st = con.createStatement();
 			//sb
-			//rs = st.executeQuery("use testschema");
-			rs = st.executeQuery("use newschema");
+			rs = st.executeQuery("use testschema");
+			//rs = st.executeQuery("use newschema");
 			
 			
 			
@@ -82,12 +82,9 @@ public class Map extends JFrame{
     	};
     	map_panel.setLayout(null);
     	    
-    	if(temp_f == 0){
-
+    	if(m_temp.equals("전체 온도")){
     		//전체
-    	}else if(temp_f == 1){
-    		
-			try {
+    		try {
 				st = con.createStatement();
 				//wt = con.createStatement();
 				rs = st.executeQuery("select * from tp");
@@ -103,8 +100,7 @@ public class Map extends JFrame{
 			}
 
     		
-    		//고온
-    	}else if(temp_f == 2){
+    	}else if(m_temp.equals("고온")){
     		
     		try {
 				st = con.createStatement();
@@ -120,6 +116,9 @@ public class Map extends JFrame{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+    		
+    		//고온
+    	}else{
     		
     		setMAap(100,500,0);
     		setMAap(200,600,0);

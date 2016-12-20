@@ -60,6 +60,13 @@ public class gui extends JFrame {
 	private JButton U_Button = new JButton();
 	private JButton T_Button = new JButton();
 	
+	private JButton do_Button = new JButton();
+	
+	
+	private String date;
+	private String user;
+	private String temp;
+	
 	ImageIcon icon;
 	public Map p2;
 	//--------------------------------
@@ -78,12 +85,12 @@ public class gui extends JFrame {
 		
 		try {
 			//sb
-			//con = DriverManager.getConnection("jdbc:mysql://localhost","root", "1234"); 
-			con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234");
+			con = DriverManager.getConnection("jdbc:mysql://localhost","root", "1234"); 
+			//con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234");
 			st = con.createStatement();
 			//sb
-			//rs = st.executeQuery("use testschema");
-			rs = st.executeQuery("use newschema");
+			rs = st.executeQuery("use testschema");
+			//rs = st.executeQuery("use newschema");
 			
 			
 		} catch (SQLException e) {
@@ -120,7 +127,7 @@ public class gui extends JFrame {
 						
 		
 		p2 = new Map();
-		Map_panel = p2.Map_init(0);
+		Map_panel = p2.Map_init("0","0","0");
 		Map_panel.setBounds(100, 0, 1820, 1000);
 		Map_panel.setVisible(true);
 		
@@ -207,9 +214,14 @@ public class gui extends JFrame {
 		T_Button.setBounds(0, 950, 100, 50);
 		T_Button.addActionListener(new MyActionListener());
 		
+		do_Button.setText("실행");
+		do_Button.setBounds(0,850,100,50);
+		do_Button.addActionListener(new MyActionListener());
+		
 		panel2.add(D_Button);
 		panel2.add(U_Button);
 		panel2.add(T_Button);
+		panel2.add(do_Button);
 		panel2.add(combo_d);
 		panel2.add(combo_u);
     }
@@ -225,6 +237,7 @@ public class gui extends JFrame {
             }      	
             else if(b.getText().equals("날짜 선택")){
             	b.setText("전체 날짜");
+            	date = combo_d.getSelectedItem().toString();            
             	setTitle(b.getText());
             	combo_d.setVisible(false);
             	// InnerClassListener의 멤버나 JFrame의 멤버 호출
@@ -236,6 +249,7 @@ public class gui extends JFrame {
             }      	
             else if(b.getText().equals("User 선택")){
             	b.setText("전체User");
+            	user = combo_u.getSelectedItem().toString();
             	setTitle(b.getText());
             	combo_u.setVisible(false);
             	// InnerClassListener의 멤버나 JFrame의 멤버 호출
@@ -244,28 +258,36 @@ public class gui extends JFrame {
             //--------------temp-----------------
             if (b.getText().equals("전체 온도")){
             	b.setText("고온");
+            	temp = b.getText();
             	//combo.setVisible(true);
-            	showMap(1);
       
             }      	
             else if(b.getText().equals("고온")){
             	b.setText("전체 온도");
+            	temp = b.getText();
             	setTitle(b.getText());
             	//combo.setVisible(false);
             	// InnerClassListener의 멤버나 JFrame의 멤버 호출
-            	showMap(2);
             }
+            
+            if (b.getText().equals("실행")){
+            	
+            	// 날짜, 사람, 고-저온
+            	// date, user, temp
+            	showMap(date, user, temp);
+      
+            }     
 
         }
     }
     
-    private void showMap(int temp_f){
+    private void showMap(String d, String u, String t){
     	
     	Map_panel.setVisible(false);
     	jF.getContentPane().remove(Map_panel);
     	
     	p2 = new Map();
-		Map_panel = p2.Map_init(temp_f);
+		Map_panel = p2.Map_init(d, u, t);
 		Map_panel.setBounds(100, 0, 1820, 1000);
 		Map_panel.setVisible(true);
 		
