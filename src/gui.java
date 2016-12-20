@@ -59,13 +59,16 @@ public class gui extends JFrame {
 	private JButton D_Button = new JButton();
 	private JButton U_Button = new JButton();
 	private JButton T_Button = new JButton();
+	private JButton TT_Button = new JButton();
+	private JButton A_Button = new JButton();
+	private JButton AA_Button = new JButton();
 	
 	private JButton do_Button = new JButton();
 	
 	
 	private String date;
 	private String user;
-	private String temp;
+	private String temp = "";
 	
 	ImageIcon icon;
 	public Map p2;
@@ -75,13 +78,8 @@ public class gui extends JFrame {
 	public gui() throws IOException, SQLException
 	{
 
-
-
-		tabbedPane  = new JTabbedPane();
-				
+		tabbedPane  = new JTabbedPane();	
 		panel1 = new JPanel();
-		
-
 		
 		try {
 			//sb
@@ -117,7 +115,7 @@ public class gui extends JFrame {
 		//panel1.setLayout(null);
 		//ChartPanel CP = new ChartPanel(jP.DrawMyChart(database_load.dload()));
 		panel1.setLayout(new java.awt.BorderLayout());
-		panel1.add(jP.JP1());
+		//panel1.add(jP.JP1());
 
 		//panel1.add(new JLabel("Select"), BorderLayout.SOUTH);
 		
@@ -125,8 +123,8 @@ public class gui extends JFrame {
 		//--------MAP--------------------------------------------------------------------------
 						
 		
-		p2 = new Map();
-		Map_panel = p2.Map_init("0","0","0");
+		//p2 = new Map();
+		Map_panel = p2.Map_init("0","0","초기");
 		Map_panel.setBounds(100, 0, 1820, 1000);
 		Map_panel.setVisible(true);
 		
@@ -209,18 +207,34 @@ public class gui extends JFrame {
 
 
     	
-		T_Button.setText("전체 온도");
-		T_Button.setBounds(0, 950, 100, 50);
+		T_Button.setText("개인온도");
+		T_Button.setBounds(0, 900, 100, 50);
 		T_Button.addActionListener(new MyActionListener());
 		
+		TT_Button.setText("개인고온");
+		TT_Button.setBounds(0, 950, 100, 50);
+		TT_Button.addActionListener(new MyActionListener());
+		
 		do_Button.setText("실행");
-		do_Button.setBounds(0,850,100,50);
+		do_Button.setBounds(0,800,100,50);
 		do_Button.addActionListener(new MyActionListener());
+		
+		A_Button.setText("전체온도");
+		A_Button.setBounds(0,650,100,50);
+		A_Button.addActionListener(new MyActionListener());
+		
+		AA_Button.setText("전체고온");
+		AA_Button.setBounds(0,700,100,50);
+		AA_Button.addActionListener(new MyActionListener());
+		
 		
 		panel2.add(D_Button);
 		panel2.add(U_Button);
 		panel2.add(T_Button);
+		panel2.add(TT_Button);
 		panel2.add(do_Button);
+		panel2.add(A_Button);
+		panel2.add(AA_Button);
 		panel2.add(combo_d);
 		panel2.add(combo_u);
     }
@@ -255,27 +269,27 @@ public class gui extends JFrame {
             }
             
             //--------------temp-----------------
-            if (b.getText().equals("전체 온도")){
-            	b.setText("고온");
+            if (b.getText().equals("개인온도")){
             	temp = b.getText();
-            	//combo.setVisible(true);
-      
             }      	
-            else if(b.getText().equals("고온")){
-            	b.setText("전체 온도");
+            
+            if(b.getText().equals("개인고온")){
             	temp = b.getText();
-            	setTitle(b.getText());
-            	//combo.setVisible(false);
-            	// InnerClassListener의 멤버나 JFrame의 멤버 호출
             }
             
             if (b.getText().equals("실행")){
-            	
             	// 날짜, 사람, 고-저온
             	// date, user, temp
             	showMap(date, user, temp);
-      
-            }     
+            } 
+            
+            if(b.getText().equals("전체온도")){
+            	temp = b.getText();
+            }   
+            
+            if(b.getText().equals("전체고온")){
+            	temp = b.getText();
+            }   
 
         }
     }
