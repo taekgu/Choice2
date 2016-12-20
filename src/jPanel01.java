@@ -57,7 +57,7 @@ public class jPanel01 {
 		
 	}
 	
-	public JFreeChart DrawMyChart(Float[][] floats) throws IOException
+	public JFreeChart DrawMyChart(Float[][] floats) throws IOException, ClassCastException
 	{
 		int SAMPLE_NUM = test_main.SAMPLE_NUM;
 		    // ������ ����
@@ -129,10 +129,15 @@ public class jPanel01 {
 		        // Y�� ����
 		plot.setRangeAxis(new NumberAxis());                 // Y�� ���� ����
 		plot.getRangeAxis().setTickLabelFont(axisF);  // Y�� ���ݶ� ��Ʈ ����
-		   
+		plot.getRangeAxis().setRange((double)database_load.Min_val, (double)database_load.Max_val);
 		    // ���õ� plot�� �������� chart ����
 		JFreeChart chart = new JFreeChart(plot);
+		System.out.println(database_load.Min_val);
 		chart.setTitle("Test MyChart"); // ��Ʈ Ÿ��Ʋ
+
+		//Double min = (double)database_load.Min_val;
+		//Double max = (double)database_load.Max_val;
+		//chart.getXYPlot().getRangeAxis().setRange((double)34.0, (double)39.0);
 		//	        TextTitle copyright = new TextTitle("JFreeChart WaferMapPlot", new Font("SansSerif", Font.PLAIN, 9));
 		//	        copyright.setHorizontalAlignment(HorizontalAlignment.RIGHT);
 		//	        chart.addSubtitle(copyright);  // ��Ʈ ���� Ÿ��Ʋ\

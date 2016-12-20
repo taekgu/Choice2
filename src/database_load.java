@@ -4,13 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class database_load {
+	public static Float Min_val = (float) 0.0;
+	public static Float Max_val = (float) 0.0;
 	public static Float[][] dload(String num) throws SQLException {
 		
 		Float[][] temp7h = new Float[7][694];
-		
-		
-		Float Min_val = (float) 0.0;
-		Float Max_val = (float) 0.0;
 		
 		try {
 			Connection con = null;
@@ -34,12 +32,16 @@ public class database_load {
 					String str2 = rs.getNString(3);
 					Float flo = rs.getFloat(2);
 					temp7h[i][j] = flo;
+					
 					if (flo > Max_val)
 						Max_val = flo;
 					
 					if (flo < Min_val)
-						Min_val = flo;
-					
+					{
+						if (j < 690)
+							Min_val = flo;
+							
+					}
 					if (i == 0)
 					{
 						System.out.println("Date : " + str1 + " //  Temperature : " +  flo + " //  GPS : " + str2);
