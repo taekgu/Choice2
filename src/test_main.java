@@ -21,7 +21,7 @@ public class test_main {
 		//MC.get_MyChart(mean);
 		
 		new gui();
-		database_load.dload();
+		//database_load.dload();
 		//new Map();
 		
 	}

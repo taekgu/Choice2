@@ -4,7 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class database_load {
-	public static Float[][] dload() throws SQLException {
+	public static Float Min_val = (float) 0.0;
+	public static Float Max_val = (float) 0.0;
+	public static Float[][] dload(String num) throws SQLException {
+		
 		Float[][] temp7h = new Float[7][694];
 		
 		try {
@@ -17,7 +20,7 @@ public class database_load {
 			ResultSet rs = null;
 			st = con.createStatement();
 			st.execute("USE choice;");
-			rs = st.executeQuery("SELECT date, temp, gps FROM temperature WHERE id = 0;");
+			rs = st.executeQuery("SELECT date, temp, gps FROM temperature WHERE id = "+ num + ";");
 			
 			rs.next();
 			int i = 0, j = 0;
@@ -30,6 +33,15 @@ public class database_load {
 					Float flo = rs.getFloat(2);
 					temp7h[i][j] = flo;
 					
+					if (flo > Max_val)
+						Max_val = flo;
+					
+					if (flo < Min_val)
+					{
+						if (j < 690)
+							Min_val = flo;
+							
+					}
 					if (i == 0)
 					{
 						System.out.println("Date : " + str1 + " //  Temperature : " +  flo + " //  GPS : " + str2);

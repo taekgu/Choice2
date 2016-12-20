@@ -79,8 +79,8 @@ public class gui extends JFrame {
 
 		tabbedPane  = new JTabbedPane();
 				
-		panel1 = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
+		panel1 = new JPanel();
+		
 
 		
 		try {
@@ -113,14 +113,13 @@ public class gui extends JFrame {
 		jPanel01 jP = new jPanel01();
 		p2 = new Map();
 		//panel2 = p2.Map_init();
+
+		//panel1.setLayout(null);
+		//ChartPanel CP = new ChartPanel(jP.DrawMyChart(database_load.dload()));
 		panel1.setLayout(new java.awt.BorderLayout());
-		
-	
-		ChartPanel CP = new ChartPanel(jP.DrawMyChart(database_load.dload()));
-		
-		
-		panel1.add(CP, BorderLayout.CENTER);
-		panel1.add(new JLabel("Select"), BorderLayout.SOUTH);
+		panel1.add(jP.JP1());
+
+		//panel1.add(new JLabel("Select"), BorderLayout.SOUTH);
 		
 		
 		//--------MAP--------------------------------------------------------------------------
