@@ -53,7 +53,7 @@ public class Map extends JFrame{
 	ImageIcon icon;
 	
     public Map(){
-    	icon = new ImageIcon("Seoul.JPG");
+    	icon = new ImageIcon("map.png");
     }
         
     public JPanel Map_init(String m_date, String m_user, String m_temp){
@@ -82,8 +82,61 @@ public class Map extends JFrame{
     	};
     	map_panel.setLayout(null);
     	    
-    	if(m_temp.equals("전체 온도")){
+    	if(m_temp.equals("개인온도")){
     		//전체
+    		try {
+				st = con.createStatement();
+				//wt = con.createStatement();
+				rs = st.executeQuery("select * from tp where id = "+m_user);
+				//ws = wt.executeQuery("select gps_har from tp");
+				while(rs.next()){
+					
+					if(rs.getString("date").substring(0, 10).equals(m_date)){
+						//System.out.println("gps_lat : "+(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639));
+						//System.out.println("gps_har : "+(int)((rs.getFloat("gps_har") - 126.6566)/0.0003632));
+						//setMAap((int)((rs.getFloat("gps_har") - 126.6566)/0.0003632),(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639),0);
+						setMAap((int)((rs.getFloat("gps_har") - 126.6566)/0.0003632),(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639),0);
+						//<--> 126.6566 ~ 127.3178   0.6612  # 1 <-> 0.0003632   up/down   37.4531 ~ 37.7170     0.2639  # 1 <-> 0.0002639
+						//      0 ~ 1820             1820                                      0  ~  1000         1000
+					}else{
+						
+					}
+					
+					
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+    		
+    	}else if(m_temp.equals("개인고온")){
+    		
+    		try {
+				st = con.createStatement();
+				//wt = con.createStatement();
+				rs = st.executeQuery("select * from tp where temp > 37.3 && id = "+m_user);
+				//ws = wt.executeQuery("select gps_har from tp");
+				while(rs.next()){
+					
+					if(rs.getString("date").substring(0, 10).equals(m_date)){
+						//System.out.println("gps_lat : "+(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639));
+						//System.out.println("gps_har : "+(int)((rs.getFloat("gps_har") - 126.6566)/0.0003632));
+						setMAap_up((int)((rs.getFloat("gps_har") - 126.6566)/0.0003632),(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639),0);
+					}else{
+						
+					}					
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		
+    		//
+    	}else if(m_temp.equals("초기")){
+    		return map_panel;
+    	}else if(m_temp.equals("전체온도")){//전체
+    		
     		try {
 				st = con.createStatement();
 				//wt = con.createStatement();
@@ -98,14 +151,16 @@ public class Map extends JFrame{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
     		
-    	}else if(m_temp.equals("고온")){
+    		//setMAap(100,500,0);
+    		//setMAap(200,600,0);
+    		//setMAap(300,700,0);  
+    	}else if(m_temp.equals("전체고온")){//전체
     		
     		try {
 				st = con.createStatement();
 				//wt = con.createStatement();
-				rs = st.executeQuery("select * from tp where temp >37.3 ");
+				rs = st.executeQuery("select * from tp where temp > 37.3");
 				//ws = wt.executeQuery("select gps_har from tp");
 				while(rs.next()){
 					System.out.println("gps_lat : "+(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639));
@@ -117,12 +172,9 @@ public class Map extends JFrame{
 				e.printStackTrace();
 			}
     		
-    		//고온
-    	}else{
-    		
-    		setMAap(100,500,0);
-    		setMAap(200,600,0);
-    		setMAap(300,700,0);  
+    		//setMAap(100,500,0);
+    		//setMAap(200,600,0);
+    		//setMAap(300,700,0);  
     	}
     	
     	return map_panel;
@@ -130,7 +182,7 @@ public class Map extends JFrame{
           
     public void setMAap(int a, int b, int cnt){
     	
-    	jb[cnt] = new JButton(new ImageIcon("check.png"));
+    	jb[cnt] = new JButton(new ImageIcon("check_blue.png"));
     	jb[cnt].setBounds(a+100, b, 30, 30);
     	jb[cnt].setBorderPainted(false);
     	jb[cnt].setContentAreaFilled(false);
