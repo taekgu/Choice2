@@ -44,6 +44,8 @@ public class Map extends JFrame{
 	
 	public gui g;
 	
+	
+	
 	//--------------------------------
 
 	JPanel map_panel;
@@ -90,7 +92,8 @@ public class Map extends JFrame{
 				rs = st.executeQuery("select * from tp where id = "+m_user);
 				//ws = wt.executeQuery("select gps_har from tp");
 				while(rs.next()){
-					
+					//System.out.println("date : "+rs.getString("date").substring(0, 10));	
+					//System.out.println("m_date : "+m_date);	
 					if(rs.getString("date").substring(0, 10).equals(m_date)){
 						//System.out.println("gps_lat : "+(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639));
 						//System.out.println("gps_har : "+(int)((rs.getFloat("gps_har") - 126.6566)/0.0003632));
@@ -143,8 +146,8 @@ public class Map extends JFrame{
 				rs = st.executeQuery("select * from tp");
 				//ws = wt.executeQuery("select gps_har from tp");
 				while(rs.next()){
-					System.out.println("gps_lat : "+(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639));
-					System.out.println("gps_har : "+(int)((rs.getFloat("gps_har") - 126.6566)/0.0003632));
+					//System.out.println("gps_lat : "+(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639));
+					//System.out.println("gps_har : "+(int)((rs.getFloat("gps_har") - 126.6566)/0.0003632));
 					setMAap((int)((rs.getFloat("gps_har") - 126.6566)/0.0003632),(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639),0);
 				}
 			} catch (SQLException e) {
@@ -163,8 +166,8 @@ public class Map extends JFrame{
 				rs = st.executeQuery("select * from tp where temp > 37.3");
 				//ws = wt.executeQuery("select gps_har from tp");
 				while(rs.next()){
-					System.out.println("gps_lat : "+(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639));
-					System.out.println("gps_har : "+(int)((rs.getFloat("gps_har") - 126.6566)/0.0003632));
+					//System.out.println("gps_lat : "+(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639));
+					//System.out.println("gps_har : "+(int)((rs.getFloat("gps_har") - 126.6566)/0.0003632));
 					setMAap_up((int)((rs.getFloat("gps_har") - 126.6566)/0.0003632),(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639),0);
 				}
 			} catch (SQLException e) {
