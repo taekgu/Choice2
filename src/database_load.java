@@ -6,10 +6,10 @@ import java.sql.SQLException;
 public class database_load {
 	public static Float Min_val = (float) 0.0;
 	public static Float Max_val = (float) 0.0;
+	public static int COUNT = 0;
 	public static Float[][] dload(String num) throws SQLException {
 		
-		Float[][] temp7h = new Float[7][694];
-		
+		Float[][] temp7h = new Float[7][COUNT];
 		try {
 			Connection con = null;
 			String dbURL =  "jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
@@ -18,18 +18,24 @@ public class database_load {
 			//MyExcuteQuery("SHOW DATABASES;");
 			java.sql.Statement st = null;
 			ResultSet rs = null;
+			
+			
 			st = con.createStatement();
-			st.execute("USE choice;");
-			rs = st.executeQuery("SELECT date, temp, gps FROM temperature WHERE id = "+ num + ";");
+			st.execute("USE newschema;");
+			
+			rs = st.executeQuery("SELECT COUNT(id) FROM tp WHERE LEFT(date,10)=" + "'2016-12-15'");
+			COUNT = rs.getInt(1);
+			
+				
+			rs = st.executeQuery("SELECT date, temp, gps FROM tp WHERE id = "+ num + ";");
 			
 			rs.next();
 			int i = 0, j = 0;
 			for (i = 0; i < 3; i++) // 3��
 			{
-				for(j = 0; j<694; j++) // �Ϸ翡 694��
+				for(j = 0; j<COUNT; j++) // �Ϸ翡 694��
 				{
 					String str1 = rs.getNString(1);
-					String str2 = rs.getNString(3);
 					Float flo = rs.getFloat(2);
 					temp7h[i][j] = flo;
 					
@@ -44,7 +50,7 @@ public class database_load {
 					}
 					if (i == 0)
 					{
-						System.out.println("Date : " + str1 + " //  Temperature : " +  flo + " //  GPS : " + str2);
+						System.out.println("Date : " + str1 + " //  Temperature : " +  flo);
 						//if 
 					}
 						
