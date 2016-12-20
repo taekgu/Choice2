@@ -61,11 +61,11 @@ public class Map extends JFrame{
     	try {
     		//sb
 			//con = DriverManager.getConnection("jdbc:mysql://localhost","root", "1234"); 
-			con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234");
+			con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234"); // jj
 			st = con.createStatement();
 			//sb
 			//rs = st.executeQuery("use testschema");
-			rs = st.executeQuery("use newschema");
+			rs = st.executeQuery("use newschema"); // jj
 			
 			
 			

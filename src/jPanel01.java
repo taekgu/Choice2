@@ -1,9 +1,26 @@
 import java.io.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GradientPaint;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Paint;
  
 
@@ -32,7 +49,9 @@ import org.jfree.ui.StandardGradientPaintTransformer;
 import org.jfree.ui.TextAnchor;
 
 public class jPanel01 {
+	
 
+	
 	public jPanel01()
 	{
 		
@@ -41,26 +60,26 @@ public class jPanel01 {
 	public JFreeChart DrawMyChart(Float[][] floats) throws IOException
 	{
 		int SAMPLE_NUM = test_main.SAMPLE_NUM;
-		    // µ¥ÀÌÅÍ »ý¼º
+		    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		
 		/////////////////////////////////////////////////////////////////
 		
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();                // bar chart 1
 		
-		// µ¥ÀÌÅÍ ÀÔ·Â ( °ª, ¹ü·Ê, Ä«Å×°í¸® )
-		// ±×·¡ÇÁ 1       
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ ( ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½, Ä«ï¿½×°ï¿½ )
+		// ï¿½×·ï¿½ï¿½ï¿½ 1       
 		for (int i = 0; i < SAMPLE_NUM; i++){	
-		    dataset.addValue(floats[0][i], "S1", i+1 + "½Ã");
+		    dataset.addValue(floats[0][i], "S1", i+1 + "ï¿½ï¿½");
 			//System.out.println(floats[0][i]);
 
 		}
 		
-		// ·»´õ¸µ »ý¼º ¹× ¼¼ÆÃ
-		// ·»´õ¸µ »ý¼º
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		final LineAndShapeRenderer renderer = new LineAndShapeRenderer();
 		     
-		// °øÅë ¿É¼Ç Á¤ÀÇ
-		//final CategoryItemLabelGenerator generator = new StandardCategoryItemLabelGenerator(); // ¼ýÀÚ»ý¼º
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½É¼ï¿½ ï¿½ï¿½ï¿½ï¿½
+		//final CategoryItemLabelGenerator generator = new StandardCategoryItemLabelGenerator(); // ï¿½ï¿½ï¿½Ú»ï¿½ï¿½ï¿½
 		
 		final ItemLabelPosition p_below = new ItemLabelPosition(
 		             ItemLabelAnchor.OUTSIDE6, TextAnchor.TOP_LEFT
@@ -68,9 +87,9 @@ public class jPanel01 {
 		Font f = new Font("Gulim", Font.PLAIN, 10);
 		Font axisF = new Font("Gulim", Font.PLAIN, 10);
 		   
-		    // ·»´õ¸µ ¼¼ÆÃ
-		// ±×·¡ÇÁ 1
-		   // renderer.setBaseItemLabelGenerator(generator); // ¼ýÀÚ»ý¼º
+		    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		// ï¿½×·ï¿½ï¿½ï¿½ 1
+		   // renderer.setBaseItemLabelGenerator(generator); // ï¿½ï¿½ï¿½Ú»ï¿½ï¿½ï¿½
 		renderer.setBaseItemLabelsVisible(true);
 		renderer.setBaseShapesVisible(true);
 		renderer.setDrawOutlines(true);
@@ -86,41 +105,119 @@ public class jPanel01 {
 		                                       3.0f)
 		);
 		
-		// plot »ý¼º
+		// plot ï¿½ï¿½ï¿½ï¿½
 		    final CategoryPlot plot = new CategoryPlot();
 		   
-		    // plot ¿¡ µ¥ÀÌÅÍ ÀûÀç
+		    // plot ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		plot.setDataset(dataset);
 		plot.setRenderer(renderer);
 		//////////////////////////////////////////////////////////////////////////////////
 		 
-		        // plot ±âº» ¼³Á¤
-		plot.setOrientation(PlotOrientation.VERTICAL);             // ±×·¡ÇÁ Ç¥½Ã ¹æÇâ
-		plot.setRangeGridlinesVisible(true);                       // XÃà °¡ÀÌµå ¶óÀÎ Ç¥½Ã¿©ºÎ
-		plot.setDomainGridlinesVisible(true);                      // YÃà °¡ÀÌµå ¶óÀÎ Ç¥½Ã¿©ºÎ
+		        // plot ï¿½âº» ï¿½ï¿½ï¿½ï¿½
+		plot.setOrientation(PlotOrientation.VERTICAL);             // ï¿½×·ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		plot.setRangeGridlinesVisible(true);                       // Xï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½Ã¿ï¿½ï¿½ï¿½
+		plot.setDomainGridlinesVisible(true);                      // Yï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½Ã¿ï¿½ï¿½ï¿½
 		 
-		        // ·»´õ¸µ ¼ø¼­ Á¤ÀÇ : dataset µî·Ï ¼ø¼­´ë·Î ·»´õ¸µ ( Áï, ¸ÕÀú µî·ÏÇÑ°Ô ¾Æ·¡·Î ±ò¸² )
+		        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ : dataset ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ( ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ñ°ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½ï¿½ )
 	    plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
 		   
-		    // XÃà ¼¼ÆÃ
-		plot.setDomainAxis(new CategoryAxis());              // XÃà Á¾·ù ¼³Á¤
-		plot.getDomainAxis().setTickLabelFont(axisF); // XÃà ´«±Ý¶óº§ ÆùÆ® Á¶Á¤
-		plot.getDomainAxis().setCategoryLabelPositions(CategoryLabelPositions.STANDARD);       // Ä«Å×°í¸® ¶óº§ À§Ä¡ Á¶Á¤
+		    // Xï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		plot.setDomainAxis(new CategoryAxis());              // Xï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		plot.getDomainAxis().setTickLabelFont(axisF); // Xï¿½ï¿½ ï¿½ï¿½ï¿½Ý¶ï¿½ ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+		plot.getDomainAxis().setCategoryLabelPositions(CategoryLabelPositions.STANDARD);       // Ä«ï¿½×°ï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
 		 
-		        // YÃà ¼¼ÆÃ
-		plot.setRangeAxis(new NumberAxis());                 // YÃà Á¾·ù ¼³Á¤
-		plot.getRangeAxis().setTickLabelFont(axisF);  // YÃà ´«±Ý¶óº§ ÆùÆ® Á¶Á¤
+		        // Yï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		plot.setRangeAxis(new NumberAxis());                 // Yï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		plot.getRangeAxis().setTickLabelFont(axisF);  // Yï¿½ï¿½ ï¿½ï¿½ï¿½Ý¶ï¿½ ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 		   
-		    // ¼¼ÆÃµÈ plotÀ» ¹ÙÅÁÀ¸·Î chart »ý¼º
-		final JFreeChart chart = new JFreeChart(plot);
-		chart.setTitle("Test MyChart"); // Â÷Æ® Å¸ÀÌÆ²
+		    // ï¿½ï¿½ï¿½Ãµï¿½ plotï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ chart ï¿½ï¿½ï¿½ï¿½
+		JFreeChart chart = new JFreeChart(plot);
+		chart.setTitle("Test MyChart"); // ï¿½ï¿½Æ® Å¸ï¿½ï¿½Æ²
 		//	        TextTitle copyright = new TextTitle("JFreeChart WaferMapPlot", new Font("SansSerif", Font.PLAIN, 9));
 		//	        copyright.setHorizontalAlignment(HorizontalAlignment.RIGHT);
-		//	        chart.addSubtitle(copyright);  // Â÷Æ® ¼­ºê Å¸ÀÌÆ²\
+		//	        chart.addSubtitle(copyright);  // ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½Æ²\
 		//return chart;
 	
 		return chart;
+	}
 	
-	}	
+
+	@SuppressWarnings("null")
+	public JPanel JP1()  throws IOException, SQLException, NullPointerException
+	{
+		Connection con = null;
+		String dbURL =  "jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
+		con = DriverManager.getConnection(dbURL,"root", "1234");
+
+		//MyExcuteQuery("SHOW DATABASES;");
+		java.sql.Statement st = null;
+		ResultSet rs = null;
+		st = con.createStatement();
+		st.execute("USE choice;");
+	
+		
+		JPanel p1 = new JPanel(new GridBagLayout());
+		GridBagLayout gridbag = new GridBagLayout();
+		GridBagConstraints c =new GridBagConstraints();
+		//c.fill = GridBagConstraints.HORIZONTAL;
+		
+		p1.setLayout(gridbag);
+		jPanel01 jP01 = new jPanel01();
+		
+	
+		
+		JComboBox<String> box1 = new JComboBox<String>();
+		rs = st.executeQuery("select distinct id from temperature");
+		while(rs.next()){
+			box1.addItem(rs.getString("id"));
+			//System.out.println("test : "+rs.getString("id"));
+		}
+		box1.addActionListener(box1);
+		//box.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2"}));
+		c.gridx = 0;
+		c.gridy = 0;
+		p1.add(box1,c);
+		
+		String buf_f = null;
+		int num = 0;
+		String temp_date[] = null;
+		JComboBox<String> box2 = new JComboBox<String>();
+		rs = st.executeQuery("use newschema");
+		rs = st.executeQuery("select distinct date from tp");
+		while(rs.next()){
+			if(rs.getString("date").substring(0, 10).equals(buf_f))
+			{
+				continue;
+			}else{
+				buf_f = rs.getString("date").substring(0, 10);
+				box2.addItem(buf_f);
+				//System.out.println("test : "+buf_f);
+			}
+		}
+
+		
+		//Collections.sort((List<T>) box2);
+		box2.addActionListener(box2);
+		c.gridx = 1;
+		c.gridy = 0;
+		c.gridwidth = 2;
+		p1.add(box2,c);
+		
+		
+		
+		ChartPanel CP = new ChartPanel(jP01.DrawMyChart(database_load.dload("3")));
+		//JFreeChart jfc = jP01.DrawMyChart(database_load.dload());
+		
+	
+		
+		c.gridwidth=3;
+		c.gridheight=2;
+		c.gridx=0;
+		c.gridy=1;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		p1.add(CP,c);
+		
+		return p1; 
+	}
 }
 
