@@ -66,7 +66,7 @@ public class gui extends JFrame {
 	private JButton do_Button = new JButton();
 	
 	
-	private String date;
+	private String date = "";
 	private String user;
 	private String temp = "";
 	
@@ -129,15 +129,12 @@ public class gui extends JFrame {
 		Map_panel.setVisible(true);
 		
 		panel2.add(Map_panel);
-		
-		
+				
 		setUser();
-		
-		
+
 		//----------------------------------------------------------------------------------------------
 
 		panel3.add(label3);
-		
 		
 		tabbedPane.add("�µ�", panel1);
 		tabbedPane.add("Map", panel2);
@@ -156,7 +153,6 @@ public class gui extends JFrame {
 		jF.setExtendedState(JFrame.MAXIMIZED_BOTH); // �ִ�ȭ
 		jF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		jF.setVisible(true);
-		
 	
 	}
 	
@@ -185,20 +181,13 @@ public class gui extends JFrame {
 			}
 			combo_d.setVisible(false);
 			
-			
 			rs = st.executeQuery("select distinct id from tp");
 			
-			U_Button.setText("전체User");
+			U_Button.setText("User");
 			U_Button.setBounds(0, 500, 100, 50);
 			U_Button.addActionListener(new MyActionListener());
 			combo_u.setBounds(0, 550, 100, 50);
-			while(rs.next()){
-				combo_u.addItem(rs.getString("id"));
-				System.out.println("test : "+rs.getString("id"));
-				
-			}
 			combo_u.setVisible(false);
-			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -252,20 +241,27 @@ public class gui extends JFrame {
             	b.setText("전체 날짜");
             	date = combo_d.getSelectedItem().toString();            
             	setTitle(b.getText());
+            	            	
             	combo_d.setVisible(false);
             	// InnerClassListener의 멤버나 JFrame의 멤버 호출
             }
             //---------------user---------------------
-            if (b.getText().equals("전체User")){
-            	b.setText("User 선택");
-            	combo_u.setVisible(true);
+            if (b.getText().equals("User")){
+            	if(date.equals("")){
+            		b.setText("User");
+            	}else{
+            		b.setText("User 선택");
+            		set_User(date);
+                	combo_u.setVisible(true);
+            	}
             }      	
             else if(b.getText().equals("User 선택")){
-            	b.setText("전체User");
+            	b.setText("User");
             	user = combo_u.getSelectedItem().toString();
             	setTitle(b.getText());
-            	combo_u.setVisible(false);
-            	// InnerClassListener의 멤버나 JFrame의 멤버 호출
+            	
+          		combo_u.removeAllItems();
+          		combo_u.setVisible(false);
             }
             
             //--------------temp-----------------
@@ -309,6 +305,38 @@ public class gui extends JFrame {
 		tabbedPane.add("Third", panel3);
 		jF.add(tabbedPane);
     	
+    }
+    
+    private void set_User(String d){
+    	
+    	String id_buf = "";
+    	
+    	try {
+			st = con.createStatement();			
+			rs = st.executeQuery("select id,date from tp");
+			
+			while(rs.next()){
+				
+				if(rs.getString("date").substring(0, 10).equals(d))
+				{
+					if(rs.getString("id").equals(id_buf)){
+						continue;
+					}else{
+						id_buf = rs.getString("id");
+						combo_u.addItem(id_buf);
+						System.out.println("test : "+id_buf);
+					}
+				}else{
+					continue;
+				}
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	    
     }
     
 	public void start() throws SQLException

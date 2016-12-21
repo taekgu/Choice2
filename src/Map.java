@@ -136,7 +136,8 @@ public class Map extends JFrame{
 			}
     		
     		//
-    	}else if(m_temp.equals("초기")){
+    	}else if(m_temp.equals("초기")){   		
+    		
     		return map_panel;
     	}else if(m_temp.equals("전체온도")){//전체
     		
@@ -178,6 +179,11 @@ public class Map extends JFrame{
     		//setMAap(100,500,0);
     		//setMAap(200,600,0);
     		//setMAap(300,700,0);  
+    	}else{
+    		setMAap((int)((126.987106424942 - 126.6566)/0.0003632),(int)((37.5512814249418 - 37.4531)/0.0002639),0);
+    		setMAap((int)((126.99269486545 - 126.6566)/0.0003632),(int)((37.5488929136663 - 37.4531)/0.0002639),0);
+    		setMAap((int)((126.986841779263 - 126.6566)/0.0003632),(int)((37.5460266383503 - 37.4531)/0.0002639),0);
+    		setMAap((int)((126.984190084929 - 126.6566)/0.0003632),(int)((37.53301363535 - 37.4531)/0.0002639),0);
     	}
     	
     	return map_panel;
