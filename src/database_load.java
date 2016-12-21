@@ -3,13 +3,25 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
+
 public class database_load {
-	public static Float Min_val = (float) 0.0;
-	public static Float Max_val = (float) 0.0;
+	public static Float Min_val = (float)100.0;
+	public static Float Max_val = (float)0.0;
 	public static int COUNT = 0;
+	
+	
+	public database_load()
+	{
+
+	}
+	
+	
 	public static Float[][] dload(String num) throws SQLException {
+
+	
+		Float [][] temp7h = new Float[1][1000];
 		
-		Float[][] temp7h = new Float[7][COUNT];
 		try {
 			Connection con = null;
 			String dbURL =  "jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
@@ -18,24 +30,23 @@ public class database_load {
 			//MyExcuteQuery("SHOW DATABASES;");
 			java.sql.Statement st = null;
 			ResultSet rs = null;
-			
-			
 			st = con.createStatement();
-			st.execute("USE newschema;");
+			st.execute("USE newschema3;");
+			//rs = st.executeQuery("SELECT COUNT(temp) FROM tp WHERE id = 1 AND LEFT(date,10) = " + "2016-03-11" + ";");
 			
-			rs = st.executeQuery("SELECT COUNT(id) FROM tp WHERE LEFT(date,10)=" + "'2016-12-15'");
-			COUNT = rs.getInt(1);
-			
-				
-			rs = st.executeQuery("SELECT date, temp, gps FROM tp WHERE id = "+ num + ";");
+			COUNT = 276;
+			//rs.next();
+			System.out.println("count : " +  COUNT);
+			rs = st.executeQuery("SELECT date, temp FROM tp WHERE id = "+ num + " AND LEFT(date,10) = " + "'2016-03-11'" + ";" );
+			//rs = st.executeQuery("SELECT date, temp FROM tp WHERE id = 1 AND LEFT(date,10) = '2016-03-11';");
 			
 			rs.next();
 			int i = 0, j = 0;
-			for (i = 0; i < 3; i++) // 3��
+			for (i = 0; i < 1; i++)
 			{
-				for(j = 0; j<COUNT; j++) // �Ϸ翡 694��
+				for(j = 0; j<1000; j++)
 				{
-					String str1 = rs.getNString(1);
+					//String str1 = rs.getNString(1);
 					Float flo = rs.getFloat(2);
 					temp7h[i][j] = flo;
 					
@@ -43,21 +54,10 @@ public class database_load {
 						Max_val = flo;
 					
 					if (flo < Min_val)
-					{
-						if (j < 690)
-							Min_val = flo;
-							
-					}
-					if (i == 0)
-					{
-						System.out.println("Date : " + str1 + " //  Temperature : " +  flo);
-						//if 
-					}
-						
+						Min_val = flo;
 
-						//System.out.println(flo + " // " + temp7h[0][j]);
+					System.out.println("Temperature : " +  flo);
 
-					//System.out.println(str1 + " // " +  flo + " // " + str2 +  " // " + i + " // " + j);
 					if (rs.next() == false)
 						break;
 				}

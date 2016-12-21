@@ -78,9 +78,6 @@ public class gui extends JFrame {
 	public gui() throws IOException, SQLException
 	{
 
-		tabbedPane  = new JTabbedPane();	
-		panel1 = new JPanel();
-		
 		try {
 			//sb
 			//con = DriverManager.getConnection("jdbc:mysql://localhost","root", "1234"); 
@@ -88,13 +85,18 @@ public class gui extends JFrame {
 			st = con.createStatement();
 			//sb
 			//rs = st.executeQuery("use testschema");
-			rs = st.executeQuery("use newschema");
+			rs = st.executeQuery("use newschema3");
 			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		tabbedPane  = new JTabbedPane();	
+		panel1 = new JPanel();
+		
+
 		
 		icon = new ImageIcon("Seoul.JPG");
 
@@ -115,8 +117,8 @@ public class gui extends JFrame {
 		//panel1.setLayout(null);
 		//ChartPanel CP = new ChartPanel(jP.DrawMyChart(database_load.dload()));
 		panel1.setLayout(new java.awt.BorderLayout());
-		//panel1.add(jP.JP1());
 
+		panel1.add(jP.JP1());
 		//panel1.add(new JLabel("Select"), BorderLayout.SOUTH);
 		
 		
@@ -138,8 +140,7 @@ public class gui extends JFrame {
 
 		panel3.add(label3);
 		
-		
-		tabbedPane.add("�µ�", panel1);
+		tabbedPane.add("Data", panel1);
 		tabbedPane.add("Map", panel2);
 		tabbedPane.add("Third", panel3);
 		//tabbedPane.add("Th)
@@ -156,8 +157,6 @@ public class gui extends JFrame {
 		jF.setExtendedState(JFrame.MAXIMIZED_BOTH); // �ִ�ȭ
 		jF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		jF.setVisible(true);
-		
-	
 	}
 	
 	public void setUser(){
