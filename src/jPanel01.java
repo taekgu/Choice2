@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -186,28 +187,27 @@ public class jPanel01 {
 		jPanel01 jP01 = new jPanel01();
 		
 	
-		
+		// ComboBox 1
 		JComboBox<String> box1 = new JComboBox<String>();
 		rs = st.executeQuery("SELECT DISTINCT id FROM tp");
 		while(rs.next()){
 			box1.addItem(rs.getString("id"));
-			//System.out.println("test : "+rs.getString("id"));
 		}
 		
 		box1.addActionListener(box1);
-		//box.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2"}));
-		JLabel label1 = new JLabel("Select : ");
-		label1.setBounds(0, 0, 50, 20);
+		JLabel label1 = new JLabel("User Select : ");
+		label1.setBounds(10, 0, 100, 20);
 		p1.add(label1);
-		box1.setBounds(50,0,50,20);
+		box1.setBounds(90,0,50,20);
 		p1.add(box1);
 		
+		
+		//ComboBox 2
 		String buf_f = null;
 		int num = 0;
 		String temp_date[] = null;
 		JComboBox<String> box2 = new JComboBox<String>();
-		//rs = st.executeQuery("use newschema");
-		rs = st.executeQuery("SELECT DISTINCT date FROM tp");
+		rs = st.executeQuery("SELECT DISTINCT date FROM tp ORDER BY date");
 		while(rs.next()){
 			if(rs.getString("date").substring(0, 10).equals(buf_f))
 			{
@@ -215,29 +215,32 @@ public class jPanel01 {
 			}else{
 				buf_f = rs.getString("date").substring(0, 10);
 				box2.addItem(buf_f);
-				//System.out.println("test : "+buf_f);
+		
 			}
 		}
-
-		//Collections.sort((List<T>) box2);
+		
 		box2.addActionListener(box2);
 		JLabel label2 = new JLabel("Date : ");
-		label2.setBounds(200, 0, 50, 20);
+		label2.setBounds(10, 50, 50, 20);
 		p1.add(label2);
-		box2.setBounds(235,0,100,20);
+		box2.setBounds(45,50,100,20);
 		p1.add(box2);
 		
 		ChartPanel CP = new ChartPanel(jP01.DrawMyChart(database_load.dload("1")));
-		//JFreeChart jfc = jP01.DrawMyChart(database_load.dload());
-	
-		CP.setBounds(0, 20, 1920, 980);
+				
+		JButton b1 = new JButton();
+		b1 = new JButton();
+		b1.setText("Check");
+		b1.setBounds(10, 150,100,100);
+		p1.add(b1);
+		CP.setBounds(300, 10, 1610, 980);
 		p1.add(CP);
 		p1.setVisible(true);
 		return p1; 
 	}
 	/*
 	public void Combo2_init()
-	{
+	{ 
 		String buf_f = null;
 		int num = 0;
 		String temp_date[] = null;
