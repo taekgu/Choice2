@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -50,16 +51,30 @@ import org.jfree.ui.TextAnchor;
 
 public class jPanel01 {
 	
-
-	
+	Connection con;
+	private String dbURL = "";
+	java.sql.Statement st;
+	ResultSet rs;
+		
 	public jPanel01()
 	{
-		
+		try
+		{
+			con = null;
+			dbURL=  "jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
+			con = DriverManager.getConnection(dbURL,"root", "1234");
+			st = con.createStatement();
+			ResultSet rs = null;
+			st.execute("USE newschema3;");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
-	public JFreeChart DrawMyChart(Float[][] floats) throws IOException, ClassCastException
+	public JFreeChart DrawMyChart(Float[][] floats) throws IOException, ClassCastException, IllegalArgumentException
 	{
-		int SAMPLE_NUM = test_main.SAMPLE_NUM;
+		int SAMPLE_NUM = database_load.COUNT;
 		    // ������ ����
 		
 		/////////////////////////////////////////////////////////////////
@@ -69,7 +84,7 @@ public class jPanel01 {
 		// ������ �Է� ( ��, ����, ī�װ� )
 		// �׷��� 1       
 		for (int i = 0; i < SAMPLE_NUM; i++){	
-		    dataset.addValue(floats[0][i], "S1", i+1 + "��");
+		    dataset.addValue(floats[0][i], "S1", i+1 + "시");
 			//System.out.println(floats[0][i]);
 
 		}
@@ -129,11 +144,11 @@ public class jPanel01 {
 		        // Y�� ����
 		plot.setRangeAxis(new NumberAxis());                 // Y�� ���� ����
 		plot.getRangeAxis().setTickLabelFont(axisF);  // Y�� ���ݶ� ��Ʈ ����
-		plot.getRangeAxis().setRange((double)database_load.Min_val, (double)database_load.Max_val);
+		plot.getRangeAxis().setRange(((double)database_load.Min_val)-0.1, ((double)database_load.Max_val)+0.1);
 		    // ���õ� plot�� �������� chart ����
 		JFreeChart chart = new JFreeChart(plot);
-		System.out.println(database_load.Min_val);
-		chart.setTitle("Test MyChart"); // ��Ʈ Ÿ��Ʋ
+		//System.out.println(database_load.Min_val + ", " + database_load.Max_val);
+		//chart.setTitle("Test MyChart"); // ��Ʈ Ÿ��Ʋ
 
 		//Double min = (double)database_load.Min_val;
 		//Double max = (double)database_load.Max_val;
@@ -150,6 +165,7 @@ public class jPanel01 {
 	@SuppressWarnings("null")
 	public JPanel JP1()  throws IOException, SQLException, NullPointerException
 	{
+		/*
 		Connection con = null;
 		String dbURL =  "jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
 		con = DriverManager.getConnection(dbURL,"root", "1234");
@@ -158,31 +174,70 @@ public class jPanel01 {
 		java.sql.Statement st = null;
 		ResultSet rs = null;
 		st = con.createStatement();
-		st.execute("USE choice;");
-	
+		st.execute("USE newschema3;");
+	*/
 		
 		JPanel p1 = new JPanel(new GridBagLayout());
-		GridBagLayout gridbag = new GridBagLayout();
-		GridBagConstraints c =new GridBagConstraints();
+	//	GridBagLayout gridbag = new GridBagLayout();
+		//GridBagConstraints c =new GridBagConstraints();
 		//c.fill = GridBagConstraints.HORIZONTAL;
 		
-		p1.setLayout(gridbag);
+		p1.setLayout(null);
 		jPanel01 jP01 = new jPanel01();
 		
 	
 		
 		JComboBox<String> box1 = new JComboBox<String>();
-		rs = st.executeQuery("select distinct id from temperature");
+		rs = st.executeQuery("SELECT DISTINCT id FROM tp");
 		while(rs.next()){
 			box1.addItem(rs.getString("id"));
 			//System.out.println("test : "+rs.getString("id"));
 		}
+		
 		box1.addActionListener(box1);
 		//box.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2"}));
-		c.gridx = 0;
-		c.gridy = 0;
-		p1.add(box1,c);
+		JLabel label1 = new JLabel("Select : ");
+		label1.setBounds(0, 0, 50, 20);
+		p1.add(label1);
+		box1.setBounds(50,0,50,20);
+		p1.add(box1);
 		
+		String buf_f = null;
+		int num = 0;
+		String temp_date[] = null;
+		JComboBox<String> box2 = new JComboBox<String>();
+		//rs = st.executeQuery("use newschema");
+		rs = st.executeQuery("SELECT DISTINCT date FROM tp");
+		while(rs.next()){
+			if(rs.getString("date").substring(0, 10).equals(buf_f))
+			{
+				continue;
+			}else{
+				buf_f = rs.getString("date").substring(0, 10);
+				box2.addItem(buf_f);
+				//System.out.println("test : "+buf_f);
+			}
+		}
+
+		//Collections.sort((List<T>) box2);
+		box2.addActionListener(box2);
+		JLabel label2 = new JLabel("Date : ");
+		label2.setBounds(200, 0, 50, 20);
+		p1.add(label2);
+		box2.setBounds(235,0,100,20);
+		p1.add(box2);
+		
+		ChartPanel CP = new ChartPanel(jP01.DrawMyChart(database_load.dload("1")));
+		//JFreeChart jfc = jP01.DrawMyChart(database_load.dload());
+	
+		CP.setBounds(0, 20, 1920, 980);
+		p1.add(CP);
+		p1.setVisible(true);
+		return p1; 
+	}
+	/*
+	public void Combo2_init()
+	{
 		String buf_f = null;
 		int num = 0;
 		String temp_date[] = null;
@@ -200,29 +255,13 @@ public class jPanel01 {
 			}
 		}
 
-		
 		//Collections.sort((List<T>) box2);
 		box2.addActionListener(box2);
-		c.gridx = 1;
-		c.gridy = 0;
-		c.gridwidth = 2;
-		p1.add(box2,c);
-		
-		
-		
-		ChartPanel CP = new ChartPanel(jP01.DrawMyChart(database_load.dload("3")));
-		//JFreeChart jfc = jP01.DrawMyChart(database_load.dload());
-		
-	
-		
-		c.gridwidth=3;
-		c.gridheight=2;
-		c.gridx=0;
-		c.gridy=1;
-		c.fill = GridBagConstraints.HORIZONTAL;
-		p1.add(CP,c);
-		
-		return p1; 
-	}
+		JLabel label2 = new JLabel("Date : ");
+		label2.setBounds(200, 0, 50, 20);
+		p1.add(label2);
+		box2.setBounds(235,0,100,20);
+		p1.add(box2);
+	}*/
 }
 
