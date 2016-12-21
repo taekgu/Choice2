@@ -83,11 +83,11 @@ public class gui extends JFrame {
 		
 		try {
 			//sb
-			con = DriverManager.getConnection("jdbc:mysql://localhost","root", "1234"); 
-			//con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234");
+			//con = DriverManager.getConnection("jdbc:mysql://localhost","root", "1234"); 
+			con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234");
 			st = con.createStatement();
 			//sb
-			rs = st.executeQuery("use testschema");
+			rs = st.executeQuery("use newschema3");
 			//rs = st.executeQuery("use newschema");
 			
 			
@@ -115,7 +115,7 @@ public class gui extends JFrame {
 		//panel1.setLayout(null);
 		//ChartPanel CP = new ChartPanel(jP.DrawMyChart(database_load.dload()));
 		panel1.setLayout(new java.awt.BorderLayout());
-		//panel1.add(jP.JP1());
+		panel1.add(jP.JP1());
 
 		//panel1.add(new JLabel("Select"), BorderLayout.SOUTH);
 		

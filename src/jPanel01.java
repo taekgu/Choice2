@@ -24,7 +24,8 @@ import java.awt.GradientPaint;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Paint;
- 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartPanel;
@@ -56,9 +57,19 @@ public class jPanel01 {
 	private String dbURL = "";
 	java.sql.Statement st;
 	ResultSet rs;
+	
+	JButton b1;
+	JButton b2;
+	JComboBox<String> box1;
+	JComboBox<String> box2;
 		
 	public jPanel01()
 	{
+		
+		b1 = new JButton();
+		b2 = new JButton();
+		box1 = new JComboBox<String>();
+		box2 = new JComboBox<String>();
 		try
 		{
 			con = null;
@@ -185,10 +196,10 @@ public class jPanel01 {
 		
 		p1.setLayout(null);
 		jPanel01 jP01 = new jPanel01();
-		
+
 	
 		// ComboBox 1
-		JComboBox<String> box1 = new JComboBox<String>();
+		//JComboBox<String> box1 = new JComboBox<String>();
 		rs = st.executeQuery("SELECT DISTINCT id FROM tp");
 		while(rs.next()){
 			box1.addItem(rs.getString("id"));
@@ -201,12 +212,18 @@ public class jPanel01 {
 		box1.setBounds(90,0,50,20);
 		p1.add(box1);
 		
+		//JButton b1 = new JButton();
+		b1 = new JButton();
+		b1.setText("Select");
+		b1.setBounds(150, 0,70,20);
+		p1.add(b1);
+		
 		
 		//ComboBox 2
 		String buf_f = null;
 		int num = 0;
 		String temp_date[] = null;
-		JComboBox<String> box2 = new JComboBox<String>();
+		//JComboBox<String> box2 = new JComboBox<String>();
 		rs = st.executeQuery("SELECT DISTINCT date FROM tp ORDER BY date");
 		while(rs.next()){
 			if(rs.getString("date").substring(0, 10).equals(buf_f))
@@ -215,7 +232,6 @@ public class jPanel01 {
 			}else{
 				buf_f = rs.getString("date").substring(0, 10);
 				box2.addItem(buf_f);
-		
 			}
 		}
 		
@@ -226,45 +242,50 @@ public class jPanel01 {
 		box2.setBounds(45,50,100,20);
 		p1.add(box2);
 		
+
+		
+		//JButton b2 = new JButton();
+		b2 = new JButton();
+		b2.setText("Check");
+		b2.setBounds(150, 50,70,20);
+		p1.add(b2);
+		
+		//Chart Visible
 		ChartPanel CP = new ChartPanel(jP01.DrawMyChart(database_load.dload("1")));
-				
-		JButton b1 = new JButton();
-		b1 = new JButton();
-		b1.setText("Check");
-		b1.setBounds(10, 150,100,100);
-		p1.add(b1);
 		CP.setBounds(300, 10, 1610, 980);
 		p1.add(CP);
 		p1.setVisible(true);
 		return p1; 
 	}
-	/*
-	public void Combo2_init()
-	{ 
-		String buf_f = null;
-		int num = 0;
-		String temp_date[] = null;
-		JComboBox<String> box2 = new JComboBox<String>();
-		rs = st.executeQuery("use newschema");
-		rs = st.executeQuery("select distinct date from tp");
-		while(rs.next()){
-			if(rs.getString("date").substring(0, 10).equals(buf_f))
-			{
-				continue;
-			}else{
-				buf_f = rs.getString("date").substring(0, 10);
-				box2.addItem(buf_f);
-				//System.out.println("test : "+buf_f);
-			}
-		}
-
-		//Collections.sort((List<T>) box2);
-		box2.addActionListener(box2);
-		JLabel label2 = new JLabel("Date : ");
-		label2.setBounds(200, 0, 50, 20);
-		p1.add(label2);
-		box2.setBounds(235,0,100,20);
-		p1.add(box2);
-	}*/
+	
+    
+	
+		
+	public void BoxActionPerformed(ActionEvent e) {
+		String sel_num = null;
+		JButton JB = (JButton) e.getSource();
+		
+		if (JB.getText().equals("Select")){
+			//JB.setText("날짜 선택");
+			sel_num = box1.getSelectedItem().toString();  
+        	box2.removeAllItems();
+        	try{
+        		String buf_f = null;
+        		rs = st.executeQuery("SELECT DISTINCT date FROM tp ORDER BY date WHERE id = " + sel_num + ";");
+        		while(rs.next()){
+        			if(rs.getString("date").substring(0, 10).equals(buf_f))
+        			{
+        				continue;
+        			}else{
+        				buf_f = rs.getString("date").substring(0, 10);
+        				box2.addItem(buf_f);
+        			}
+        		}
+        	}catch (SQLException se) {
+    			// TODO Auto-generated catch block
+    			se.printStackTrace();
+    		}
+        }    
+	}
 }
 
