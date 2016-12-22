@@ -87,7 +87,7 @@ public class gui extends JFrame {
 			con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234");
 			st = con.createStatement();
 			//sb
-			rs = st.executeQuery("use newschema3");
+			rs = st.executeQuery("use newschema4");
 			//rs = st.executeQuery("use newschema");
 			
 			
@@ -136,7 +136,7 @@ public class gui extends JFrame {
 
 		panel3.add(label3);
 		
-		tabbedPane.add("�µ�", panel1);
+		tabbedPane.add("Data", panel1);
 		tabbedPane.add("Map", panel2);
 		tabbedPane.add("Third", panel3);
 		//tabbedPane.add("Th)
