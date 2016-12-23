@@ -6,18 +6,17 @@ import java.sql.SQLException;
 
 
 public class database_load {
-	public static Float Min_val = (float)100.0;
-	public static Float Max_val = (float)0.0;
+	public static Float Min_val;
+	public static Float Max_val; 
 	public static int COUNT = 0;
-	
 	
 	public database_load()
 	{
-
+		Min_val = (float)100.0;
+		Max_val = (float)0.0;
 	}
-	
-	
-	public static Float[][] dload(String num) throws SQLException {
+		
+	public static Float[][] dload(String sel_user, String sel_date) throws SQLException {
 
 	
 		Float [][] temp7h = new Float[1][1000];
@@ -31,23 +30,25 @@ public class database_load {
 			java.sql.Statement st = null;
 			ResultSet rs = null;
 			st = con.createStatement();
-			st.execute("USE newschema3;");
+			st.execute("USE newschema4;");
 			//rs = st.executeQuery("SELECT COUNT(temp) FROM tp WHERE id = 1 AND LEFT(date,10) = " + "'2016-03-11'" + ";");
 			
 			COUNT = 276;
 			//rs.next();
 			System.out.println("count : " +  COUNT);
-			rs = st.executeQuery("SELECT date, temp FROM tp WHERE id = "+ num + " AND LEFT(date,10) = " + "'2016-03-11'" + ";" );
-			//rs = st.executeQuery("SELECT date, temp FROM tp WHERE id = 1 AND LEFT(date,10) = '2016-03-11';");
+			rs = st.executeQuery("SELECT temp FROM tp WHERE id = "+ sel_user +" AND LEFT(date,10) = '" + sel_date + "';" );
+			//rs = st.executeQuery("SELECT temp FROM tp WHERE id = 1 AND LEFT(date,10) = '2016-03-11';");
 			
 			rs.next();
+			Min_val = (float)100.0;
+			Max_val = (float)0.0;
 			int i = 0, j = 0;
 			for (i = 0; i < 1; i++)
 			{
 				for(j = 0; j<1000; j++)
 				{
 					//String str1 = rs.getNString(1);
-					Float flo = rs.getFloat(2);
+					Float flo = rs.getFloat(1);
 					temp7h[i][j] = flo;
 					
 					if (flo > Max_val)
@@ -56,7 +57,7 @@ public class database_load {
 					if (flo < Min_val)
 						Min_val = flo;
 
-					System.out.println("Temperature : " +  flo);
+					//System.out.println("Temperature : " +  flo);
 
 					if (rs.next() == false)
 						break;
@@ -64,6 +65,8 @@ public class database_load {
 				if (rs.next() == false)
 					break;
 			}
+			System.out.println("Max : " + Max_val + "  Min : " + Min_val);
+
 			/*while (rs.next()) {
 				
 				
@@ -84,6 +87,7 @@ public class database_load {
 			System.out.println("SQLException: " + sqex.getMessage());
 			System.out.println("SQLState: " + sqex.getSQLState());
 		}
+		System.out.println("Data Load");
 		return temp7h;
 	}
 	

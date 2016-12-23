@@ -38,7 +38,7 @@ public class gui extends JFrame {
 	
 	public JFrame jF;
 	public JTabbedPane tabbedPane;
-	private JPanel panel1;
+	public JPanel panel1;
 	public JPanel panel2;
 	private JPanel panel3;
 	private JPanel Map_panel;
@@ -73,13 +73,27 @@ public class gui extends JFrame {
 	ImageIcon icon;
 	public Map p2;
 	//--------------------------------
-
+	//JJ
+	JButton b1;
+	JButton b2;
+	JComboBox<String> box1;
+	JComboBox<String> box2;
+	JPanel p1 ;
+	ChartPanel CP;
+	
 	
 	public gui() throws IOException, SQLException
 	{
 
 		tabbedPane  = new JTabbedPane();	
 		panel1 = new JPanel();
+		
+		b1 = new JButton();
+		b2 = new JButton();
+		box1 = new JComboBox<String>();
+		box2 = new JComboBox<String>();
+		p1 = new JPanel(new GridBagLayout());
+		CP = new ChartPanel(null);
 		
 		try {
 			//sb
@@ -175,7 +189,7 @@ public class gui extends JFrame {
 				}else{
 					buf_f = rs.getString("date").substring(0, 10);
 					combo_d.addItem(buf_f);
-					System.out.println("test : "+buf_f);
+					//System.out.println("test : "+buf_f);
 				}
 				
 			}
@@ -324,7 +338,7 @@ public class gui extends JFrame {
 					}else{
 						id_buf = rs.getString("id");
 						combo_u.addItem(id_buf);
-						System.out.println("test : "+id_buf);
+						//System.out.println("test : "+id_buf);
 					}
 				}else{
 					continue;

@@ -62,6 +62,8 @@ public class jPanel01 {
 	JButton b2;
 	JComboBox<String> box1;
 	JComboBox<String> box2;
+	JPanel p1 ;
+	ChartPanel CP;
 		
 	public jPanel01()
 	{
@@ -70,6 +72,8 @@ public class jPanel01 {
 		b2 = new JButton();
 		box1 = new JComboBox<String>();
 		box2 = new JComboBox<String>();
+		p1 = new JPanel(new GridBagLayout());
+		CP = new ChartPanel(null);
 		try
 		{
 			con = null;
@@ -90,16 +94,17 @@ public class jPanel01 {
 		    // ������ ����
 		
 		/////////////////////////////////////////////////////////////////
-		
+
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();                // bar chart 1
 		
 		// ������ �Է� ( ��, ����, ī�װ� )
-		// �׷��� 1       
+		// �׷��� 1
+		
 		for (int i = 0; i < SAMPLE_NUM; i++){	
 		    dataset.addValue(floats[0][i], "S1", i+1 + "시");
 			//System.out.println(floats[0][i]);
-
 		}
+		//dataset = null;
 		
 		// ������ ���� �� ����
 		// ������ ����
@@ -157,6 +162,7 @@ public class jPanel01 {
 		plot.setRangeAxis(new NumberAxis());                 // Y�� ���� ����
 		plot.getRangeAxis().setTickLabelFont(axisF);  // Y�� ���ݶ� ��Ʈ ����
 		plot.getRangeAxis().setRange(((double)database_load.Min_val)-0.1, ((double)database_load.Max_val)+0.1);
+		//plot.getRangeAxis().setRange(34.0, 39.0);
 		    // ���õ� plot�� �������� chart ����
 		JFreeChart chart = new JFreeChart(plot);
 		//System.out.println(database_load.Min_val + ", " + database_load.Max_val);
@@ -189,7 +195,7 @@ public class jPanel01 {
 		st.execute("USE newschema3;");
 	*/
 		
-		JPanel p1 = new JPanel(new GridBagLayout());
+		//JPanel p1 = new JPanel(new GridBagLayout());
 	//	GridBagLayout gridbag = new GridBagLayout();
 		//GridBagConstraints c =new GridBagConstraints();
 		//c.fill = GridBagConstraints.HORIZONTAL;
@@ -205,7 +211,7 @@ public class jPanel01 {
 			box1.addItem(rs.getString("id"));
 		}
 		
-		box1.addActionListener(box1);
+		//box1.addActionListener(box1);
 		JLabel label1 = new JLabel("User Select : ");
 		label1.setBounds(10, 0, 100, 20);
 		p1.add(label1);
@@ -216,10 +222,14 @@ public class jPanel01 {
 		b1 = new JButton();
 		b1.setText("Select");
 		b1.setBounds(150, 0,70,20);
+		b1.addActionListener(new MyActionListener()); 
+
 		p1.add(b1);
 		
 		
+		
 		//ComboBox 2
+		/*
 		String buf_f = null;
 		int num = 0;
 		String temp_date[] = null;
@@ -233,9 +243,9 @@ public class jPanel01 {
 				buf_f = rs.getString("date").substring(0, 10);
 				box2.addItem(buf_f);
 			}
-		}
+		}*/
 		
-		box2.addActionListener(box2);
+		//box2.addActionListener(box2);
 		JLabel label2 = new JLabel("Date : ");
 		label2.setBounds(10, 50, 50, 20);
 		p1.add(label2);
@@ -248,11 +258,13 @@ public class jPanel01 {
 		b2 = new JButton();
 		b2.setText("Check");
 		b2.setBounds(150, 50,70,20);
+		b2.addActionListener(new MyActionListener()); 
 		p1.add(b2);
 		
 		//Chart Visible
-		ChartPanel CP = new ChartPanel(jP01.DrawMyChart(database_load.dload("1")));
+		ChartPanel CP = new ChartPanel(jP01.DrawMyChart(database_load.dload("1", "2016-10-03")));
 		CP.setBounds(300, 10, 1610, 980);
+		
 		p1.add(CP);
 		p1.setVisible(true);
 		return p1; 
@@ -261,31 +273,77 @@ public class jPanel01 {
     
 	
 		
-	public void BoxActionPerformed(ActionEvent e) {
-		String sel_num = null;
-		JButton JB = (JButton) e.getSource();
-		
-		if (JB.getText().equals("Select")){
-			//JB.setText("날짜 선택");
-			sel_num = box1.getSelectedItem().toString();  
-        	box2.removeAllItems();
-        	try{
+	private class MyActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            JButton b = (JButton) e.getSource();
+            if (b.getText().equals("Select")){
+            	box2.removeAllItems();
         		String buf_f = null;
-        		rs = st.executeQuery("SELECT DISTINCT date FROM tp ORDER BY date WHERE id = " + sel_num + ";");
-        		while(rs.next()){
-        			if(rs.getString("date").substring(0, 10).equals(buf_f))
-        			{
-        				continue;
-        			}else{
-        				buf_f = rs.getString("date").substring(0, 10);
-        				box2.addItem(buf_f);
-        			}
+        		String id = null;
+        		
+        		id = box1.getSelectedItem().toString();
+        		try{
+	        		rs = st.executeQuery("SELECT DISTINCT date FROM tp WHERE id="+ id +" ORDER BY date");
+	        		while(rs.next()){
+	        			if(rs.getString("date").substring(0, 10).equals(buf_f))
+	        			{
+	        				continue;
+	        			}else{
+	        				buf_f = rs.getString("date").substring(0, 10);
+	        				box2.addItem(buf_f);
+	        			}
+	        		}
+        		} catch (SQLException se) {
+        			// TODO Auto-generated catch block
+        			se.printStackTrace();
         		}
-        	}catch (SQLException se) {
-    			// TODO Auto-generated catch block
-    			se.printStackTrace();
-    		}
-        }    
-	}
+            }      	
+            
+            else if(b.getText().equals("Check")){
+            	
+            	Float[][] new_data = new Float[1][1000];
+            	System.out.println("Redraw");
+            
+            	try {
+            		
+					new_data = database_load.dload(box1.getSelectedItem().toString(), box2.getSelectedItem().toString());
+					System.out.println(box1.getSelectedItem().toString() + " / " + box2.getSelectedItem().toString());
+			
+					jPanel01 jP01 = new jPanel01();
+					ChartPanel NCP  = new ChartPanel(jP01.DrawMyChart(new_data)); 
+					JPanel panel11 = new gui().panel1;
+					
+							
+					//p1.remove(CP);
+					/*
+					panel11.remove(CP);
+					NCP.setBounds(300, 10, 1610, 980);
+					panel11.add(NCP);
+					panel11.invalidate();
+					panel11.validate();
+					panel11.repaint();*/
+					
+					
+					
+					
+				} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ClassCastException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IllegalArgumentException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} /*catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}*/ catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+            }
+        }
+    }
 }
 
