@@ -49,7 +49,6 @@ public class gui extends JFrame {
 	
 	
 	//------------------MAP-----------------------
-		
 	Connection con;
 	java.sql.Statement st;
 	ResultSet rs;
@@ -117,9 +116,8 @@ public class gui extends JFrame {
 		panel1 = new JPanel();
 		panel2 = new JPanel();
 		panel2.setLayout(null);
-		panel3 = new JPanel();
 		
-		label3 = new JLabel("Third");
+		panel3 = make_panel3.make(jF);
 				
 		// add chart in JPanel
 		jPanel01 jP = new jPanel01();
@@ -136,9 +134,8 @@ public class gui extends JFrame {
 		
 		//--------MAP--------------------------------------------------------------------------
 						
-		
 		//p2 = new Map();
-		Map_panel = p2.Map_init("0","0","초기");
+		Map_panel = p2.Map_init("0","0","珥덇린");
 		Map_panel.setBounds(100, 0, 1820, 1000);
 		Map_panel.setVisible(true);
 		
@@ -147,24 +144,22 @@ public class gui extends JFrame {
 		setUser();
 
 		//----------------------------------------------------------------------------------------------
-
-		panel3.add(label3);
 		
 		tabbedPane.add("Data", panel1);
 		tabbedPane.add("Map", panel2);
 		tabbedPane.add("Third", panel3);
 		//tabbedPane.add("Th)
 		
-		//��ũ�� ������ ���
+		//占쏙옙크占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占�
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension di  = tk.getScreenSize();
-		//������ ����
+		//占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
 		jF = new JFrame();
 		jF.add(tabbedPane);
 		jF.setSize((int)di.getWidth(),(int)di.getWidth()-200); // Full Screen
 		//jF.setSize(800, 600);
-		jF.setTitle("Choice Tech"); // â ����
-		jF.setExtendedState(JFrame.MAXIMIZED_BOTH); // �ִ�ȭ
+		jF.setTitle("Choice Tech"); // 창 占쏙옙占쏙옙
+		jF.setExtendedState(JFrame.MAXIMIZED_BOTH); // 占쌍댐옙화
 		jF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		jF.setVisible(true);
 	
@@ -178,7 +173,7 @@ public class gui extends JFrame {
 			String buf_f = null;
 			rs = st.executeQuery("select distinct date from tp");
 			
-			D_Button.setText("전체 날짜");
+			D_Button.setText("�쟾泥� �궇吏�");
 	    	D_Button.setBounds(0, 0, 100, 50);
 	    	D_Button.addActionListener(new MyActionListener());
 	    	combo_d.setBounds(0, 50, 100, 50);
@@ -210,23 +205,23 @@ public class gui extends JFrame {
 
 
     	
-		T_Button.setText("개인온도");
+		T_Button.setText("媛쒖씤�삩�룄");
 		T_Button.setBounds(0, 900, 100, 50);
 		T_Button.addActionListener(new MyActionListener());
 		
-		TT_Button.setText("개인고온");
+		TT_Button.setText("媛쒖씤怨좎삩");
 		TT_Button.setBounds(0, 950, 100, 50);
 		TT_Button.addActionListener(new MyActionListener());
 		
-		do_Button.setText("실행");
+		do_Button.setText("�떎�뻾");
 		do_Button.setBounds(0,800,100,50);
 		do_Button.addActionListener(new MyActionListener());
 		
-		A_Button.setText("전체온도");
+		A_Button.setText("�쟾泥댁삩�룄");
 		A_Button.setBounds(0,650,100,50);
 		A_Button.addActionListener(new MyActionListener());
 		
-		AA_Button.setText("전체고온");
+		AA_Button.setText("�쟾泥닿퀬�삩");
 		AA_Button.setBounds(0,700,100,50);
 		AA_Button.addActionListener(new MyActionListener());
 		
@@ -247,29 +242,29 @@ public class gui extends JFrame {
         public void actionPerformed(ActionEvent e) {
         	//------------------date-----------------
             JButton b = (JButton) e.getSource();
-            if (b.getText().equals("전체 날짜")){
-            	b.setText("날짜 선택");
+            if (b.getText().equals("�쟾泥� �궇吏�")){
+            	b.setText("�궇吏� �꽑�깮");
             	combo_d.setVisible(true);
             }      	
-            else if(b.getText().equals("날짜 선택")){
-            	b.setText("전체 날짜");
+            else if(b.getText().equals("�궇吏� �꽑�깮")){
+            	b.setText("�쟾泥� �궇吏�");
             	date = combo_d.getSelectedItem().toString();            
             	setTitle(b.getText());
             	            	
             	combo_d.setVisible(false);
-            	// InnerClassListener의 멤버나 JFrame의 멤버 호출
+            	// InnerClassListener�쓽 硫ㅻ쾭�굹 JFrame�쓽 硫ㅻ쾭 �샇異�
             }
             //---------------user---------------------
             if (b.getText().equals("User")){
             	if(date.equals("")){
             		b.setText("User");
             	}else{
-            		b.setText("User 선택");
+            		b.setText("User �꽑�깮");
             		set_User(date);
                 	combo_u.setVisible(true);
             	}
             }      	
-            else if(b.getText().equals("User 선택")){
+            else if(b.getText().equals("User �꽑�깮")){
             	b.setText("User");
             	user = combo_u.getSelectedItem().toString();
             	setTitle(b.getText());
@@ -279,25 +274,25 @@ public class gui extends JFrame {
             }
             
             //--------------temp-----------------
-            if (b.getText().equals("개인온도")){
+            if (b.getText().equals("媛쒖씤�삩�룄")){
             	temp = b.getText();
             }      	
             
-            if(b.getText().equals("개인고온")){
+            if(b.getText().equals("媛쒖씤怨좎삩")){
             	temp = b.getText();
             }
             
-            if (b.getText().equals("실행")){
-            	// 날짜, 사람, 고-저온
+            if (b.getText().equals("�떎�뻾")){
+            	// �궇吏�, �궗�엺, 怨�-���삩
             	// date, user, temp
             	showMap(date, user, temp);
             } 
             
-            if(b.getText().equals("전체온도")){
+            if(b.getText().equals("�쟾泥댁삩�룄")){
             	temp = b.getText();
             }   
             
-            if(b.getText().equals("전체고온")){
+            if(b.getText().equals("�쟾泥닿퀬�삩")){
             	temp = b.getText();
             }   
 

@@ -18,13 +18,12 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.RectangleAnchor;
 
-public class jPanel02 implements ActionListener {
+public class jPanel03 implements ActionListener {
 
-	public jPanel02()
+	public jPanel03()
 	{
 		
 	}
-	public int f_count=0 ;
 	public JFreeChart DrawMyChart(XYDataset xydtset) throws IOException
 	{
 		
@@ -74,7 +73,7 @@ public class jPanel02 implements ActionListener {
 		return chart;
 	}
 	
-	public JFreeChart DrawGenderPiChart(double fever_per) throws IOException
+	public JFreeChart DrawGenderPiChart(double fever_per,int gd) throws IOException
 	{
 		DefaultPieDataset data = new DefaultPieDataset();
 		
@@ -86,12 +85,11 @@ public class jPanel02 implements ActionListener {
 		
 		JFreeChart chart = null;
 		
-		if(f_count%2 == 0)
+		if(gd == 0)
 			 chart = ChartFactory.createPieChart("Male's Fever Percentage",data,true,true,false);
-		else if(f_count%2 == 1)
+		else if(gd == 1)
 			chart = ChartFactory.createPieChart("Female's Fever Percentage",data,true,true,false);
 		
-		f_count++;
 		return chart;
 	}
 	

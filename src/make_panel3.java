@@ -137,6 +137,21 @@ public class make_panel3 implements ActionListener
 						list.setSelectedIndex(0);// 처음 선택은 0번째
 						List.add(list); // 파넬에 추가
 						
+						list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+						list.addListSelectionListener(new ListSelectionListener(){
+							@Override
+							public void valueChanged(ListSelectionEvent e) {
+								// TODO Auto-generated method stub
+								//if(list.getSelectedIndex() == 0)
+									System.out.println(list.getSelectedValue());
+									
+									if(list.getSelectedValue().equals(season[0])); // 봄
+									else if(list.getSelectedValue().equals(season[1]));//여름
+									else if(list.getSelectedValue().equals(season[2]));//가을
+									else if(list.getSelectedValue().equals(season[3]));//겨울
+							}
+						});
+						
 						//바뀐 내용들 추가하여 나타내기
 						allstat.add(allchoice);
 						allstat.add(PieChart);
@@ -152,7 +167,8 @@ public class make_panel3 implements ActionListener
 				button3.setActionCommand("Gender");
 				button3.addActionListener(new ActionListener(){
 					@Override
-					public void actionPerformed(ActionEvent e) {
+					public void actionPerformed(ActionEvent e) 
+					{
 						// TODO Auto-generated method stub
 						//원래 있던내용 비우기
 						panel.removeAll();
@@ -223,8 +239,12 @@ public class make_panel3 implements ActionListener
 								// TODO Auto-generated method stub
 								//if(list.getSelectedIndex() == 0)
 									System.out.println(list.getSelectedValue());
+									
+									if(list.getSelectedValue().equals(gender[0])); // 남자
+									else if(list.getSelectedValue().equals(gender[1]));//여자
 							}
 						});
+						
 						
 						//사용하는 그래프 추가 
 						allstat.add(allchoice);
@@ -258,6 +278,26 @@ public class make_panel3 implements ActionListener
 						list.setListData(age); // 나이 목록 부르기
 						list.setSelectedIndex(0);// 처음 선택은 0번째
 						List.add(list); // 파넬에 추가
+						
+						//리스트 이벤트 발생!
+						list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+						list.addListSelectionListener(new ListSelectionListener(){
+							@Override
+							public void valueChanged(ListSelectionEvent e) {
+								// TODO Auto-generated method stub
+								//if(list.getSelectedIndex() == 0)
+									System.out.println(list.getSelectedValue());
+									
+									if(list.getSelectedValue().equals(age[0])); // 0-9
+									else if(list.getSelectedValue().equals(age[1]));// 10-19
+									else if(list.getSelectedValue().equals(age[2]));// 20-29
+									else if(list.getSelectedValue().equals(age[3]));// 30-39
+									else if(list.getSelectedValue().equals(age[4]));// 40-49
+									else if(list.getSelectedValue().equals(age[5]));// 50-59
+									else if(list.getSelectedValue().equals(age[6]));// 60-69
+									else if(list.getSelectedValue().equals(age[7]));// 70-79
+							}
+						});
 						
 						//바뀐 내용 표시
 						allstat.add(allchoice);
