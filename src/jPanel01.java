@@ -222,7 +222,7 @@ public class jPanel01 {
 		b1 = new JButton();
 		b1.setText("Select");
 		b1.setBounds(150, 0,70,20);
-		b1.addActionListener(new MyActionListener()); 
+		b1.addActionListener(new MyActionListener2()); 
 
 		p1.add(b1);
 		
@@ -258,7 +258,7 @@ public class jPanel01 {
 		b2 = new JButton();
 		b2.setText("Check");
 		b2.setBounds(150, 50,70,20);
-		b2.addActionListener(new MyActionListener()); 
+		b2.addActionListener(new MyActionListener2()); 
 		p1.add(b2);
 		
 		//Chart Visible
@@ -273,11 +273,11 @@ public class jPanel01 {
     
 	
 		
-	private class MyActionListener implements ActionListener {
+	private class MyActionListener2 implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             JButton b = (JButton) e.getSource();
             if (b.getText().equals("Select")){
-            	box2.removeAllItems();
+            	//box2.removeAllItems();
         		String buf_f = null;
         		String id = null;
         		
@@ -305,26 +305,23 @@ public class jPanel01 {
             	System.out.println("Redraw");
             
             	try {
-            		
 					new_data = database_load.dload(box1.getSelectedItem().toString(), box2.getSelectedItem().toString());
 					System.out.println(box1.getSelectedItem().toString() + " / " + box2.getSelectedItem().toString());
 			
 					jPanel01 jP01 = new jPanel01();
 					ChartPanel NCP  = new ChartPanel(jP01.DrawMyChart(new_data)); 
 					JPanel panel11 = new gui().panel1;
+												
+					p1.remove(CP);
 					
-							
-					//p1.remove(CP);
-					/*
 					panel11.remove(CP);
+				
 					NCP.setBounds(300, 10, 1610, 980);
 					panel11.add(NCP);
 					panel11.invalidate();
 					panel11.validate();
-					panel11.repaint();*/
-					
-					
-					
+					panel11.repaint();
+					panel11.setVisible(true);
 					
 				} catch (SQLException e1) {
 				// TODO Auto-generated catch block

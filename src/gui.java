@@ -348,6 +348,76 @@ public class gui extends JFrame {
     	    
     }
     
+	private class MyActionListener2 implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            JButton b = (JButton) e.getSource();
+            if (b.getText().equals("Select")){
+            	box2.removeAllItems();
+        		String buf_f = null;
+        		String id = null;
+        		
+        		id = box1.getSelectedItem().toString();
+        		try{
+	        		rs = st.executeQuery("SELECT DISTINCT date FROM tp WHERE id="+ id +" ORDER BY date");
+	        		while(rs.next()){
+	        			if(rs.getString("date").substring(0, 10).equals(buf_f))
+	        			{
+	        				continue;
+	        			}else{
+	        				buf_f = rs.getString("date").substring(0, 10);
+	        				box2.addItem(buf_f);
+	        			}
+	        		}
+        		} catch (SQLException se) {
+        			// TODO Auto-generated catch block
+        			se.printStackTrace();
+        		}
+            }      	
+            
+            else if(b.getText().equals("Check")){
+            	
+            	Float[][] new_data = new Float[1][1000];
+            	System.out.println("Redraw");
+            
+            	try {
+					new_data = database_load.dload(box1.getSelectedItem().toString(), box2.getSelectedItem().toString());
+					System.out.println(box1.getSelectedItem().toString() + " / " + box2.getSelectedItem().toString());
+			
+					jPanel01 jP01 = new jPanel01();
+					ChartPanel NCP  = new ChartPanel(jP01.DrawMyChart(new_data)); 
+					JPanel panel11 = new gui().panel1;
+												
+					p1.remove(CP);
+					
+					panel11.remove(CP);
+				
+					NCP.setBounds(300, 10, 1610, 980);
+					panel11.add(NCP);
+					panel11.invalidate();
+					panel11.validate();
+					panel11.repaint();
+					panel11.setVisible(true);
+					
+				} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ClassCastException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IllegalArgumentException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} /*catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}*/ catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+            }
+        }
+    }
+    
 	public void start() throws SQLException
 	{
 		
