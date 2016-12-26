@@ -12,35 +12,43 @@ import java.text.SimpleDateFormat;
 public class database_load_avg{
 	
 	public static Float[][] dload_avg() throws SQLException {
-		//ÇÊ¿äÇÑ º¯¼ö ¼±¾ð ÃÊ±âÈ­
-		Float[][] temp7h = new Float[7][694]; // ¿ÂµµÀúÀå ¹è¿­
-		Connection con = null;// Dababase¿ÍÀÇ ¿¬°áÀ» À§ÇÑ º¯¼ö
-		java.sql.Statement st = null;//mysql ¿¡°Ô ¸í·ÉÀ» ³»¸®±â À§ÇØ 
-		ResultSet rs = null; // mysql ¿¡¼­ÀÇ °á°ú¸¦ ¹Þ¾Æ¿È. (ÇÑÁÙ¾¿?)
-		int i = 0, j = 0; // for ¹®¿¡ »ç¿ë
+		//ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
+		Float[][] temp7h = new Float[7][694]; // ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­
+		Connection con = null;// Dababaseï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		java.sql.Statement st = null;//mysql ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+		ResultSet rs = null; // mysql ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½. (ï¿½ï¿½ï¿½Ù¾ï¿½?)
+		int i = 0, j = 0; // for ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		try {
-			String dbURL = "jdbc:mysql://127.0.0.1:3306?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
+			//HY
+			//String dbURL = "jdbc:mysql://127.0.0.1:3306?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
+			//JJ
+			String dbURL =  "jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection(dbURL,"root","asdasd"); // ¿¬°á¿¡ ±ÇÇÑ ºÎ¿©? 
-			
-			st = con.createStatement();// ¿¬°á
-			st.execute("USE chois;");//µ¥ÀÌÅÍ º£ÀÌ½º »ç¿ë
-			
-			rs = st.executeQuery("SELECT date, temp from temp_avg;"); //select// Äõ¸® °á°ú¸¦ ResultSetÀ» ¾ò±â À§ÇÑ ¸Þ¼Òµå·Î ÁÖ·Î SELECT¹®¿¡ »ç¿ëµË´Ï´Ù.
+			//HY
+			//con = DriverManager.getConnection(dbURL,"root","asdasd"); // ï¿½ï¿½ï¿½á¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Î¿ï¿½? 
+			//JJ
+			con = DriverManager.getConnection(dbURL,"root","1234"); // ï¿½ï¿½ï¿½á¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Î¿ï¿½? 
+
+			st = con.createStatement();// ï¿½ï¿½ï¿½ï¿½
+			//HY
+			//st.execute("USE chois;");//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½
+			//JJ
+			st.execute("USE hy1;");
+			rs = st.executeQuery("SELECT date, temp from temp_avg;"); //select// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ResultSetï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼Òµï¿½ï¿½ ï¿½Ö·ï¿½ SELECTï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ë´Ï´ï¿½.
 			rs.next(); 
 			
-			for (i = 0; i < 3; i++) // 3ÀÏ
+			for (i = 0; i < 3; i++) // 3ï¿½ï¿½
 			{
-				for(j = 0; j<694; j++) // ÇÏ·ç¿¡ 694¹ø
+				for(j = 0; j<694; j++) // ï¿½Ï·ç¿¡ 694ï¿½ï¿½
 				{
 					java.sql.Timestamp timestamp = rs.getTimestamp("date");
 					java.util.Date date = timestamp;
 					
-					Float flo = rs.getFloat(2);//¿Âµµ
+					Float flo = rs.getFloat(2);//ï¿½Âµï¿½
 					
-					temp7h[i][j] = flo;//¿Âµµ ¹è¿­¿¡ ÀúÀå 
+					temp7h[i][j] = flo;//ï¿½Âµï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 					
-					//³¯Â¥ -> ½ºÆ®¸µ 
+					//ï¿½ï¿½Â¥ -> ï¿½ï¿½Æ®ï¿½ï¿½ 
 					DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					String tempDate = sdFormat.format(date);
 					
@@ -50,7 +58,7 @@ public class database_load_avg{
 				if (rs.next() == false)
 					break;
 			}
-			//¿¡·¯ Ã³¸®
+			//ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
 		} catch (SQLException sqex) {
 			System.out.println("SQLException: " + sqex.getMessage());
 			System.out.println("SQLState: " + sqex.getSQLState());
@@ -58,27 +66,27 @@ public class database_load_avg{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		con.close(); // ¿¬°áÀ» ³¡³»ÁÝ´Ï´Ù. -> »ç¿ë¿Ï·á
+		con.close(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ý´Ï´ï¿½. -> ï¿½ï¿½ï¿½Ï·ï¿½
 		
-		return temp7h; // ÀúÀåÇÑ ¿Âµµ µ¥ÀÌÅÍ ¸®ÅÏ
+		return temp7h; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Âµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	}
 	
 	public static double dload_avg_per() throws SQLException {
-		//ÇÊ¿äÇÑ º¯¼ö ¼±¾ð ÃÊ±âÈ­
-		Connection con = null;// Dababase¿ÍÀÇ ¿¬°áÀ» À§ÇÑ º¯¼ö
-		java.sql.Statement st = null;//mysql ¿¡°Ô ¸í·ÉÀ» ³»¸®±â À§ÇØ 
-		ResultSet rs = null; // mysql ¿¡¼­ÀÇ °á°ú¸¦ ¹Þ¾Æ¿È. (ÇÑÁÙ¾¿?)
+		//ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
+		Connection con = null;// Dababaseï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		java.sql.Statement st = null;//mysql ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+		ResultSet rs = null; // mysql ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½. (ï¿½ï¿½ï¿½Ù¾ï¿½?)
 		double fever_per = 0;
 		try {
 			
 			String dbURL = "jdbc:mysql://127.0.0.1:3306?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection(dbURL,"root","asdasd"); // ¿¬°á¿¡ ±ÇÇÑ ºÎ¿©? 
+			con = DriverManager.getConnection(dbURL,"root","asdasd"); // ï¿½ï¿½ï¿½á¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Î¿ï¿½? 
 			
-			st = con.createStatement();// ¿¬°á
-			st.execute("USE chois;");//µ¥ÀÌÅÍ º£ÀÌ½º »ç¿ë
+			st = con.createStatement();// ï¿½ï¿½ï¿½ï¿½
+			st.execute("USE chois;");//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½
 			
-			rs = st.executeQuery("SELECT category, number from population;"); //select// Äõ¸® °á°ú¸¦ ResultSetÀ» ¾ò±â À§ÇÑ ¸Þ¼Òµå·Î ÁÖ·Î SELECT¹®¿¡ »ç¿ëµË´Ï´Ù.
+			rs = st.executeQuery("SELECT category, number from population;"); //select// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ResultSetï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼Òµï¿½ï¿½ ï¿½Ö·ï¿½ SELECTï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ë´Ï´ï¿½.
 			rs.next(); 
 			int total = 0;
 			int fever = 0;
@@ -94,7 +102,7 @@ public class database_load_avg{
 			}
 			
 			fever_per = (double)fever/(double)total;
-			//¿¡·¯ Ã³¸®
+			//ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
 		} catch (SQLException sqex) {
 			System.out.println("SQLException: " + sqex.getMessage());
 			System.out.println("SQLState: " + sqex.getSQLState());
@@ -102,9 +110,9 @@ public class database_load_avg{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		con.close(); // ¿¬°áÀ» ³¡³»ÁÝ´Ï´Ù. -> »ç¿ë¿Ï·á
+		con.close(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ý´Ï´ï¿½. -> ï¿½ï¿½ï¿½Ï·ï¿½
 		
-		return fever_per; // ÀúÀåÇÑ ¿Âµµ µ¥ÀÌÅÍ ¸®ÅÏ
+		return fever_per; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Âµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	}
 	
 }

@@ -1,4 +1,4 @@
-package practice;
+
 import java.io.*;
 import java.text.NumberFormat;
 import java.awt.Color;

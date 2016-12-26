@@ -48,6 +48,7 @@ public class gui extends JFrame {
 	private JLabel label3;
 	
 	
+	
 	//------------------MAP-----------------------
 	Connection con;
 	java.sql.Statement st;
@@ -128,7 +129,7 @@ public class gui extends JFrame {
 		//ChartPanel CP = new ChartPanel(jP.DrawMyChart(database_load.dload()));
 		panel1.setLayout(new java.awt.BorderLayout());
 		panel1.add(jP.JP1());
-
+		panel1_init();
 		//panel1.add(new JLabel("Select"), BorderLayout.SOUTH);
 		
 		
@@ -158,13 +159,73 @@ public class gui extends JFrame {
 		jF.add(tabbedPane);
 		jF.setSize((int)di.getWidth(),(int)di.getWidth()-200); // Full Screen
 		//jF.setSize(800, 600);
-		jF.setTitle("Choice Tech"); // 창 占쏙옙占쏙옙
+		jF.setTitle("ChoisTec"); // 창 占쏙옙占쏙옙
 		jF.setExtendedState(JFrame.MAXIMIZED_BOTH); // 占쌍댐옙화
 		jF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		jF.setVisible(true);
 	
 	}
-	
+	public void panel1_init() throws SQLException
+	{
+		b1 = new JButton();
+		b1.setText("Select");
+		b1.setBounds(150, 0,70,20);
+		b1.addActionListener(new MyActionListener2()); 
+		panel1.add(b1);
+		
+		b2 = new JButton();
+		b2.setText("Check");
+		b2.setBounds(150, 50,70,20);
+		b2.addActionListener(new MyActionListener2()); 
+		panel1.add(b2);
+		
+		rs = st.executeQuery("SELECT DISTINCT id FROM tp");
+		while(rs.next()){
+			box1.addItem(rs.getString("id"));
+		}
+		
+		//box1.addActionListener(box1);
+		JLabel label1 = new JLabel("User Select : ");
+		label1.setBounds(10, 0, 100, 20);
+		p1.add(label1);
+		box1.setBounds(90,0,50,20);
+		panel1.add(box1);
+		
+		//JButton b1 = new JButton();
+		//b1 = new JButton();
+		//b1.setText("Select");
+		//b1.setBounds(150, 0,70,20);
+		//b1.addActionListener(new MyActionListener2()); 
+
+		panel1.add(b1);
+		
+		
+		
+		
+		//box2.addActionListener(box2);
+		JLabel label2 = new JLabel("Date : ");
+		label2.setBounds(10, 50, 50, 20);
+		panel1.add(label2);
+		box2.setBounds(45,50,100,20);
+		panel1.add(box2);
+		
+
+		
+		//JButton b2 = new JButton();
+		b2 = new JButton();
+		b2.setText("Check");
+		b2.setBounds(150, 50,70,20);
+		//b2.addActionListener(new MyActionListener2()); 
+		//p1.add(b2);
+		
+		//Chart Visible
+		//ChartPanel CP = new ChartPanel(jP01.DrawMyChart(database_load.dload("1", "2016-10-03")));
+		//CP.setBounds(300, 10, 1610, 980);
+		
+		
+		
+		
+	}
 	public void setUser(){
 		
 		try {
@@ -349,75 +410,76 @@ public class gui extends JFrame {
     }
     
 	private class MyActionListener2 implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            JButton b = (JButton) e.getSource();
-            if (b.getText().equals("Select")){
-            	box2.removeAllItems();
-        		String buf_f = null;
-        		String id = null;
-        		
-        		id = box1.getSelectedItem().toString();
-        		try{
-	        		rs = st.executeQuery("SELECT DISTINCT date FROM tp WHERE id="+ id +" ORDER BY date");
-	        		while(rs.next()){
-	        			if(rs.getString("date").substring(0, 10).equals(buf_f))
-	        			{
-	        				continue;
-	        			}else{
-	        				buf_f = rs.getString("date").substring(0, 10);
-	        				box2.addItem(buf_f);
-	        			}
+	        public void actionPerformed(ActionEvent e) {
+	            JButton b = (JButton) e.getSource();
+	            if (b.getText().equals("Select")){
+	            	box2.removeAllItems();
+	        		String buf_f = null;
+	        		String id = null;
+	        		
+	        		id = box1.getSelectedItem().toString();
+	        		try{
+		        		rs = st.executeQuery("SELECT DISTINCT date FROM tp WHERE id="+ id +" ORDER BY date");
+		        		while(rs.next()){
+		        			if(rs.getString("date").substring(0, 10).equals(buf_f))
+		        			{
+		        				continue;
+		        			}else{
+		        				buf_f = rs.getString("date").substring(0, 10);
+		        				box2.addItem(buf_f);
+		        			}
+		        		}
+	        		} catch (SQLException se) {
+	        			// TODO Auto-generated catch block
+	        			se.printStackTrace();
 	        		}
-        		} catch (SQLException se) {
-        			// TODO Auto-generated catch block
-        			se.printStackTrace();
-        		}
-            }      	
-            
-            else if(b.getText().equals("Check")){
-            	
-            	Float[][] new_data = new Float[1][1000];
-            	System.out.println("Redraw");
-            
-            	try {
-					new_data = database_load.dload(box1.getSelectedItem().toString(), box2.getSelectedItem().toString());
-					System.out.println(box1.getSelectedItem().toString() + " / " + box2.getSelectedItem().toString());
-			
-					jPanel01 jP01 = new jPanel01();
-					ChartPanel NCP  = new ChartPanel(jP01.DrawMyChart(new_data)); 
-					JPanel panel11 = new gui().panel1;
-												
-					p1.remove(CP);
-					
-					panel11.remove(CP);
+	            }      	
+	            
+	            else if(b.getText().equals("Check")){
+	            	
+	            	/*
+	        		Float[][] new_data = new Float[1][1000];
+	            	System.out.println("Redraw");
+	            
+	            	try {
+						new_data = database_load.dload(box1.getSelectedItem().toString(), box2.getSelectedItem().toString());
+						System.out.println(box1.getSelectedItem().toString() + " / " + box2.getSelectedItem().toString());
 				
-					NCP.setBounds(300, 10, 1610, 980);
-					panel11.add(NCP);
-					panel11.invalidate();
-					panel11.validate();
-					panel11.repaint();
-					panel11.setVisible(true);
+						jPanel01 jP01 = new jPanel01();
+						ChartPanel NCP  = new ChartPanel(jP01.DrawMyChart(new_data)); 
+						JPanel panel11 = new gui().panel1;
+													
+						p1.remove(CP);
+						
+						panel11.remove(CP);
 					
-				} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ClassCastException e1) {
+						NCP.setBounds(300, 10, 1610, 980);
+						panel11.add(NCP);
+						panel11.invalidate();
+						panel11.validate();
+						panel11.repaint();
+						panel11.setVisible(true);
+						
+					} catch (SQLException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IllegalArgumentException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} /*catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}*/ catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-            }
-        }
-    }
-    
+						e1.printStackTrace();
+					} catch (ClassCastException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IllegalArgumentException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	            }*/
+	        }
+	    }
+	}
 	public void start() throws SQLException
 	{
 		
