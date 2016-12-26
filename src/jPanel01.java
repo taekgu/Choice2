@@ -179,22 +179,21 @@ public class jPanel01 {
 		return chart;
 	}
 	
-
+/*
 	@SuppressWarnings("null")
 	public JPanel JP1()  throws IOException, SQLException, NullPointerException
 	{
-		/*
-		Connection con = null;
-		String dbURL =  "jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
-		con = DriverManager.getConnection(dbURL,"root", "1234");
+	
+		//Connection con = null;
+		//String dbURL =  "jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
+		//con = DriverManager.getConnection(dbURL,"root", "1234");
 
-		//MyExcuteQuery("SHOW DATABASES;");
-		java.sql.Statement st = null;
-		ResultSet rs = null;
-		st = con.createStatement();
-		st.execute("USE newschema3;");
-	*/
-		
+		////MyExcuteQuery("SHOW DATABASES;");
+		//java.sql.Statement st = null;
+		//ResultSet rs = null;
+		//st = con.createStatement();
+		//st.execute("USE newschema3;");
+
 		//JPanel p1 = new JPanel(new GridBagLayout());
 	//	GridBagLayout gridbag = new GridBagLayout();
 		//GridBagConstraints c =new GridBagConstraints();
@@ -229,21 +228,21 @@ public class jPanel01 {
 		
 		
 		//ComboBox 2
-		/*
-		String buf_f = null;
-		int num = 0;
-		String temp_date[] = null;
-		//JComboBox<String> box2 = new JComboBox<String>();
-		rs = st.executeQuery("SELECT DISTINCT date FROM tp ORDER BY date");
-		while(rs.next()){
-			if(rs.getString("date").substring(0, 10).equals(buf_f))
-			{
-				continue;
-			}else{
-				buf_f = rs.getString("date").substring(0, 10);
-				box2.addItem(buf_f);
-			}
-		}*/
+		
+		//String buf_f = null;
+		//int num = 0;
+		//String temp_date[] = null;
+		////JComboBox<String> box2 = new JComboBox<String>();
+		//rs = st.executeQuery("SELECT DISTINCT date FROM tp ORDER BY date");
+		//while(rs.next()){
+			//if(rs.getString("date").substring(0, 10).equals(buf_f))
+			//{
+				//continue;
+			//}else{
+				//buf_f = rs.getString("date").substring(0, 10);
+				//box2.addItem(buf_f);
+			//}
+		}
 		
 		//box2.addActionListener(box2);
 		JLabel label2 = new JLabel("Date : ");
@@ -262,13 +261,13 @@ public class jPanel01 {
 		//p1.add(b2);
 		
 		//Chart Visible
-		ChartPanel CP = new ChartPanel(jP01.DrawMyChart(database_load.dload("1", "2016-10-03")));
+		//ChartPanel CP = new ChartPanel(jP01.DrawMyChart(database_load.dload("0", "2016-02-23")));
 		CP.setBounds(300, 10, 1610, 980);
 		
 		p1.add(CP);
 		p1.setVisible(true);
 		return p1; 
-	}
+	}*/
 	
     
 	

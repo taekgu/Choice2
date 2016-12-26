@@ -92,7 +92,7 @@ public class gui extends JFrame {
 		b2 = new JButton();
 		box1 = new JComboBox<String>();
 		box2 = new JComboBox<String>();
-		p1 = new JPanel(new GridBagLayout());
+		//p1 = new JPanel(new GridBagLayout());
 		CP = new ChartPanel(null);
 		
 		try {
@@ -127,8 +127,8 @@ public class gui extends JFrame {
 
 		//panel1.setLayout(null);
 		//ChartPanel CP = new ChartPanel(jP.DrawMyChart(database_load.dload()));
-		panel1.setLayout(new java.awt.BorderLayout());
-		panel1.add(jP.JP1());
+		panel1.setLayout(null);
+		//panel1.add(jP.JP1());
 		panel1_init();
 		//panel1.add(new JLabel("Select"), BorderLayout.SOUTH);
 		
@@ -165,7 +165,7 @@ public class gui extends JFrame {
 		jF.setVisible(true);
 	
 	}
-	public void panel1_init() throws SQLException
+	public void panel1_init() throws SQLException, ClassCastException, IllegalArgumentException, IOException
 	{
 		b1 = new JButton();
 		b1.setText("Select");
@@ -179,6 +179,11 @@ public class gui extends JFrame {
 		b2.addActionListener(new MyActionListener2()); 
 		panel1.add(b2);
 		
+		
+		CP = new ChartPanel(new jPanel01().DrawMyChart(database_load.dload("0", "2016-10-21")));
+				
+		CP.setBounds(300, 10, 1610, 980);
+		panel1.add(CP);
 		rs = st.executeQuery("SELECT DISTINCT id FROM tp");
 		while(rs.next()){
 			box1.addItem(rs.getString("id"));
@@ -187,7 +192,7 @@ public class gui extends JFrame {
 		//box1.addActionListener(box1);
 		JLabel label1 = new JLabel("User Select : ");
 		label1.setBounds(10, 0, 100, 20);
-		p1.add(label1);
+		panel1.add(label1);
 		box1.setBounds(90,0,50,20);
 		panel1.add(box1);
 		
@@ -222,7 +227,7 @@ public class gui extends JFrame {
 		//ChartPanel CP = new ChartPanel(jP01.DrawMyChart(database_load.dload("1", "2016-10-03")));
 		//CP.setBounds(300, 10, 1610, 980);
 		
-		
+		panel1.setVisible(true);
 		
 		
 	}
@@ -410,76 +415,73 @@ public class gui extends JFrame {
     }
     
 	private class MyActionListener2 implements ActionListener {
-	        public void actionPerformed(ActionEvent e) {
-	            JButton b = (JButton) e.getSource();
-	            if (b.getText().equals("Select")){
-	            	box2.removeAllItems();
-	        		String buf_f = null;
-	        		String id = null;
-	        		
-	        		id = box1.getSelectedItem().toString();
-	        		try{
-		        		rs = st.executeQuery("SELECT DISTINCT date FROM tp WHERE id="+ id +" ORDER BY date");
-		        		while(rs.next()){
-		        			if(rs.getString("date").substring(0, 10).equals(buf_f))
-		        			{
-		        				continue;
-		        			}else{
-		        				buf_f = rs.getString("date").substring(0, 10);
-		        				box2.addItem(buf_f);
-		        			}
-		        		}
-	        		} catch (SQLException se) {
-	        			// TODO Auto-generated catch block
-	        			se.printStackTrace();
+        public void actionPerformed(ActionEvent e) {
+            JButton b = (JButton) e.getSource();
+            if (b.getText().equals("Select")){
+            	box2.removeAllItems();
+        		String buf_f = null;
+        		String id = null;
+        		
+        		id = box1.getSelectedItem().toString();
+        		try{
+	        		rs = st.executeQuery("SELECT DISTINCT date FROM tp WHERE id="+ id +" ORDER BY date");
+	        		while(rs.next()){
+	        			if(rs.getString("date").substring(0, 10).equals(buf_f))
+	        			{
+	        				continue;
+	        			}else{
+	        				buf_f = rs.getString("date").substring(0, 10);
+	        				box2.addItem(buf_f);
+	        			}
 	        		}
-	            }      	
-	            
-	            else if(b.getText().equals("Check")){
-	            	
-	            	/*
-	        		Float[][] new_data = new Float[1][1000];
-	            	System.out.println("Redraw");
-	            
-	            	try {
-						new_data = database_load.dload(box1.getSelectedItem().toString(), box2.getSelectedItem().toString());
-						System.out.println(box1.getSelectedItem().toString() + " / " + box2.getSelectedItem().toString());
-				
-						jPanel01 jP01 = new jPanel01();
-						ChartPanel NCP  = new ChartPanel(jP01.DrawMyChart(new_data)); 
-						JPanel panel11 = new gui().panel1;
-													
-						p1.remove(CP);
-						
-						panel11.remove(CP);
+        		} catch (SQLException se) {
+        			// TODO Auto-generated catch block
+        			se.printStackTrace();
+        		}
+            }      	
+            
+            else if(b.getText().equals("Check")){
+            	
+            	
+        		Float[][] new_data = new Float[1][1000];
+            	System.out.println("Redraw");
+            
+            	try {
+					new_data = database_load.dload(box1.getSelectedItem().toString(), box2.getSelectedItem().toString());
+					System.out.println(box1.getSelectedItem().toString() + " / " + box2.getSelectedItem().toString());
+					//ChartPanel NCP = new ChartPanel(new jPanel01().DrawMyChart(new_data));
+					//NCP.setBounds(300, 10, 1610, 980);
+					panel1.remove(CP);
+					CP = new ChartPanel(new jPanel01().DrawMyChart(new_data));
 					
-						NCP.setBounds(300, 10, 1610, 980);
-						panel11.add(NCP);
-						panel11.invalidate();
-						panel11.validate();
-						panel11.repaint();
-						panel11.setVisible(true);
-						
-					} catch (SQLException e1) {
+					CP.setBounds(300, 10, 1610, 980);
+					
+					
+					
+					panel1.add(CP);
+					panel1.repaint();
+					panel1.setVisible(true);
+					
+				} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ClassCastException e1) {
 					// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (ClassCastException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (IllegalArgumentException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-	            }*/
-	        }
-	    }
-	}
+					e1.printStackTrace();
+				} catch (IllegalArgumentException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} /*catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}*/
+            }
+        }
+    }
+	
 	public void start() throws SQLException
 	{
 		

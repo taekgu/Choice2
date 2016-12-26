@@ -1,4 +1,4 @@
-package practice;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -73,8 +73,8 @@ public class database_load_gender{
 		try {
 			
 			String dbURL = "jdbc:mysql://127.0.0.1:3306?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
-			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection(dbURL,"root","asdasd"); // ���ῡ ���� �ο�? 
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(dbURL,"root","1234"); // ���ῡ ���� �ο�? 
 			
 			st = con.createStatement();// ����
 			st.execute("USE chois;");//������ ���̽� ���
