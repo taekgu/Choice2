@@ -19,6 +19,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,6 +27,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 
 import org.jfree.chart.ChartPanel;
@@ -80,6 +82,11 @@ public class gui extends JFrame {
 	JComboBox<String> box2;
 	JPanel p1 ;
 	ChartPanel CP;
+	JRadioButton rb1;
+	JRadioButton rb2;
+	JRadioButton rb3;
+	JRadioButton rb4;
+	ButtonGroup Bgroup;
 	
 	
 	public gui() throws IOException, SQLException
@@ -94,6 +101,11 @@ public class gui extends JFrame {
 		box2 = new JComboBox<String>();
 		//p1 = new JPanel(new GridBagLayout());
 		CP = new ChartPanel(null);
+		rb1 = new JRadioButton();
+		rb2 = new JRadioButton();
+		rb3 = new JRadioButton();
+		Bgroup = new ButtonGroup();
+		
 		
 		try {
 			//sb
@@ -167,6 +179,8 @@ public class gui extends JFrame {
 	}
 	public void panel1_init() throws SQLException, ClassCastException, IllegalArgumentException, IOException
 	{
+		
+		
 		b1 = new JButton();
 		b1.setText("Select");
 		b1.setBounds(150, 0,70,20);
@@ -179,7 +193,17 @@ public class gui extends JFrame {
 		b2.addActionListener(new MyActionListener2()); 
 		panel1.add(b2);
 		
+		//Radio Button
+		rb1.setText("All");
+		rb1.setSelected(true);
+		rb2.setText("Male");
+		rb3.setText("Female");
 		
+		Bgroup.add(rb1);
+		Bgroup.add(rb2);
+		Bgroup.add(rb3);
+		
+		panel1.add(Bgroup);
 		CP = new ChartPanel(new jPanel01().DrawMyChart(database_load.dload("0", "2016-10-21"), "0", "2016-10-21"));
 				
 		CP.setBounds(300, 10, 1610, 980);
@@ -220,12 +244,10 @@ public class gui extends JFrame {
 		b2 = new JButton();
 		b2.setText("Check");
 		b2.setBounds(150, 50,70,20);
-		//b2.addActionListener(new MyActionListener2()); 
-		//p1.add(b2);
 		
-		//Chart Visible
-		//ChartPanel CP = new ChartPanel(jP01.DrawMyChart(database_load.dload("1", "2016-10-03")));
-		//CP.setBounds(300, 10, 1610, 980);
+
+
+	
 		
 		panel1.setVisible(true);
 		
