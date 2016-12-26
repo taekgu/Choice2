@@ -221,8 +221,8 @@ public class jPanel01 {
 		//JButton b1 = new JButton();
 		b1 = new JButton();
 		b1.setText("Select");
-		//b1.setBounds(150, 0,70,20);
-		//b1.addActionListener(new MyActionListener2()); 
+		b1.setBounds(150, 0,70,20);
+		b1.addActionListener(new MyActionListener2()); 
 
 		p1.add(b1);
 		
@@ -258,8 +258,8 @@ public class jPanel01 {
 		b2 = new JButton();
 		b2.setText("Check");
 		b2.setBounds(150, 50,70,20);
-		//b2.addActionListener(new MyActionListener2()); 
-		//p1.add(b2);
+		b2.addActionListener(new MyActionListener2()); 
+		p1.add(b2);
 		
 		//Chart Visible
 		ChartPanel CP = new ChartPanel(jP01.DrawMyChart(database_load.dload("1", "2016-10-03")));
@@ -272,7 +272,7 @@ public class jPanel01 {
 	
     
 	
-	
+		
 	private class MyActionListener2 implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             JButton b = (JButton) e.getSource();
@@ -332,15 +332,15 @@ public class jPanel01 {
 				} catch (IllegalArgumentException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				} /*catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}*/
+				}*/ catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
             }
         }
-    } 
+    }
 }
 
