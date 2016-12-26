@@ -180,7 +180,7 @@ public class gui extends JFrame {
 		panel1.add(b2);
 		
 		
-		CP = new ChartPanel(new jPanel01().DrawMyChart(database_load.dload("0", "2016-10-21")));
+		CP = new ChartPanel(new jPanel01().DrawMyChart(database_load.dload("0", "2016-10-21"), "0", "2016-10-21"));
 				
 		CP.setBounds(300, 10, 1610, 980);
 		panel1.add(CP);
@@ -452,7 +452,7 @@ public class gui extends JFrame {
 					//ChartPanel NCP = new ChartPanel(new jPanel01().DrawMyChart(new_data));
 					//NCP.setBounds(300, 10, 1610, 980);
 					panel1.remove(CP);
-					CP = new ChartPanel(new jPanel01().DrawMyChart(new_data));
+					CP = new ChartPanel(new jPanel01().DrawMyChart(new_data, box1.getSelectedItem().toString(), box2.getSelectedItem().toString()));
 					
 					CP.setBounds(300, 10, 1610, 980);
 					

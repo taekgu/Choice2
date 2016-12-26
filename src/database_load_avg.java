@@ -84,7 +84,7 @@ public class database_load_avg{
 			con = DriverManager.getConnection(dbURL,"root","asdasd"); // ���ῡ ���� �ο�? 
 			
 			st = con.createStatement();// ����
-			st.execute("USE chois;");//������ ���̽� ���
+			st.execute("USE hy1;");//������ ���̽� ���
 			
 			rs = st.executeQuery("SELECT category, number from population;"); //select// ���� ����� ResultSet�� ��� ���� �޼ҵ�� �ַ� SELECT���� ���˴ϴ�.
 			rs.next(); 

@@ -77,7 +77,7 @@ public class database_load_gender{
 			con = DriverManager.getConnection(dbURL,"root","1234"); // ���ῡ ���� �ο�? 
 			
 			st = con.createStatement();// ����
-			st.execute("USE chois;");//������ ���̽� ���
+			st.execute("USE hy1;");//������ ���̽� ���
 			
 			rs = st.executeQuery("SELECT category, number from population;"); //select// ���� ����� ResultSet�� ��� ���� �޼ҵ�� �ַ� SELECT���� ���˴ϴ�.
 			
