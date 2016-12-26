@@ -1,5 +1,4 @@
 
-
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -29,29 +28,41 @@ public class make_panel3 implements ActionListener
 {
 	static private JPanel panel = new JPanel(new GridLayout(1, 2));;
 	
-	static final JPanel allchoice = new JPanel(new GridLayout(1, 2, -150, 0)); // ï¿½ï¿½Æ° + ï¿½ï¿½ï¿½ï¿½Æ® 
-	static final JPanel List = new JPanel(new FlowLayout(FlowLayout.LEFT, 200, 25)); // ï¿½ï¿½ï¿½ï¿½Æ®
-	static final JPanel allstat = new JPanel(new GridLayout(2, 1)); // ï¿½ï¿½Æ° + ï¿½ï¿½ï¿½ï¿½Æ® + ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+	static final JPanel allchoice = new JPanel(new GridLayout(1, 2, -150, 0)); // ¹öÆ° + ¸®½ºÆ® 
+	static final JPanel List = new JPanel(new FlowLayout(FlowLayout.LEFT, 200, 25)); // ¸®½ºÆ®
+	static JPanel allstat = new JPanel(new GridLayout(2, 1)); // ¹öÆ° + ¸®½ºÆ® + ÆÄÀÌÂ÷Æ®
 
-	// ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ & ï¿½Ê±ï¿½È­
-	static jPanel03 jP3 = new jPanel03(); //ï¿½Ä³ï¿½ ï¿½ï¿½Ã¼
-	static ChartPanel CP3; // ï¿½ï¿½Æ® ï¿½×¸ï¿½
-	static ChartPanel PieChart; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® 
-	static JList list = new JList();// ï¿½ï¿½ï¿½ï¿½Æ®
+	// »ç¿ëÇÏ´Â º¯¼ö ¼±¾ð & ÃÊ±âÈ­
+	static jPanel03 jP3 = new jPanel03(); //ÆÄ³Ú ÀüÃ¼
+	static ChartPanel CP3; // Â÷Æ® ±×¸²
+	static ChartPanel PieChart; // ÆÄÀÌÂ÷Æ® 
+	static JList list = new JList();// ¸®½ºÆ®
 
-	// listï¿½ï¿½ ï¿½ï¿½î°¥ ï¿½ï¿½ï¿½ï¿½ï¿½
+	//gender¿¡¼­ »ç¿ëÇÏ´Â º¯¼ö
+	static Float[][] gdarrdata;
+	static XYSeries gdseries1;
+	static XYSeries gdseries2 ;
+	static XYSeriesCollection gddataset ;
+	static XYDataset gdxydataset ;
+	static ChartPanel m_PieChart ;
+	static ChartPanel f_PieChart;
+	static double[][] gdfever_per; 
+	
+	// list¿¡ µé¾î°¥ ³»¿ëµé
 	static String[] season = { "Spring", "Summer", "Fall", "Winter" };
 	static String[] age = { "0~9", "10~19", "20~29", "30~39", "40~49", "50~59", "60~69", "70~79" };
-	static String[] gender = {"Female","Male"};
-	
-	static Dimension ld = new Dimension(130, 190); // list Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
-	
+	static String[] gender = {"Male","Female"};
+	static String[] area = {"Seoul","Busan","Daegu","Gwangju","Incheon","Daejeon","Ulsan","Gyeonggi-do","Gangwon-do","Chungcheongbuk-do","Chungcheongnam-do","jeollabuk-do","jeollanam-do","Gyeongsangbuk-do","Gyeongsangnam-do","Jeju-do"};
+	static Dimension ld = new Dimension(130, 190); // list Å©±â Á¶Àý 
+	static Dimension sd = new Dimension(145, 190);
 	private static JFrame jfjf ;
 	
 	public static JPanel make(JFrame JF)
 	{
 		jfjf = JF;
-		// -----------ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ï¿½ï¿½---------------------//
+		// -----------¹öÆ°¸¸µé±â---------------------//
+		
+		//---------------------------ÀüÃ¼ ------------------------------------//
 				final JButton button1 = new JButton("All");
 				
 				button1.addActionListener(new ActionListener(){
@@ -60,7 +71,7 @@ public class make_panel3 implements ActionListener
 						// TODO Auto-generated method stub
 						PieChart = new ChartPanel(null);
 
-						// ---------------ï¿½×·ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ --------------------------//
+						// ---------------±×·¡ÇÁ ±×¸®±â --------------------------//
 						try {
 							Float[][] arrdata = database_load_avg.dload_avg();
 							XYSeries series = new XYSeries("total");
@@ -82,10 +93,10 @@ public class make_panel3 implements ActionListener
 							e1.printStackTrace();
 						}
 
-						// --------------------ï¿½ï¿½ï¿½Ì±×·ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ----------------------//
-						// ï¿½ï¿½ï¿½ï¿½É¸ï¿½ ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½//
+						// --------------------ÆÄÀÌ±×·¡ÇÁ ±×¸®±â ----------------------//
+						// °¨±â°É¸° »ç¶÷ ÆÛ¼¾Å×ÀÌÁö °è»ê//
 						try {
-							double fever_per = database_load_avg.dload_avg_per(); // ï¿½ï¿½ï¿½ï¿½É¸ï¿½ï¿½ï¿½ï¿½
+							double fever_per = database_load_avg.dload_avg_per(); // °¨±â°É¸°»ç¶÷
 																					// %
 							try {
 								PieChart = new ChartPanel(jP3.DrawAllPiChart(fever_per));
@@ -101,7 +112,9 @@ public class make_panel3 implements ActionListener
 						panel.removeAll();
 						allstat.removeAll();
 						
-						//ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½//
+						allstat = new JPanel(new GridLayout(2, 1));
+						
+						//¸®½ºÆ® ¸ñ·Ï Áö¿ì±â//
 						List.removeAll();
 						list = new JList();
 						list.setPreferredSize(ld);
@@ -116,26 +129,28 @@ public class make_panel3 implements ActionListener
 					}
 				});
 
-				final JButton button2 = new JButton("Season");
-				button2.setActionCommand("Season");
-				button2.addActionListener(new ActionListener(){
+				
+				//---------------------------°èÀýº° ------------------------------------//
+				final JButton button5 = new JButton("Season");
+				button5.setActionCommand("Season");
+				button5.addActionListener(new ActionListener(){
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						CP3 = new ChartPanel(null);
-						PieChart = new ChartPanel(null);
-						
-						//ï¿½Ù²ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+						//¹Ù²ð°ÍÀº ¹Ì¸® Áö¿ì±â
 						panel.removeAll();
 						List.removeAll();
 						panel.removeAll();
 						allstat.removeAll();
 						
-						// ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½Ïµï¿½ ï¿½ß°ï¿½ï¿½Ï±ï¿½
+						allstat = new JPanel(new GridLayout(2, 1));
+						CP3 = new ChartPanel(null);
+						PieChart = new ChartPanel(null);
+						
+						// ¸®½ºÆ®¿¡ ¸ñ·Ïµé Ãß°¡ÇÏ±â
 						list = new JList();
-						list.setPreferredSize(ld); // Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
-						list.setListData(season); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ï¿½ï¿½
-						list.setSelectedIndex(0);// Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½Â°
-						List.add(list); // ï¿½Ä³Ú¿ï¿½ ï¿½ß°ï¿½
+						list.setPreferredSize(ld); // Å©±â Á¶Àý 
+						list.setListData(season); // ³ªÀÌ ¸ñ·Ï ºÎ¸£±â
+						List.add(list); // ÆÄ³Ú¿¡ Ãß°¡
 						
 						list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 						list.addListSelectionListener(new ListSelectionListener(){
@@ -145,14 +160,26 @@ public class make_panel3 implements ActionListener
 								//if(list.getSelectedIndex() == 0)
 									System.out.println(list.getSelectedValue());
 									
-									if(list.getSelectedValue().equals(season[0])); // ï¿½ï¿½
-									else if(list.getSelectedValue().equals(season[1]));//ï¿½ï¿½ï¿½ï¿½
-									else if(list.getSelectedValue().equals(season[2]));//ï¿½ï¿½ï¿½ï¿½
-									else if(list.getSelectedValue().equals(season[3]));//ï¿½Ü¿ï¿½
+									if(list.getSelectedValue().equals(season[0])) // º½
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(season[1]))//¿©¸§
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(season[2]))//°¡À»
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(season[3]))//°Ü¿ï
+									{
+										
+									}
 							}
 						});
 						
-						//ï¿½Ù²ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½
+						//¹Ù²ï ³»¿ëµé Ãß°¡ÇÏ¿© ³ªÅ¸³»±â
 						allstat.add(allchoice);
 						allstat.add(PieChart);
 
@@ -163,6 +190,7 @@ public class make_panel3 implements ActionListener
 				});
 
 				
+				//---------------------------¼ºº° º° ------------------------------------//
 				final JButton button3 = new JButton("Gender");
 				button3.setActionCommand("Gender");
 				button3.addActionListener(new ActionListener(){
@@ -170,45 +198,27 @@ public class make_panel3 implements ActionListener
 					public void actionPerformed(ActionEvent e) 
 					{
 						// TODO Auto-generated method stub
-						//ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+						//¿ø·¡ ÀÖ´ø³»¿ë ºñ¿ì±â
 						panel.removeAll();
 						allstat.removeAll();
+						
 						PieChart = new ChartPanel(null);
 						CP3 = new ChartPanel(null);
+						allstat = new JPanel(new GridLayout(2, 1));
 						
 						try {
-							Float[][] arrdata = database_load_gender.dload_avg();
-							XYSeries series1 = new XYSeries("male");
-							XYSeries series2 = new XYSeries("female");
-							XYSeriesCollection dataset = new XYSeriesCollection();
-							XYDataset xydataset = dataset;
-
-							for (int i = 0; i < 35; i++) {
-								series1.add(i * 600000 - 26640000, arrdata[1][i]);
-								series2.add(i * 600000 - 26640000, arrdata[0][i]);
-							}
-							dataset.addSeries(series1);
-							dataset.addSeries(series2);
-
-							CP3 = new ChartPanel(jP3.DrawMyChart(xydataset));
-						} catch (IOException e1) {
+							gdarrdata = database_load_gender.dload_avg();
+						} catch (SQLException e2) {
 							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+							e2.printStackTrace();
 						}
-
-						ChartPanel m_PieChart = null;
-						ChartPanel f_PieChart = null;
-						
-						// ----- ï¿½ï¿½ï¿½Ì±×·ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ------ //
+						// ----- ÆÄÀÌ±×·¡ÇÁ ±×¸®±â ------ //
 						try {
-							double[][] fever_per = database_load_gender.dload_avg_per(); // ï¿½ï¿½ï¿½ï¿½É¸ï¿½ï¿½ï¿½ï¿½
+							gdfever_per = database_load_gender.dload_avg_per(); // °¨±â°É¸°»ç¶÷
 																							// %
-							try {//í™•ì¸!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-								m_PieChart = new ChartPanel(jP3.DrawGenderPiChart(fever_per[0][0],0));
-								f_PieChart = new ChartPanel(jP3.DrawGenderPiChart(fever_per[1][0],1));
+							try {
+								m_PieChart = new ChartPanel(jP3.DrawGenderPiChart(gdfever_per[0][0],0));
+								f_PieChart = new ChartPanel(jP3.DrawGenderPiChart(gdfever_per[1][0],1));
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -218,45 +228,87 @@ public class make_panel3 implements ActionListener
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						final JPanel gender_pie = new JPanel(new GridLayout(1, 2));
 
-						gender_pie.add(m_PieChart);
-						gender_pie.add(f_PieChart);
-						
-						//list ï¿½ï¿½ï¿½ï¿½
+						//list ºñ¿ì±â
 						List.removeAll();
 						list = new JList();
 						list.setPreferredSize(ld);
-						list.setListData(gender); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ï¿½ï¿½
-						list.setSelectedIndex(0);// Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½Â°
+						list.setListData(gender); // ³ªÀÌ ¸ñ·Ï ºÎ¸£±â
 						List.add(list);
 						
-						//ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ìºï¿½Æ® ï¿½ß»ï¿½!
-						list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+						allstat.add(allchoice);
+						
+						//¸®½ºÆ® ÀÌº¥Æ® ¹ß»ý!
+						//list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 						list.addListSelectionListener(new ListSelectionListener(){
 							@Override
 							public void valueChanged(ListSelectionEvent e) {
 								// TODO Auto-generated method stub
 								//if(list.getSelectedIndex() == 0)
 									System.out.println(list.getSelectedValue());
+									panel.removeAll();
+									allstat.removeAll();
+									PieChart = new ChartPanel(null);
+									CP3 = new ChartPanel(null);
 									
-									if(list.getSelectedValue().equals(gender[0])); // ï¿½ï¿½ï¿½ï¿½
-									else if(list.getSelectedValue().equals(gender[1]));//ï¿½ï¿½ï¿½ï¿½
+									if(list.getSelectedValue().equals(gender[0]))// ³²ÀÚ
+									{
+										gdseries1 = new XYSeries("male");
+										gddataset = new XYSeriesCollection();
+										gdxydataset = gddataset;
+										
+										for (int i = 0; i < 35; i++) {
+												gdseries1.add(i * 600000 - 26640000, gdarrdata[0][i]);
+											}
+										
+										allstat.add(allchoice);
+										allstat.add(m_PieChart);
+										
+										gddataset.addSeries(gdseries1);
+										try {
+											CP3 = new ChartPanel(jP3.DrawMyChart(gdxydataset));
+										} catch (IOException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										}
+									}
+									else if(list.getSelectedValue().equals(gender[1]))//¿©ÀÚ
+									{
+										gdseries2 = new XYSeries("female");
+										gddataset = new XYSeriesCollection();
+										gdxydataset = gddataset;
+										
+										for (int i = 0; i < 35; i++) {
+												gdseries2.add(i * 600000 - 26640000, gdarrdata[1][i]);
+											}
+										
+										allstat.add(allchoice);
+										allstat.add(f_PieChart);
+										
+										gddataset.addSeries(gdseries2);
+										
+										try {
+											CP3 = new ChartPanel(jP3.DrawMyChart(gdxydataset));
+										} catch (IOException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										}
+									}
+									
+									panel.add(CP3);
+									panel.add(allstat);
+									jfjf.setVisible(true);
 							}
 						});
 						
-						
-						//ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ 
-						allstat.add(allchoice);
-						allstat.add(gender_pie);
-
+						//»ç¿ëÇÏ´Â ±×·¡ÇÁ Ãß°¡ 
 						panel.add(CP3);
 						panel.add(allstat);
 						jfjf.setVisible(true);
 					}
 				});
-
 				
+				//---------------------------¿¬·É´ëº° ------------------------------------//
 				final JButton button4 = new JButton("Age");
 				button4.setActionCommand("Age");
 				button4.addActionListener(new ActionListener(){
@@ -265,21 +317,21 @@ public class make_panel3 implements ActionListener
 						// TODO Auto-generated method stub
 						CP3 = new ChartPanel(null);
 						PieChart = new ChartPanel(null);
+						allstat = new JPanel(new GridLayout(2, 1));
 						
-						//ï¿½Ù²Ü°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+						//¹Ù²Ü°Å Áö¿ì±â
 						panel.removeAll();
 						allstat.removeAll();
 						panel.removeAll();
 						List.removeAll();
 						
-						//ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ 
+						//¸®½ºÆ® ¸¸µé±â -> ³ªÀÌ 
 						list = new JList();
-						list.setPreferredSize(ld); // Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
-						list.setListData(age); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ï¿½ï¿½
-						list.setSelectedIndex(0);// Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½Â°
-						List.add(list); // ï¿½Ä³Ú¿ï¿½ ï¿½ß°ï¿½
+						list.setPreferredSize(ld); // Å©±â Á¶Àý 
+						list.setListData(age); // ³ªÀÌ ¸ñ·Ï ºÎ¸£±â
+						List.add(list); // ÆÄ³Ú¿¡ Ãß°¡
 						
-						//ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ìºï¿½Æ® ï¿½ß»ï¿½!
+						//¸®½ºÆ® ÀÌº¥Æ® ¹ß»ý!
 						list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 						list.addListSelectionListener(new ListSelectionListener(){
 							@Override
@@ -288,18 +340,42 @@ public class make_panel3 implements ActionListener
 								//if(list.getSelectedIndex() == 0)
 									System.out.println(list.getSelectedValue());
 									
-									if(list.getSelectedValue().equals(age[0])); // 0-9
-									else if(list.getSelectedValue().equals(age[1]));// 10-19
-									else if(list.getSelectedValue().equals(age[2]));// 20-29
-									else if(list.getSelectedValue().equals(age[3]));// 30-39
-									else if(list.getSelectedValue().equals(age[4]));// 40-49
-									else if(list.getSelectedValue().equals(age[5]));// 50-59
-									else if(list.getSelectedValue().equals(age[6]));// 60-69
-									else if(list.getSelectedValue().equals(age[7]));// 70-79
+									if(list.getSelectedValue().equals(age[0])) // 0-9
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(age[1])) // 10-19
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(age[2]))// 20-29
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(age[3]))// 30-39
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(age[4]))// 40-49
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(age[5]))// 50-59
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(age[6]))// 60-69
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(age[7]))// 70-79
+									{
+										
+									}
 							}
 						});
 						
-						//ï¿½Ù²ï¿½ ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½
+						//¹Ù²ï ³»¿ë Ç¥½Ã
 						allstat.add(allchoice);
 						allstat.add(PieChart);
 
@@ -309,19 +385,86 @@ public class make_panel3 implements ActionListener
 					}
 				});
 
-				Dimension d = new Dimension(150, 80);
-				button1.setPreferredSize(d);
-				button2.setPreferredSize(d);
-				button3.setPreferredSize(d);
-				button4.setPreferredSize(d);
+				//---------------------------Áö¿ªº° ------------------------------------//
+				final JButton button2 = new JButton("Area");
+				button2.setActionCommand("Area");
+				button2.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						//¹Ù²ð°ÍÀº ¹Ì¸® Áö¿ì±â
+						panel.removeAll();
+						List.removeAll();
+						panel.removeAll();
+						allstat.removeAll();
+						
+						allstat = new JPanel(new GridLayout(2, 1));
+						CP3 = new ChartPanel(null);
+						PieChart = new ChartPanel(null);
+						
+						// ¸®½ºÆ®¿¡ ¸ñ·Ïµé Ãß°¡ÇÏ±â
+						list = new JList();
+						//list.setPreferredSize(ld); // Å©±â Á¶Àý 
+						list.setListData(area); // ³ªÀÌ ¸ñ·Ï ºÎ¸£±â
+						//List.add(list); // ÆÄ³Ú¿¡ Ãß°¡
+						
+						JScrollPane sc = new JScrollPane(list);
+						sc.setPreferredSize(sd);
+						
+						List.add(sc);
+						list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+						list.addListSelectionListener(new ListSelectionListener(){
+							@Override
+							public void valueChanged(ListSelectionEvent e) {
+								// TODO Auto-generated method stub
+								//if(list.getSelectedIndex() == 0)
+									System.out.println(list.getSelectedValue());
+									
+									if(list.getSelectedValue().equals(season[0])) // º½
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(season[1]))//¿©¸§
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(season[2]))//°¡À»
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(season[3]))//°Ü¿ï
+									{
+										
+									}
+							}
+						});
+						
+						//¹Ù²ï ³»¿ëµé Ãß°¡ÇÏ¿© ³ªÅ¸³»±â
+						allstat.add(allchoice);
+						allstat.add(PieChart);
 
+						panel.add(CP3);
+						panel.add(allstat);
+						jfjf.setVisible(true);
+					}
+				});
+				
+				
+				Dimension d1 = new Dimension(150, 80);
+				Dimension d2 = new Dimension(100, 80);
+				button1.setPreferredSize(d1);
+				button2.setPreferredSize(d1);
+				button3.setPreferredSize(d2);
+				button4.setPreferredSize(d2);
+				button5.setPreferredSize(d2);
+				
 				final JPanel buttonPanel1 = new JPanel((new FlowLayout(FlowLayout.LEFT, 50, 5)));
 				buttonPanel1.add(button1);
 				buttonPanel1.add(button2);
 
-				final JPanel buttonPanel2 = new JPanel((new FlowLayout(FlowLayout.LEFT, 50, 5)));
+				final JPanel buttonPanel2 = new JPanel((new FlowLayout(FlowLayout.LEFT, 37, 5)));
 				buttonPanel2.add(button3);
 				buttonPanel2.add(button4);
+				buttonPanel2.add(button5);
 
 				final JPanel Button = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 20));
 				Button.add(buttonPanel1);
@@ -342,14 +485,12 @@ public class make_panel3 implements ActionListener
 				panel.add(CP3);
 				panel.add(allstat);
 		
-				
 		return panel;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 	
 }
