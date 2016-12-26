@@ -19,6 +19,7 @@ public class database_load_avg{
 		ResultSet rs = null; // mysql ������ ����� �޾ƿ�. (���پ�?)
 		int i = 0, j = 0; // for ���� ���
 		try {
+
 			//HY
 			//String dbURL = "jdbc:mysql://127.0.0.1:3306?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
 			//JJ
@@ -35,6 +36,7 @@ public class database_load_avg{
 			//JJ
 			st.execute("USE hy1;");
 			rs = st.executeQuery("SELECT date, temp from temp_avg;"); //select// ���� ����� ResultSet�� ��� ���� �޼ҵ�� �ַ� SELECT���� ���˴ϴ�.
+
 			rs.next(); 
 			
 			for (i = 0; i < 3; i++) // 3��
@@ -83,8 +85,10 @@ public class database_load_avg{
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(dbURL,"root","asdasd"); // ���ῡ ���� �ο�? 
 			
+
 			st = con.createStatement();// ����
 			st.execute("USE hy1;");//������ ���̽� ���
+
 			
 			rs = st.executeQuery("SELECT category, number from population;"); //select// ���� ����� ResultSet�� ��� ���� �޼ҵ�� �ַ� SELECT���� ���˴ϴ�.
 			rs.next(); 

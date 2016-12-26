@@ -50,7 +50,6 @@ public class gui extends JFrame {
 	private JLabel label3;
 	
 	
-	
 	//------------------MAP-----------------------
 	Connection con;
 	java.sql.Statement st;
@@ -139,9 +138,12 @@ public class gui extends JFrame {
 
 		//panel1.setLayout(null);
 		//ChartPanel CP = new ChartPanel(jP.DrawMyChart(database_load.dload()));
+
 		panel1.setLayout(null);
 		//panel1.add(jP.JP1());
 		panel1_init();
+
+
 		//panel1.add(new JLabel("Select"), BorderLayout.SOUTH);
 		
 		
@@ -171,12 +173,13 @@ public class gui extends JFrame {
 		jF.add(tabbedPane);
 		jF.setSize((int)di.getWidth(),(int)di.getWidth()-200); // Full Screen
 		//jF.setSize(800, 600);
-		jF.setTitle("ChoisTec"); // 창 占쏙옙占쏙옙
+		jF.setTitle("Choice Tech"); // 창 占쏙옙占쏙옙
 		jF.setExtendedState(JFrame.MAXIMIZED_BOTH); // 占쌍댐옙화
 		jF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		jF.setVisible(true);
 	
 	}
+
 	public void panel1_init() throws SQLException, ClassCastException, IllegalArgumentException, IOException
 	{
 		
@@ -203,7 +206,7 @@ public class gui extends JFrame {
 		Bgroup.add(rb2);
 		Bgroup.add(rb3);
 		
-		panel1.add(Bgroup);
+		//panel1.add(Bgroup);
 		CP = new ChartPanel(new jPanel01().DrawMyChart(database_load.dload("0", "2016-10-21"), "0", "2016-10-21"));
 				
 		CP.setBounds(300, 10, 1610, 980);
@@ -253,6 +256,7 @@ public class gui extends JFrame {
 		
 		
 	}
+
 	public void setUser(){
 		
 		try {
@@ -463,9 +467,9 @@ public class gui extends JFrame {
             }      	
             
             else if(b.getText().equals("Check")){
-            	
-            	
-        		Float[][] new_data = new Float[1][1000];
+
+            	Float[][] new_data = new Float[1][1000];
+
             	System.out.println("Redraw");
             
             	try {
@@ -483,7 +487,8 @@ public class gui extends JFrame {
 					panel1.add(CP);
 					panel1.repaint();
 					panel1.setVisible(true);
-					
+
+
 				} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -493,6 +498,7 @@ public class gui extends JFrame {
 				} catch (IllegalArgumentException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -504,6 +510,11 @@ public class gui extends JFrame {
         }
     }
 	
+
+				
+
+    
+
 	public void start() throws SQLException
 	{
 		
