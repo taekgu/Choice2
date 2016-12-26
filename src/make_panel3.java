@@ -1,4 +1,3 @@
-package practice;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -39,10 +38,18 @@ public class make_panel3 implements ActionListener
 	static ChartPanel PieChart; // 파이차트 
 	static JList list = new JList();// 리스트
 
+	static Float[][] gdarrdata;
+	static XYSeries gdseries1;
+	static XYSeries gdseries2 ;
+	static XYSeriesCollection gddataset ;
+	static XYDataset gdxydataset ;
+	static ChartPanel m_PieChart ;
+	static ChartPanel f_PieChart;
+	static double[][] gdfever_per; 
 	// list에 들어갈 내용들
 	static String[] season = { "Spring", "Summer", "Fall", "Winter" };
 	static String[] age = { "0~9", "10~19", "20~29", "30~39", "40~49", "50~59", "60~69", "70~79" };
-	static String[] gender = {"Female","Male"};
+	static String[] gender = {"Male","Female"};
 	
 	static Dimension ld = new Dimension(130, 190); // list 크기 조절 
 	
@@ -134,7 +141,6 @@ public class make_panel3 implements ActionListener
 						list = new JList();
 						list.setPreferredSize(ld); // 크기 조절 
 						list.setListData(season); // 나이 목록 부르기
-						list.setSelectedIndex(0);// 처음 선택은 0번째
 						List.add(list); // 파넬에 추가
 						
 						list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -145,10 +151,22 @@ public class make_panel3 implements ActionListener
 								//if(list.getSelectedIndex() == 0)
 									System.out.println(list.getSelectedValue());
 									
-									if(list.getSelectedValue().equals(season[0])); // 봄
-									else if(list.getSelectedValue().equals(season[1]));//여름
-									else if(list.getSelectedValue().equals(season[2]));//가을
-									else if(list.getSelectedValue().equals(season[3]));//겨울
+									if(list.getSelectedValue().equals(season[0])) // 봄
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(season[1]))//여름
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(season[2]))//가을
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(season[3]))//겨울
+									{
+										
+									}
 							}
 						});
 						
@@ -162,7 +180,6 @@ public class make_panel3 implements ActionListener
 					}
 				});
 
-				
 				final JButton button3 = new JButton("Gender");
 				button3.setActionCommand("Gender");
 				button3.addActionListener(new ActionListener(){
@@ -177,38 +194,18 @@ public class make_panel3 implements ActionListener
 						CP3 = new ChartPanel(null);
 						
 						try {
-							Float[][] arrdata = database_load_gender.dload_avg();
-							XYSeries series1 = new XYSeries("male");
-							XYSeries series2 = new XYSeries("female");
-							XYSeriesCollection dataset = new XYSeriesCollection();
-							XYDataset xydataset = dataset;
-
-							for (int i = 0; i < 35; i++) {
-								series1.add(i * 600000 - 26640000, arrdata[1][i]);
-								series2.add(i * 600000 - 26640000, arrdata[0][i]);
-							}
-							dataset.addSeries(series1);
-							dataset.addSeries(series2);
-
-							CP3 = new ChartPanel(jP3.DrawMyChart(xydataset));
-						} catch (IOException e1) {
+							gdarrdata = database_load_gender.dload_avg();
+						} catch (SQLException e2) {
 							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+							e2.printStackTrace();
 						}
-
-						ChartPanel m_PieChart = null;
-						ChartPanel f_PieChart = null;
-						
 						// ----- 파이그래프 그리기 ------ //
 						try {
-							double[][] fever_per = database_load_gender.dload_avg_per(); // 감기걸린사람
+							gdfever_per = database_load_gender.dload_avg_per(); // 감기걸린사람
 																							// %
 							try {
-								m_PieChart = new ChartPanel(jP3.DrawGenderPiChart(fever_per[0][0]));
-								f_PieChart = new ChartPanel(jP3.DrawGenderPiChart(fever_per[1][0]));
+								m_PieChart = new ChartPanel(jP3.DrawGenderPiChart(gdfever_per[0][0],0));
+								f_PieChart = new ChartPanel(jP3.DrawGenderPiChart(gdfever_per[1][0],1));
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -218,44 +215,87 @@ public class make_panel3 implements ActionListener
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						final JPanel gender_pie = new JPanel(new GridLayout(1, 2));
 
-						gender_pie.add(m_PieChart);
-						gender_pie.add(f_PieChart);
-						
 						//list 비우기
 						List.removeAll();
 						list = new JList();
 						list.setPreferredSize(ld);
 						list.setListData(gender); // 나이 목록 부르기
-						list.setSelectedIndex(0);// 처음 선택은 0번째
 						List.add(list);
 						
+						allstat.add(allchoice);
+						
+						
 						//리스트 이벤트 발생!
-						list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+						//list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 						list.addListSelectionListener(new ListSelectionListener(){
 							@Override
 							public void valueChanged(ListSelectionEvent e) {
 								// TODO Auto-generated method stub
 								//if(list.getSelectedIndex() == 0)
 									System.out.println(list.getSelectedValue());
+									panel.removeAll();
+									allstat.removeAll();
+									PieChart = new ChartPanel(null);
+									CP3 = new ChartPanel(null);
 									
-									if(list.getSelectedValue().equals(gender[0])); // 남자
-									else if(list.getSelectedValue().equals(gender[1]));//여자
+									if(list.getSelectedValue().equals(gender[0]))// 남자
+									{
+										gdseries1 = new XYSeries("male");
+										gddataset = new XYSeriesCollection();
+										gdxydataset = gddataset;
+										
+										for (int i = 0; i < 35; i++) {
+												gdseries1.add(i * 600000 - 26640000, gdarrdata[0][i]);
+											}
+										
+										allstat.add(allchoice);
+										allstat.add(m_PieChart);
+										
+										gddataset.addSeries(gdseries1);
+										try {
+											CP3 = new ChartPanel(jP3.DrawMyChart(gdxydataset));
+										} catch (IOException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										}
+									}
+									else if(list.getSelectedValue().equals(gender[1]))//여자
+									{
+										gdseries2 = new XYSeries("female");
+										gddataset = new XYSeriesCollection();
+										gdxydataset = gddataset;
+										
+										for (int i = 0; i < 35; i++) {
+												gdseries2.add(i * 600000 - 26640000, gdarrdata[1][i]);
+											}
+										
+										allstat.add(allchoice);
+										allstat.add(f_PieChart);
+										
+										gddataset.addSeries(gdseries2);
+										
+										try {
+											CP3 = new ChartPanel(jP3.DrawMyChart(gdxydataset));
+										} catch (IOException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										}
+									}
+									
+									
+									panel.add(CP3);
+									panel.add(allstat);
+									jfjf.setVisible(true);
 							}
 						});
 						
-						
 						//사용하는 그래프 추가 
-						allstat.add(allchoice);
-						allstat.add(gender_pie);
-
 						panel.add(CP3);
 						panel.add(allstat);
 						jfjf.setVisible(true);
 					}
 				});
-
 				
 				final JButton button4 = new JButton("Age");
 				button4.setActionCommand("Age");
@@ -276,7 +316,6 @@ public class make_panel3 implements ActionListener
 						list = new JList();
 						list.setPreferredSize(ld); // 크기 조절 
 						list.setListData(age); // 나이 목록 부르기
-						list.setSelectedIndex(0);// 처음 선택은 0번째
 						List.add(list); // 파넬에 추가
 						
 						//리스트 이벤트 발생!
@@ -288,14 +327,38 @@ public class make_panel3 implements ActionListener
 								//if(list.getSelectedIndex() == 0)
 									System.out.println(list.getSelectedValue());
 									
-									if(list.getSelectedValue().equals(age[0])); // 0-9
-									else if(list.getSelectedValue().equals(age[1]));// 10-19
-									else if(list.getSelectedValue().equals(age[2]));// 20-29
-									else if(list.getSelectedValue().equals(age[3]));// 30-39
-									else if(list.getSelectedValue().equals(age[4]));// 40-49
-									else if(list.getSelectedValue().equals(age[5]));// 50-59
-									else if(list.getSelectedValue().equals(age[6]));// 60-69
-									else if(list.getSelectedValue().equals(age[7]));// 70-79
+									if(list.getSelectedValue().equals(age[0])) // 0-9
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(age[1])) // 10-19
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(age[2]))// 20-29
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(age[3]))// 30-39
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(age[4]))// 40-49
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(age[5]))// 50-59
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(age[6]))// 60-69
+									{
+										
+									}
+									else if(list.getSelectedValue().equals(age[7]))// 70-79
+									{
+										
+									}
 							}
 						});
 						
@@ -342,7 +405,6 @@ public class make_panel3 implements ActionListener
 				panel.add(CP3);
 				panel.add(allstat);
 		
-				
 		return panel;
 	}
 
