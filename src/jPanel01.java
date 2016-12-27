@@ -81,7 +81,8 @@ public class jPanel01 {
 			con = DriverManager.getConnection(dbURL,"root", "1234");
 			st = con.createStatement();
 			ResultSet rs = null;
-			st.execute("USE newschema4;");
+			//st.execute("USE newschema4;");
+			st.execute("USE testschema;");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -144,7 +145,7 @@ public class jPanel01 {
 		        // Y�� ����
 		plot.setRangeAxis(new NumberAxis());                 // Y�� ���� ����
 		plot.getRangeAxis().setTickLabelFont(axisF);  // Y�� ���ݶ� ��Ʈ ����
-		plot.getRangeAxis().setRange(((double)database_load.Min_val)-0.1, ((double)database_load.Max_val)+0.1);
+		//plot.getRangeAxis().setRange(((double)database_load.Min_val)-0.1, ((double)database_load.Max_val)+0.1);
 		
 		JFreeChart chart = new JFreeChart(plot);
 

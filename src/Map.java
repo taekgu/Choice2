@@ -62,12 +62,12 @@ public class Map extends JFrame{
     	
     	try {
     		//sb
-			//con = DriverManager.getConnection("jdbc:mysql://localhost","root", "1234"); 
-			con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234");
+			con = DriverManager.getConnection("jdbc:mysql://localhost","root", "1234"); 
+			//con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234");
 			st = con.createStatement();
 			//sb
-			//rs = st.executeQuery("use testschema");
-			rs = st.executeQuery("use newschema4");
+			rs = st.executeQuery("use testschema");
+			//rs = st.executeQuery("use newschema4");
 			
 			
 			
@@ -84,7 +84,8 @@ public class Map extends JFrame{
     	};
     	map_panel.setLayout(null);
     	    
-    	if(m_temp.equals("개인온도")){
+    	
+    	if(m_temp.equals("p_temp")){
     		//전체
     		try {
 				st = con.createStatement();
@@ -112,8 +113,8 @@ public class Map extends JFrame{
 				e.printStackTrace();
 			}
 
-    		
-    	}else if(m_temp.equals("개인고온")){
+    		//test
+    	}else if(m_temp.equals("p_h_temp")){
     		
     		try {
 				st = con.createStatement();
@@ -136,10 +137,10 @@ public class Map extends JFrame{
 			}
     		
     		//
-    	}else if(m_temp.equals("초기")){   		
+    	}else if(m_temp.equals("init")){   		
     		
     		return map_panel;
-    	}else if(m_temp.equals("전체온도")){//전체
+    	}else if(m_temp.equals("t_temp")){//전체
     		
     		try {
 				st = con.createStatement();
@@ -159,7 +160,7 @@ public class Map extends JFrame{
     		//setMAap(100,500,0);
     		//setMAap(200,600,0);
     		//setMAap(300,700,0);  
-    	}else if(m_temp.equals("전체고온")){//전체
+    	}else if(m_temp.equals("t_h_temp")){//전체
     		
     		try {
 				st = con.createStatement();

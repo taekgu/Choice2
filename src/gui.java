@@ -114,12 +114,13 @@ public class gui extends JFrame {
 		
 		try {
 			//sb
-			//con = DriverManager.getConnection("jdbc:mysql://localhost","root", "1234"); 
-			con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234");
+			con = DriverManager.getConnection("jdbc:mysql://localhost","root", "1234"); 
+			//con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234");
 			st = con.createStatement();
 			//sb
-			rs = st.executeQuery("use newschema4");
+			//rs = st.executeQuery("use newschema4");
 			//rs = st.executeQuery("use newschema");
+			rs = st.executeQuery("use testschema");
 			
 			
 		} catch (SQLException e) {
@@ -153,7 +154,7 @@ public class gui extends JFrame {
 		//--------MAP--------------------------------------------------------------------------
 						
 		//p2 = new Map();
-		Map_panel = p2.Map_init("0","0","珥덇린");
+		Map_panel = p2.Map_init("0","0","init");
 		Map_panel.setBounds(100, 0, 1820, 1000);
 		Map_panel.setVisible(true);
 		
@@ -283,7 +284,7 @@ public class gui extends JFrame {
 			String buf_f = null;
 			rs = st.executeQuery("select distinct date from tp");
 			
-			D_Button.setText("�쟾泥� �궇吏�");
+			D_Button.setText("t_date");
 	    	D_Button.setBounds(0, 0, 100, 50);
 	    	D_Button.addActionListener(new MyActionListener());
 	    	combo_d.setBounds(0, 50, 100, 50);
@@ -312,28 +313,26 @@ public class gui extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-
-    	
-		T_Button.setText("媛쒖씤�삩�룄");
-		T_Button.setBounds(0, 900, 100, 50);
-		T_Button.addActionListener(new MyActionListener());
 		
-		TT_Button.setText("媛쒖씤怨좎삩");
-		TT_Button.setBounds(0, 950, 100, 50);
-		TT_Button.addActionListener(new MyActionListener());
-		
-		do_Button.setText("�떎�뻾");
-		do_Button.setBounds(0,800,100,50);
-		do_Button.addActionListener(new MyActionListener());
-		
-		A_Button.setText("�쟾泥댁삩�룄");
+		A_Button.setText("t_temp");
 		A_Button.setBounds(0,650,100,50);
 		A_Button.addActionListener(new MyActionListener());
 		
-		AA_Button.setText("�쟾泥닿퀬�삩");
+		AA_Button.setText("t_h_temp");
 		AA_Button.setBounds(0,700,100,50);
 		AA_Button.addActionListener(new MyActionListener());
+		
+		do_Button.setText("start");
+		do_Button.setBounds(0,800,100,50);
+		do_Button.addActionListener(new MyActionListener());
+		
+		T_Button.setText("p_temp");
+		T_Button.setBounds(0, 900, 100, 50);
+		T_Button.addActionListener(new MyActionListener());
+		
+		TT_Button.setText("p_h_temp");
+		TT_Button.setBounds(0, 950, 100, 50);
+		TT_Button.addActionListener(new MyActionListener());
 		
 		
 		panel2.add(D_Button);
@@ -352,12 +351,12 @@ public class gui extends JFrame {
         public void actionPerformed(ActionEvent e) {
         	//------------------date-----------------
             JButton b = (JButton) e.getSource();
-            if (b.getText().equals("�쟾泥� �궇吏�")){
-            	b.setText("�궇吏� �꽑�깮");
+            if (b.getText().equals("t_date")){
+            	b.setText("s_date");
             	combo_d.setVisible(true);
             }      	
-            else if(b.getText().equals("�궇吏� �꽑�깮")){
-            	b.setText("�쟾泥� �궇吏�");
+            else if(b.getText().equals("s_date")){
+            	b.setText("t_date");
             	date = combo_d.getSelectedItem().toString();            
             	setTitle(b.getText());
             	            	
@@ -369,12 +368,12 @@ public class gui extends JFrame {
             	if(date.equals("")){
             		b.setText("User");
             	}else{
-            		b.setText("User �꽑�깮");
+            		b.setText("User_s");
             		set_User(date);
                 	combo_u.setVisible(true);
             	}
             }      	
-            else if(b.getText().equals("User �꽑�깮")){
+            else if(b.getText().equals("User_s")){
             	b.setText("User");
             	user = combo_u.getSelectedItem().toString();
             	setTitle(b.getText());
@@ -384,25 +383,25 @@ public class gui extends JFrame {
             }
             
             //--------------temp-----------------
-            if (b.getText().equals("媛쒖씤�삩�룄")){
+            if (b.getText().equals("t_temp")){
             	temp = b.getText();
             }      	
             
-            if(b.getText().equals("媛쒖씤怨좎삩")){
+            if(b.getText().equals("t_h_temp")){
             	temp = b.getText();
             }
             
-            if (b.getText().equals("�떎�뻾")){
+            if (b.getText().equals("start")){
             	// �궇吏�, �궗�엺, 怨�-���삩
             	// date, user, temp
             	showMap(date, user, temp);
             } 
             
-            if(b.getText().equals("�쟾泥댁삩�룄")){
+            if(b.getText().equals("p_temp")){
             	temp = b.getText();
             }   
             
-            if(b.getText().equals("�쟾泥닿퀬�삩")){
+            if(b.getText().equals("p_h_temp")){
             	temp = b.getText();
             }   
 
