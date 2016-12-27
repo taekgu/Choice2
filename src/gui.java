@@ -367,6 +367,7 @@ public class gui extends JFrame {
             if (b.getText().equals("User")){
             	if(date.equals("")){
             		b.setText("User");
+            		combo_u.setVisible(false);
             	}else{
             		b.setText("User_s");
             		set_User(date);
