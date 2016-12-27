@@ -77,8 +77,11 @@ public class gui extends JFrame {
 	//JJ
 	JButton b1;
 	JButton b2;
+	JButton b3;
+
 	JComboBox<String> box1;
 	JComboBox<String> box2;
+	JComboBox<String> box3;
 	JPanel p1 ;
 	ChartPanel CP;
 	JRadioButton rb1;
@@ -96,8 +99,11 @@ public class gui extends JFrame {
 		
 		b1 = new JButton();
 		b2 = new JButton();
+		b3 = new JButton();
+		
 		box1 = new JComboBox<String>();
 		box2 = new JComboBox<String>();
+		
 		//p1 = new JPanel(new GridBagLayout());
 		CP = new ChartPanel(null);
 		rb1 = new JRadioButton();
@@ -140,11 +146,8 @@ public class gui extends JFrame {
 		//ChartPanel CP = new ChartPanel(jP.DrawMyChart(database_load.dload()));
 
 		panel1.setLayout(null);
-		//panel1.add(jP.JP1());
 		panel1_init();
 
-
-		//panel1.add(new JLabel("Select"), BorderLayout.SOUTH);
 		
 		
 		//--------MAP--------------------------------------------------------------------------
@@ -185,26 +188,51 @@ public class gui extends JFrame {
 		
 		
 		b1 = new JButton();
-		b1.setText("Select");
-		b1.setBounds(150, 0,70,20);
+		b1.setText("User List");
+		b1.setBounds(0, 0,100,50);
 		b1.addActionListener(new MyActionListener2()); 
 		panel1.add(b1);
 		
 		b2 = new JButton();
-		b2.setText("Check");
-		b2.setBounds(150, 50,70,20);
+		b2.setText("Show Chart");
+		b2.setBounds(0, 200,100,50);
 		b2.addActionListener(new MyActionListener2()); 
 		panel1.add(b2);
 		
-		//Radio Button
+		b3 = new JButton();
+		b3.setText("Date List");
+		b3.setBounds(0, 100, 100, 50);
+		b3.addActionListener(new MyActionListener2()); 
+		panel1.add(b3);
+		
+		
+		
+		//Radio Button--------------------------------------
+		
 		rb1.setText("All");
+		rb1.setBounds(10, 400, 70, 20);
+		rb1.setVisible(true);
 		rb1.setSelected(true);
+		rb1.addActionListener(new MyActionListener3());
+		panel1.add(rb1);
+		
 		rb2.setText("Male");
+		rb2.setBounds(100, 400, 70, 20);
+		rb2.setVisible(true);
+		rb2.addActionListener(new MyActionListener3());
+		panel1.add(rb2);
+		
 		rb3.setText("Female");
+		rb3.setBounds(190, 400, 70, 20);
+		rb3.setVisible(true);
+		rb3.addActionListener(new MyActionListener3());
+		panel1.add(rb3);
 		
 		Bgroup.add(rb1);
 		Bgroup.add(rb2);
 		Bgroup.add(rb3);
+		//---------------------------------------------------
+		
 		
 		//panel1.add(Bgroup);
 		CP = new ChartPanel(new jPanel01().DrawMyChart(database_load.dload("0", "2016-10-21"), "0", "2016-10-21"));
@@ -217,10 +245,11 @@ public class gui extends JFrame {
 		}
 		
 		//box1.addActionListener(box1);
-		JLabel label1 = new JLabel("User Select : ");
-		label1.setBounds(10, 0, 100, 20);
-		panel1.add(label1);
-		box1.setBounds(90,0,50,20);
+		//JLabel label1 = new JLabel("User Select : ");
+		//label1.setBounds(10, 0, 100, 20);
+		//panel1.add(label1);
+		box1.setBounds(0,50,100,50);
+		box1.setVisible(false);
 		panel1.add(box1);
 		
 		//JButton b1 = new JButton();
@@ -229,32 +258,21 @@ public class gui extends JFrame {
 		//b1.setBounds(150, 0,70,20);
 		//b1.addActionListener(new MyActionListener2()); 
 
-		panel1.add(b1);
-		
-		
-		
-		
-		//box2.addActionListener(box2);
-		JLabel label2 = new JLabel("Date : ");
-		label2.setBounds(10, 50, 50, 20);
-		panel1.add(label2);
-		box2.setBounds(45,50,100,20);
-		panel1.add(box2);
+	
 		
 
-		
-		//JButton b2 = new JButton();
+		//JLabel label2 = new JLabel("Date : ");
+		//label2.setBounds(10, 50, 50, 20);
+		//panel1.add(label2);
+		box2.setBounds(0,150,100,50);
+		box2.setVisible(false);
+		panel1.add(box2);
+
 		b2 = new JButton();
 		b2.setText("Check");
 		b2.setBounds(150, 50,70,20);
 		
-
-
-	
-		
 		panel1.setVisible(true);
-		
-		
 	}
 
 	public void setUser(){
@@ -443,7 +461,14 @@ public class gui extends JFrame {
 	private class MyActionListener2 implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             JButton b = (JButton) e.getSource();
-            if (b.getText().equals("Select")){
+            if (b.getText().equals("User List"))
+            {
+            	box1.setVisible(true);
+            	b1.setText("Select User");
+            }
+            else if (b.getText().equals("Select User")){
+            	b1.setText("User List");
+            	box1.setVisible(false);
             	box2.removeAllItems();
         		String buf_f = null;
         		String id = null;
@@ -464,9 +489,20 @@ public class gui extends JFrame {
         			// TODO Auto-generated catch block
         			se.printStackTrace();
         		}
-            }      	
+            }
+            else if (b.getText().equals("Date List"))
+            {
+            	b3.setText("Select Date");
+            	box2.setVisible(true);
+            	
+            }
+            else if (b.getText().equals("Select Date"))
+            {
+            	box2.setVisible(false);
+            	b3.setText("Date List");
+            }
             
-            else if(b.getText().equals("Check")){
+            else if(b.getText().equals("Show Chart")){
 
             	Float[][] new_data = new Float[1][1000];
 
@@ -481,9 +517,6 @@ public class gui extends JFrame {
 					CP = new ChartPanel(new jPanel01().DrawMyChart(new_data, box1.getSelectedItem().toString(), box2.getSelectedItem().toString()));
 					
 					CP.setBounds(300, 10, 1610, 980);
-					
-					
-					
 					panel1.add(CP);
 					panel1.repaint();
 					panel1.setVisible(true);
@@ -510,7 +543,51 @@ public class gui extends JFrame {
         }
     }
 	
-
+	private class MyActionListener3 implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            JRadioButton rb = (JRadioButton) e.getSource();
+            if (rb.getText().equals("All"))
+            {
+        		try {
+        			box1.removeAllItems();
+					rs = st.executeQuery("SELECT DISTINCT id FROM tp");
+					while(rs.next()){
+	        			box1.addItem(rs.getString("id"));
+	        		}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+            }
+            else if (rb.getText().equals("Male"))
+            {
+        		try {
+        			box1.removeAllItems();
+					rs = st.executeQuery("SELECT DISTINCT id FROM tp WHERE sex = 0");
+					while(rs.next()){
+	        			box1.addItem(rs.getString("id"));
+	        		}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+            }
+            
+            else if (rb.getText().equals("Female"))
+            {
+        		try {
+        			box1.removeAllItems();
+					rs = st.executeQuery("SELECT DISTINCT id FROM tp WHERE sex = 1");
+					while(rs.next()){
+	        			box1.addItem(rs.getString("id"));
+	        		}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+            }
+        }
+	}
 				
 
     

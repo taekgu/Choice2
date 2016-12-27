@@ -67,17 +67,6 @@ public class database_load {
 			}
 			System.out.println("Max : " + Max_val + "  Min : " + Min_val);
 
-			/*while (rs.next()) {
-				
-				
-				String str1 = rs.getNString(1);
-				String str2 = rs.getNString(3);
-				Float flo = rs.getFloat(2);
-				temp7h[i][j%694] = flo;
-				System.out.println(str1 + " // " +  flo + " // " + str2 +  " // " + i + " // " + j);
-				j++;
-				i = (int)(j / 694);
-			}*/
 			//������ ������ 3���� ���
 			//1. execute -> ���̺� ����, ���� ���� �� �����ͺ��̽� ���� ��ɾ�
 			//2. excuteUpdate -> ���ڵ� ����, ����, ������ ������ ���� ��ɾ�
