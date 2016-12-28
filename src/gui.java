@@ -210,20 +210,20 @@ public class gui extends JFrame {
 		//Radio Button--------------------------------------
 		
 		rb1.setText("All");
-		rb1.setBounds(10, 400, 70, 20);
+		rb1.setBounds(0, 400, 70, 20);
 		rb1.setVisible(true);
 		rb1.setSelected(true);
 		rb1.addActionListener(new MyActionListener3());
 		panel1.add(rb1);
 		
 		rb2.setText("Male");
-		rb2.setBounds(100, 400, 70, 20);
+		rb2.setBounds(0, 450, 70, 20);
 		rb2.setVisible(true);
 		rb2.addActionListener(new MyActionListener3());
 		panel1.add(rb2);
 		
 		rb3.setText("Female");
-		rb3.setBounds(190, 400, 70, 20);
+		rb3.setBounds(0, 500, 70, 20);
 		rb3.setVisible(true);
 		rb3.addActionListener(new MyActionListener3());
 		panel1.add(rb3);
@@ -237,7 +237,7 @@ public class gui extends JFrame {
 		//panel1.add(Bgroup);
 		CP = new ChartPanel(new jPanel01().DrawMyChart(database_load.dload("0", "2016-10-21"), "0", "2016-10-21"));
 				
-		CP.setBounds(300, 10, 1610, 980);
+		CP.setBounds(100, 0, 1810, 980);
 		panel1.add(CP);
 		rs = st.executeQuery("SELECT DISTINCT id FROM tp");
 		while(rs.next()){
@@ -516,7 +516,7 @@ public class gui extends JFrame {
 					panel1.remove(CP);
 					CP = new ChartPanel(new jPanel01().DrawMyChart(new_data, box1.getSelectedItem().toString(), box2.getSelectedItem().toString()));
 					
-					CP.setBounds(300, 10, 1610, 980);
+					CP.setBounds(100, 0, 1820, 980);
 					panel1.add(CP);
 					panel1.repaint();
 					panel1.setVisible(true);
