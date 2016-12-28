@@ -1,6 +1,5 @@
-
+package practice;
 import java.io.*;
-import java.text.NumberFormat;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,8 +9,6 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.annotations.XYTitleAnnotation;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.block.BlockBorder;
-import org.jfree.chart.labels.StandardXYItemLabelGenerator;
-import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.title.LegendTitle;
 import org.jfree.data.general.DefaultPieDataset;
@@ -26,7 +23,6 @@ public class jPanel03 implements ActionListener {
 	}
 	public JFreeChart DrawMyChart(XYDataset xydtset) throws IOException
 	{
-		
 		 // create the chart...              
 	    final JFreeChart chart = ChartFactory.createTimeSeriesChart(
 	        "average temperature data",      // chart title
@@ -54,7 +50,6 @@ public class jPanel03 implements ActionListener {
 	    rangeAxis.setAutoRange(true);
 
 	    return chart;
-	
 	}
 	
 	public JFreeChart DrawAllPiChart(double fever_per) throws IOException
@@ -92,6 +87,63 @@ public class jPanel03 implements ActionListener {
 		
 		return chart;
 	}
+	
+	public JFreeChart DrawAgePiChart(double fever_per,int gd) throws IOException
+	{
+		DefaultPieDataset data = new DefaultPieDataset();
+		
+		double fever = fever_per * 100;
+		double not_fever_per = 100 - fever;
+		
+		data.setValue("Fever"+Double.toString(Double.parseDouble(String.format("%.2f",fever))), fever);
+		data.setValue("Not Fever"+Double.toString(Double.parseDouble(String.format("%.2f",not_fever_per))), not_fever_per);
+		
+		JFreeChart chart = null;
+		
+		if(gd == 0)
+			 chart = ChartFactory.createPieChart("0's Fever Percentage",data,true,true,false);
+		else if(gd == 1)
+			chart = ChartFactory.createPieChart("10's Fever Percentage",data,true,true,false);
+		else if(gd == 2)
+			chart = ChartFactory.createPieChart("20's Fever Percentage",data,true,true,false);
+		else if(gd == 3)
+			chart = ChartFactory.createPieChart("30's Fever Percentage",data,true,true,false);
+		else if(gd == 4)
+			chart = ChartFactory.createPieChart("40's Fever Percentage",data,true,true,false);
+		else if(gd == 5)
+			chart = ChartFactory.createPieChart("50's Fever Percentage",data,true,true,false);
+		else if(gd == 6)
+			chart = ChartFactory.createPieChart("60's Fever Percentage",data,true,true,false);
+		else if(gd == 7)
+			chart = ChartFactory.createPieChart("70's Fever Percentage",data,true,true,false);
+		
+		
+		return chart;
+	}
+	
+	public JFreeChart DrawSeasonPiChart(double fever_per,int gd) throws IOException
+	{
+		DefaultPieDataset data = new DefaultPieDataset();
+		
+		double fever = fever_per * 100;
+		double not_fever_per = 100 - fever;
+		
+		data.setValue("Fever"+Double.toString(Double.parseDouble(String.format("%.2f",fever))), fever);
+		data.setValue("Not Fever"+Double.toString(Double.parseDouble(String.format("%.2f",not_fever_per))), not_fever_per);
+		
+		JFreeChart chart = null;
+		
+		if(gd == 0)
+			 chart = ChartFactory.createPieChart("Spring's Fever Percentage",data,true,true,false);
+		else if(gd == 1)
+			chart = ChartFactory.createPieChart("Summer's Fever Percentage",data,true,true,false);
+		else if(gd == 2)
+			chart = ChartFactory.createPieChart("Fall's Fever Percentage",data,true,true,false);
+		else if(gd == 3)
+			chart = ChartFactory.createPieChart("Winter's Fever Percentage",data,true,true,false);
+		return chart;
+	}
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
