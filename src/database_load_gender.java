@@ -15,14 +15,20 @@ public class database_load_gender{
 		ResultSet rs = null; // mysql ������ ����� �޾ƿ�. (���پ�?)
 		int i = 0; // for ���� ���
 		try {
-			
-			String dbURL = "jdbc:mysql://127.0.0.1:3306?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
+			//HY--------------------------------------------------------------------------------------------------------------
+			//String dbURL = "jdbc:mysql://127.0.0.1:3306?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
+			//Class.forName("com.mysql.jdbc.Driver");
+			//con = DriverManager.getConnection(dbURL,"root","asdasd"); // ���ῡ ���� �ο�? 
+			//st = con.createStatement();// ����
+			//st.execute("USE chois;");//������ ���̽� ���
+			//---------------------------------------------------------------------------------------------------------------
+			//JJ ------------------------------------------------------------------------------------------------------------
+			String dbURL =  "jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection(dbURL,"root","asdasd"); // ���ῡ ���� �ο�? 
-			
+			con = DriverManager.getConnection(dbURL,"root","1234"); // ���ῡ ���� �ο�? 
 			st = con.createStatement();// ����
-			st.execute("USE chois;");//������ ���̽� ���
-			
+			st.execute("USE hy1;");//������ ���̽� ���
+			//--------------------------------------------------------------------------------------------------------------
 			rs = st.executeQuery("SELECT date, temp from temp_female;"); //select// ���� ����� ResultSet�� ��� ���� �޼ҵ�� �ַ� SELECT���� ���˴ϴ�.
 			rs.next(); 
 				for(i = 0; i<35; i++) // �Ϸ翡 144��
@@ -65,13 +71,20 @@ public class database_load_gender{
 		double[][] fever_per = new double[2][1]; // 0 -> ���� / 1 -> ����
 		try {
 			
-			String dbURL = "jdbc:mysql://127.0.0.1:3306?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
-
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			//HY--------------------------------------------------------------------------------------------------------------
+			//String dbURL = "jdbc:mysql://127.0.0.1:3306?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
+			//Class.forName("com.mysql.jdbc.Driver");
+			//con = DriverManager.getConnection(dbURL,"root","asdasd"); // ���ῡ ���� �ο�? 
+			//st = con.createStatement();// ����
+			//st.execute("USE chois;");//������ ���̽� ���
+			//---------------------------------------------------------------------------------------------------------------
+			//JJ ------------------------------------------------------------------------------------------------------------
+			String dbURL =  "jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
+			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(dbURL,"root","1234"); // ���ῡ ���� �ο�? 
-			
 			st = con.createStatement();// ����
 			st.execute("USE hy1;");//������ ���̽� ���
+			//--------------------------------------------------------------------------------------------------------------
 
 			
 			rs = st.executeQuery("SELECT category, number from population;"); //select// ���� ����� ResultSet�� ��� ���� �޼ҵ�� �ַ� SELECT���� ���˴ϴ�.

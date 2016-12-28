@@ -80,14 +80,23 @@ public class database_load_avg{
 		ResultSet rs = null; // mysql ������ ����� �޾ƿ�. (���پ�?)
 		double fever_per = 0;
 		try {
-			
-			String dbURL = "jdbc:mysql://127.0.0.1:3306?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
-			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection(dbURL,"root","asdasd"); // ���ῡ ���� �ο�? 
-			
 
+			
+			//HY--------------------------------------------------------------------------------------------------------------
+			//String dbURL = "jdbc:mysql://127.0.0.1:3306?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
+			//Class.forName("com.mysql.jdbc.Driver");
+			//con = DriverManager.getConnection(dbURL,"root","asdasd"); // ���ῡ ���� �ο�? 
+			//st = con.createStatement();// ����
+			//st.execute("USE chois;");//������ ���̽� ���
+			//---------------------------------------------------------------------------------------------------------------
+			//JJ ------------------------------------------------------------------------------------------------------------
+			String dbURL =  "jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection(dbURL,"root","1234"); // ���ῡ ���� �ο�? 
 			st = con.createStatement();// ����
 			st.execute("USE hy1;");//������ ���̽� ���
+			//--------------------------------------------------------------------------------------------------------------
+
 
 			
 			rs = st.executeQuery("SELECT category, number from population;"); //select// ���� ����� ResultSet�� ��� ���� �޼ҵ�� �ַ� SELECT���� ���˴ϴ�.
