@@ -1,8 +1,5 @@
 package practice;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -10,12 +7,7 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.JScrollPane;
 import org.jfree.chart.ChartPanel;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
@@ -115,7 +107,24 @@ public class make_panel3 implements ActionListener {
 			}
 		});
 		
-		set_display();
+		button1.setBounds(0, 0, 100, 50);
+		box1.setBounds(0, 50, 100, 50);
+		box1.setVisible(cond1_flag);
+
+		button2.setBounds(0, 100, 100, 50);
+		box2.setBounds(0, 150, 100, 50);
+		box2.setVisible(cond2_flag);
+
+		button3.setBounds(0, 200, 100, 50);
+		
+		panel.add(button1);
+		panel.add(button2);
+		panel.add(button3);
+		
+		panel.add(box1);
+		panel.add(box2);
+		
+		jfjf.setVisible(true);
 
 		return panel;
 	}
@@ -127,7 +136,7 @@ public class make_panel3 implements ActionListener {
 
 	public static void Draw_Chart(String b1, String b2)
 	{
-		System.out.println(b1 + b2);
+		
 		if(b1.equals(condition[0])) // all
 		{
 			// ---------------그래프 그리기 --------------------------//
@@ -325,26 +334,5 @@ public class make_panel3 implements ActionListener {
 		}
 		
 	}
-	public static void set_display() 
-	{
-		button1.setBounds(0, 0, 100, 50);
-		box1.setBounds(0, 50, 100, 50);
-		box1.setVisible(cond1_flag);
 
-		button2.setBounds(0, 100, 100, 50);
-		box2.setBounds(0, 150, 100, 50);
-		box2.setVisible(cond2_flag);
-
-		button3.setBounds(0, 200, 100, 50);
-		
-		panel.add(button1);
-		panel.add(button2);
-		panel.add(button3);
-		
-		panel.add(box1);
-		panel.add(box2);
-		
-		
-		jfjf.setVisible(true);
-	}
 }
