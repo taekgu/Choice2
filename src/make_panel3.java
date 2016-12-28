@@ -16,7 +16,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 public class make_panel3 implements ActionListener {
 	static private JPanel panel = new JPanel(null);
 
-	static private int Temp_G_X_Size = 870, Temp_G_Y_Size = 700;
+	static private int Temp_G_X_Size = 1320, Temp_G_Y_Size = 1000;
 
 	// 사용하는 변수 선언 & 초기화
 	static jPanel03 jP3 = new jPanel03(); // 파넬 전체
@@ -174,9 +174,9 @@ public class make_panel3 implements ActionListener {
 				XYSeriesCollection dataset = new XYSeriesCollection();
 				XYDataset xydataset = dataset;
 
-				for (int i = 0; i < 35; i++) {
-					series.add(i * 600000 - 26640000, arrdata[0][i]);
-				}
+				for(int i=0;i<144;i++){
+		               series.add(i*600000-32400000,arrdata[0][i]);
+		        }
 
 				dataset.addSeries(series);
 
@@ -206,7 +206,7 @@ public class make_panel3 implements ActionListener {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			PieChart.setBounds(970, 350, 400, 350);
+			PieChart.setBounds(1420, 490, 500, 500);
 			CP3.setBounds(100, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 			panel.add(button1);
@@ -255,8 +255,8 @@ public class make_panel3 implements ActionListener {
 				gddataset = new XYSeriesCollection();
 				gdxydataset = gddataset;
 
-				for (int i = 0; i < 35; i++) {
-					gdseries1.add(i * 600000 - 26640000, gdarrdata[0][i]);
+				for (int i = 0; i<144; i++) {
+					gdseries1.add(i*600000-32400000, gdarrdata[0][i]);
 				}
 
 				gddataset.addSeries(gdseries1);
@@ -267,7 +267,7 @@ public class make_panel3 implements ActionListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				m_PieChart.setBounds(970, 350, 400, 350);
+				m_PieChart.setBounds(1420, 490, 500, 500);
 				CP3.setBounds(100, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -289,8 +289,8 @@ public class make_panel3 implements ActionListener {
 				gddataset = new XYSeriesCollection();
 				gdxydataset = gddataset;
 
-				for (int i = 0; i < 35; i++) {
-					gdseries2.add(i * 600000 - 26640000, gdarrdata[1][i]);
+				for (int i = 0; i<144; i++) {
+					gdseries2.add(i*600000-32400000, gdarrdata[1][i]);
 				}
 
 				gddataset.addSeries(gdseries2);
@@ -301,7 +301,7 @@ public class make_panel3 implements ActionListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				f_PieChart.setBounds(970, 350, 400, 350);
+				f_PieChart.setBounds(1420, 490, 500, 500);
 				CP3.setBounds(100, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -360,8 +360,8 @@ public class make_panel3 implements ActionListener {
 				agedataset = new XYSeriesCollection();
 				agexydataset = agedataset;
 
-				for (int i = 0; i < 35; i++) {
-					ageseries0.add(i * 600000 - 26640000, agearrdata[0][i]);
+				for (int i = 0; i<144; i++) {
+					ageseries0.add(i*600000-32400000, agearrdata[0][i]);
 				}
 
 				agedataset.addSeries(ageseries0);
@@ -372,7 +372,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				agePieChart0.setBounds(970, 350, 400, 350);
+				agePieChart0.setBounds(1420, 490, 500, 500);
 				CP3.setBounds(100, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -393,8 +393,8 @@ public class make_panel3 implements ActionListener {
 				agedataset = new XYSeriesCollection();
 				agexydataset = agedataset;
 
-				for (int i = 0; i < 35; i++) {
-					ageseries1.add(i * 600000 - 26640000, agearrdata[1][i]);
+				for (int i = 0; i<144; i++) {
+					ageseries1.add(i*600000-32400000, agearrdata[1][i]);
 				}
 
 				agedataset.addSeries(ageseries1);
@@ -405,7 +405,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				agePieChart1.setBounds(970, 350, 400, 350);
+				agePieChart1.setBounds(1420, 490, 500, 500);
 				CP3.setBounds(100, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -426,8 +426,8 @@ public class make_panel3 implements ActionListener {
 				agedataset = new XYSeriesCollection();
 				agexydataset = agedataset;
 
-				for (int i = 0; i < 35; i++) {
-					ageseries2.add(i * 600000 - 26640000, agearrdata[2][i]);
+				for (int i = 0; i<144; i++) {
+					ageseries2.add(i*600000-32400000, agearrdata[2][i]);
 				}
 
 				agedataset.addSeries(ageseries2);
@@ -438,7 +438,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				agePieChart2.setBounds(970, 350, 400, 350);
+				agePieChart2.setBounds(1420, 490, 500, 500);
 				CP3.setBounds(100, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -459,8 +459,8 @@ public class make_panel3 implements ActionListener {
 				agedataset = new XYSeriesCollection();
 				agexydataset = agedataset;
 
-				for (int i = 0; i < 35; i++) {
-					ageseries3.add(i * 600000 - 26640000, agearrdata[3][i]);
+				for (int i = 0; i<144; i++) {
+					ageseries3.add(i*600000-32400000, agearrdata[3][i]);
 				}
 
 				agedataset.addSeries(ageseries3);
@@ -471,7 +471,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				agePieChart3.setBounds(970, 350, 400, 350);
+				agePieChart3.setBounds(1420, 490, 500, 500);
 				CP3.setBounds(100, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -491,8 +491,8 @@ public class make_panel3 implements ActionListener {
 				agedataset = new XYSeriesCollection();
 				agexydataset = agedataset;
 
-				for (int i = 0; i < 35; i++) {
-					ageseries4.add(i * 600000 - 26640000, agearrdata[4][i]);
+				for (int i = 0; i<144; i++) {
+					ageseries4.add(i*600000-32400000, agearrdata[4][i]);
 				}
 
 				agedataset.addSeries(ageseries4);
@@ -503,7 +503,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				agePieChart4.setBounds(970, 350, 400, 350);
+				agePieChart4.setBounds(1420, 490, 500, 500);
 				CP3.setBounds(100, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -524,8 +524,8 @@ public class make_panel3 implements ActionListener {
 				agedataset = new XYSeriesCollection();
 				agexydataset = agedataset;
 
-				for (int i = 0; i < 35; i++) {
-					ageseries5.add(i * 600000 - 26640000, agearrdata[5][i]);
+				for (int i = 0; i<144; i++) {
+					ageseries5.add(i*600000-32400000, agearrdata[5][i]);
 				}
 
 				agedataset.addSeries(ageseries5);
@@ -536,7 +536,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				agePieChart5.setBounds(970, 350, 400, 350);
+				agePieChart5.setBounds(1420, 490, 500, 500);
 				CP3.setBounds(100, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -557,8 +557,8 @@ public class make_panel3 implements ActionListener {
 				agedataset = new XYSeriesCollection();
 				agexydataset = agedataset;
 
-				for (int i = 0; i < 35; i++) {
-					ageseries6.add(i * 600000 - 26640000, agearrdata[6][i]);
+				for (int i = 0; i<144; i++) {
+					ageseries6.add(i*600000-32400000, agearrdata[6][i]);
 				}
 
 				agedataset.addSeries(ageseries6);
@@ -569,7 +569,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				agePieChart6.setBounds(970, 350, 400, 350);
+				agePieChart6.setBounds(1420, 490, 500, 500);
 				CP3.setBounds(100, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -590,8 +590,8 @@ public class make_panel3 implements ActionListener {
 				agedataset = new XYSeriesCollection();
 				agexydataset = agedataset;
 
-				for (int i = 0; i < 35; i++) {
-					ageseries7.add(i * 600000 - 26640000, agearrdata[7][i]);
+				for (int i = 0; i<144; i++) {
+					ageseries7.add(i*600000-32400000, agearrdata[7][i]);
 				}
 
 				agedataset.addSeries(ageseries7);
@@ -602,7 +602,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				agePieChart7.setBounds(970, 350, 400, 350);
+				agePieChart7.setBounds(1420, 490, 500, 500);
 				CP3.setBounds(100, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -654,8 +654,8 @@ public class make_panel3 implements ActionListener {
 				ssdataset = new XYSeriesCollection();
 				ssxydataset = ssdataset;
 
-				for (int i = 0; i < 35; i++) {
-					ssseries0.add(i * 600000 - 26640000, ssarrdata[0][i]);
+				for (int i = 0; i<144; i++) {
+					ssseries0.add(i*600000-32400000, ssarrdata[0][i]);
 				}
 
 				ssdataset.addSeries(ssseries0);
@@ -666,7 +666,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				ssPieChart0.setBounds(970, 350, 400, 350);
+				ssPieChart0.setBounds(1420, 490, 500, 500);
 				CP3.setBounds(100, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -686,8 +686,8 @@ public class make_panel3 implements ActionListener {
 				ssdataset = new XYSeriesCollection();
 				ssxydataset = ssdataset;
 
-				for (int i = 0; i < 35; i++) {
-					ssseries1.add(i * 600000 - 26640000, ssarrdata[1][i]);
+				for (int i = 0; i<144; i++) {
+					ssseries1.add(i*600000-32400000, ssarrdata[1][i]);
 				}
 
 				ssdataset.addSeries(ssseries1);
@@ -698,7 +698,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				ssPieChart1.setBounds(970, 350, 400, 350);
+				ssPieChart1.setBounds(1420, 490, 500, 500);
 				CP3.setBounds(100, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -718,8 +718,8 @@ public class make_panel3 implements ActionListener {
 				ssdataset = new XYSeriesCollection();
 				ssxydataset = ssdataset;
 
-				for (int i = 0; i < 35; i++) {
-					ssseries2.add(i * 600000 - 26640000, ssarrdata[1][i]);
+				for (int i = 0; i<144; i++) {
+					ssseries2.add(i*600000-32400000, ssarrdata[1][i]);
 				}
 
 				ssdataset.addSeries(ssseries2);
@@ -730,7 +730,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				ssPieChart2.setBounds(970, 350, 400, 350);
+				ssPieChart2.setBounds(1420, 490, 500, 500);
 				CP3.setBounds(100, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -750,8 +750,8 @@ public class make_panel3 implements ActionListener {
 				ssdataset = new XYSeriesCollection();
 				ssxydataset = ssdataset;
 
-				for (int i = 0; i < 35; i++) {
-					ssseries3.add(i * 600000 - 26640000, ssarrdata[1][i]);
+				for (int i = 0; i<144; i++) {
+					ssseries3.add(i*600000-32400000, ssarrdata[1][i]);
 				}
 
 				ssdataset.addSeries(ssseries3);
@@ -762,7 +762,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				ssPieChart3.setBounds(970, 350, 400, 350);
+				ssPieChart3.setBounds(1420, 490, 500, 500);
 				CP3.setBounds(100, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
