@@ -124,7 +124,7 @@ public class make_panel3 implements ActionListener {
 		panel.add(box1);
 		panel.add(box2);
 		
-		jfjf.setVisible(true);
+		//jfjf.setVisible(true);
 
 		return panel;
 	}

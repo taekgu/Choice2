@@ -34,7 +34,7 @@ public class database_load_avg{
 			//HY
 			//st.execute("USE chois;");//������ ���̽� ���
 			//JJ
-			st.execute("USE hy1;");
+			st.execute("USE hy2;");
 			rs = st.executeQuery("SELECT date, temp from temp_avg;"); //select// ���� ����� ResultSet�� ��� ���� �޼ҵ�� �ַ� SELECT���� ���˴ϴ�.
 
 			rs.next(); 
@@ -94,7 +94,7 @@ public class database_load_avg{
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(dbURL,"root","1234"); // ���ῡ ���� �ο�? 
 			st = con.createStatement();// ����
-			st.execute("USE hy1;");//������ ���̽� ���
+			st.execute("USE hy2;");//������ ���̽� ���
 			//--------------------------------------------------------------------------------------------------------------
 
 

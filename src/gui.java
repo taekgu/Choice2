@@ -1,7 +1,10 @@
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Frame;
 
 import java.awt.GridBagConstraints;
@@ -29,9 +32,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
+import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+
 
 
 public class gui extends JFrame {
@@ -82,13 +88,20 @@ public class gui extends JFrame {
 	JComboBox<String> box1;
 	JComboBox<String> box2;
 	JComboBox<String> box3;
-	JPanel p1 ;
+	JPanel p1;
+	JPanel p3;
 	ChartPanel CP;
+	
 	JRadioButton rb1;
 	JRadioButton rb2;
 	JRadioButton rb3;
-	JRadioButton rb4;
 	ButtonGroup Bgroup;
+	
+	JPanel p4;
+	JLabel jl1;
+	JLabel jl2;
+	JLabel jl3;
+	Font f;
 	
 	
 	public gui() throws IOException, SQLException
@@ -106,11 +119,28 @@ public class gui extends JFrame {
 		
 		//p1 = new JPanel(new GridBagLayout());
 		CP = new ChartPanel(null);
+		p3 = new JPanel();
 		rb1 = new JRadioButton();
 		rb2 = new JRadioButton();
 		rb3 = new JRadioButton();
 		Bgroup = new ButtonGroup();
 		
+		p4 = new JPanel();
+		jl1 = new JLabel("ID     : ");
+		jl2 = new JLabel("Gender : ");
+		jl3 = new JLabel("Birth  : ");
+		//f = new JTabbedPane().getFont();
+		/*
+	    Font currentFont = super.getFont();
+	    String fontName = currentFont.getFontName();
+	    int fontStyle = currentFont.getStyle();
+	    int fontSize = currentFont.getSize() + 4;
+	    super.setFont(new Font(fontName, fontStyle, fontSize));*/
+		//f = super.getFont();
+		
+		
+		
+		//Bgroup2 = new ButtonGroup();w
 		
 		try {
 			//sb
@@ -137,6 +167,7 @@ public class gui extends JFrame {
 		panel2.setLayout(null);
 		
 		panel3 = make_panel3.make(jF);
+		
 				
 		// add chart in JPanel
 		jPanel01 jP = new jPanel01();
@@ -167,6 +198,10 @@ public class gui extends JFrame {
 		tabbedPane.add("Data", panel1);
 		tabbedPane.add("Map", panel2);
 		tabbedPane.add("Third", panel3);
+		//Font nf = get_Font();
+		//tabbedPane.setFont(nf);
+		//tabbedPane.setFont( new Font( "Dialog", Font.BOLD|Font.ITALIC, 24 ) );
+		//tabbedPane.setFont(new Font())
 		//tabbedPane.add("Th)
 		
 		//占쏙옙크占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占�
@@ -210,28 +245,42 @@ public class gui extends JFrame {
 		
 		//Radio Button--------------------------------------
 		
+		p3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Option", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0,0,0)));
+		p3.setBounds(5, 400, 85, 115);
+		p3.setLayout(new FlowLayout(FlowLayout.LEFT));
+		
 		rb1.setText("All");
-		rb1.setBounds(0, 400, 70, 20);
+		//rb1.setBounds(0, 400, 70, 20);
 		rb1.setVisible(true);
 		rb1.setSelected(true);
 		rb1.addActionListener(new MyActionListener3());
-		panel1.add(rb1);
+		p3.add(rb1);
 		
 		rb2.setText("Male");
-		rb2.setBounds(0, 450, 70, 20);
+		//rb2.setBounds(0, 450, 70, 20);
 		rb2.setVisible(true);
 		rb2.addActionListener(new MyActionListener3());
-		panel1.add(rb2);
+		p3.add(rb2);
 		
 		rb3.setText("Female");
-		rb3.setBounds(0, 500, 70, 20);
+		//rb3.setBounds(0, 500, 70, 20);
 		rb3.setVisible(true);
 		rb3.addActionListener(new MyActionListener3());
-		panel1.add(rb3);
-		
+		p3.add(rb3);
+		p3.setVisible(true);
 		Bgroup.add(rb1);
 		Bgroup.add(rb2);
 		Bgroup.add(rb3);
+		panel1.add(p3);
+		
+		p4.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "User Info", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0,0,0)));
+		p4.setLayout(new FlowLayout(FlowLayout.LEFT));
+		p4.setBounds(5, 600, 85, 115);
+		p4.add(jl1);
+		p4.add(jl2);
+		p4.add(jl3);
+		p4.setVisible(true);
+		panel1.add(p4);
 		//---------------------------------------------------
 		
 		
@@ -275,7 +324,18 @@ public class gui extends JFrame {
 		
 		panel1.setVisible(true);
 	}
-
+	public Font get_Font()
+	{
+			//Font cf, nf;
+			//cf= super.getFont();
+			//String fontName = cf.get().toString();
+			//System.out.println(fontName);
+			//int fontStyle = cf.getStyle();
+			//int fontSize = cf.getSize() + 4;
+			//nf = new Font(super.getFont().getFontName(), super.getFont().getStyle(), super.getFont().getSize() + 4);
+			
+			return null;
+	}
 	public void setUser(){
 		
 		try {
