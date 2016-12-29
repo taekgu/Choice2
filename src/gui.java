@@ -144,12 +144,12 @@ public class gui extends JFrame {
 		
 		try {
 			//sb
-			//con = DriverManager.getConnection("jdbc:mysql://localhost","root", "1234"); 
-			con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234");
+			con = DriverManager.getConnection("jdbc:mysql://localhost","root", "1234"); 
+			//con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234");
 			st = con.createStatement();
 			//sb
-			rs = st.executeQuery("use newschema5");
-			//rs = st.executeQuery("use newschema");
+			//rs = st.executeQuery("use newschema5");
+			rs = st.executeQuery("use newschema");
 			//rs = st.executeQuery("use testschema");
 			
 			
@@ -206,16 +206,16 @@ public class gui extends JFrame {
 		//tabbedPane.setFont(new Font())
 		//tabbedPane.add("Th)
 		
-		//占쏙옙크占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占�
+		//�뜝�룞�삕�겕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝占�
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension di  = tk.getScreenSize();
-		//占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
+		//�뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕
 		jF = new JFrame();
 		jF.add(tabbedPane);
 		jF.setSize((int)di.getWidth(),(int)di.getWidth()-200); // Full Screen
 		//jF.setSize(800, 600);
-		jF.setTitle("Choice Tech"); // 창 占쏙옙占쏙옙
-		jF.setExtendedState(JFrame.MAXIMIZED_BOTH); // 占쌍댐옙화
+		jF.setTitle("Choice Tech"); // 李� �뜝�룞�삕�뜝�룞�삕
+		jF.setExtendedState(JFrame.MAXIMIZED_BOTH); // �뜝�뙇�뙋�삕�솕
 		jF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		jF.setVisible(true);
 	
@@ -352,6 +352,7 @@ public class gui extends JFrame {
 			
 			D_Button.setText("t_date");
 	    	D_Button.setBounds(0, 0, 100, 50);
+	    	D_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 	    	D_Button.addActionListener(new MyActionListener());
 	    	combo_d.setBounds(0, 50, 100, 50);
 			while(rs.next()){
@@ -371,6 +372,7 @@ public class gui extends JFrame {
 			
 			U_Button.setText("User");
 			U_Button.setBounds(0, 500, 100, 50);
+			U_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 			U_Button.addActionListener(new MyActionListener());
 			combo_u.setBounds(0, 550, 100, 50);
 			combo_u.setVisible(false);
@@ -382,22 +384,27 @@ public class gui extends JFrame {
 		
 		A_Button.setText("t_temp");
 		A_Button.setBounds(0,620,100,50);
+		A_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		A_Button.addActionListener(new MyActionListener());
 		
 		AA_Button.setText("t_h_temp");
 		AA_Button.setBounds(0,670,100,50);
+		AA_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		AA_Button.addActionListener(new MyActionListener());
 		
 		do_Button.setText("start");
 		do_Button.setBounds(0,770,100,50);
+		do_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		do_Button.addActionListener(new MyActionListener());
 		
 		T_Button.setText("p_temp");
 		T_Button.setBounds(0, 870, 100, 50);
+		T_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		T_Button.addActionListener(new MyActionListener());
 		
 		TT_Button.setText("p_h_temp");
 		TT_Button.setBounds(0, 920, 100, 50);
+		TT_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		TT_Button.addActionListener(new MyActionListener());
 		
 		
@@ -427,7 +434,7 @@ public class gui extends JFrame {
             	setTitle(b.getText());
             	            	
             	combo_d.setVisible(false);
-            	// InnerClassListener�쓽 硫ㅻ쾭�굹 JFrame�쓽 硫ㅻ쾭 �샇異�
+            	// InnerClassListener占쎌벥 筌롢끇苡�占쎄돌 JFrame占쎌벥 筌롢끇苡� 占쎌깈�빊占�
             }
             //---------------user---------------------
             if (b.getText().equals("User")){
@@ -459,7 +466,7 @@ public class gui extends JFrame {
             }
             
             if (b.getText().equals("start")){
-            	// �궇吏�, �궗�엺, 怨�-���삩
+            	// 占쎄텊筌욑옙, 占쎄텢占쎌뿺, �⑨옙-占쏙옙占쎌궔
             	// date, user, temp
             	showMap(date, user, temp);
             } 
