@@ -67,7 +67,7 @@ public class Map extends JFrame{
 			st = con.createStatement();
 			//sb
 			//rs = st.executeQuery("use testschema");
-			rs = st.executeQuery("use newschema4");
+			rs = st.executeQuery("use newschema5");
 			
 			
 			

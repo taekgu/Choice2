@@ -24,7 +24,7 @@ public class database_load_gender{
 			//---------------------------------------------------------------------------------------------------------------
 			//JJ ------------------------------------------------------------------------------------------------------------
 			String dbURL =  "jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection(dbURL,"root","1234"); // ���ῡ ���� �ο�? 
 			st = con.createStatement();// ����
 			st.execute("USE hy2;");//������ ���̽� ���
@@ -80,7 +80,7 @@ public class database_load_gender{
 			//---------------------------------------------------------------------------------------------------------------
 			//JJ ------------------------------------------------------------------------------------------------------------
 			String dbURL =  "jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection(dbURL,"root","1234"); // ���ῡ ���� �ο�? 
 			st = con.createStatement();// ����
 			st.execute("USE hy2;");//������ ���̽� ���

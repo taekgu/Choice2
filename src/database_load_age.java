@@ -1,4 +1,4 @@
-package practice;
+//package practice;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,167 +8,173 @@ import java.sql.SQLException;
 public class database_load_age {
 	public static Float[][] dload_avg() throws SQLException {
 
-		// ╟╩┐ф╟╤ ║п╝Ў ╝▒╛Ё ├╩▒т╚н
-		Float[][] temp7h = new Float[8][694]; // ┐┬╡╡└·└х ╣ш┐н
-		Connection con = null;// Database┐═└╟ ┐м░с└╗ └з╟╤ ║п╝Ў
-		java.sql.Statement st = null;// mysql ┐б░╘ ╕э╖╔└╗ │╗╕о▒т └з╟╪
-		ResultSet rs = null; // mysql ┐б╝н└╟ ░с░·╕ж ╣▐╛╞┐╚. (╟╤┴┘╛┐?)
-		int i = 0; // for ╣о┐б ╗ч┐ы
+		// я┐╜╩┐я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜ я┐╜╩▒я┐╜╚н
+		Float[][] temp7h = new Float[8][694]; // я┐╜┬╡я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜ш┐н
+		Connection con = null;// Databaseя┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
+		java.sql.Statement st = null;// mysql я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
+		ResultSet rs = null; // mysql я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜▐╛╞┐я┐╜. (я┐╜я┐╜я┐╜┘╛я┐╜?)
+		int i = 0; // for я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜
 		try {
 
-			String dbURL = "jdbc:mysql://127.0.0.1:3306?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
-			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection(dbURL, "root", "asdasd"); // ┐м░с┐б
-																		// ▒╟╟╤
-																		// ║╬┐й?
-
-			st = con.createStatement();// ┐м░с
-			st.execute("USE chois;");// ╡е└╠┼═ ║г└╠╜║ ╗ч┐ы
+			//HY--------------------------------------------------------------------------------------------------------------
+			//String dbURL = "jdbc:mysql://127.0.0.1:3306?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
+			//Class.forName("com.mysql.jdbc.Driver");
+			//con = DriverManager.getConnection(dbURL,"root","asdasd"); // я┐╜я┐╜я┐╜с┐б я┐╜я┐╜я┐╜я┐╜ я┐╜╬┐я┐╜? 
+			//st = con.createStatement();// я┐╜я┐╜я┐╜я┐╜
+			//st.execute("USE chois;");//я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜╠╜я┐╜ я┐╜я┐╜я┐╜
+			//---------------------------------------------------------------------------------------------------------------
+			//JJ ------------------------------------------------------------------------------------------------------------
+			String dbURL =  "jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(dbURL,"root","1234"); // я┐╜я┐╜я┐╜с┐б я┐╜я┐╜я┐╜я┐╜ я┐╜╬┐я┐╜? 
+			st = con.createStatement();// я┐╜я┐╜я┐╜я┐╜
+			st.execute("USE hy2;");//я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜╠╜я┐╜ я┐╜я┐╜я┐╜
+			//--------------------------------------------------------------------------------------------------------------
 
 			rs = st.executeQuery("SELECT age, date, temp from temp_age where age=0 ;"); // select//
-																						// ─ї╕о
-																						// ░с░·╕ж
-																						// ResultSet└╗
-																						// ╛Є▒т
-																						// └з╟╤
-																						// ╕▐╝╥╡х╖╬
-																						// ┴╓╖╬
-																						// SELECT╣о┐б
-																						// ╗ч┐ы╡╦┤╧┤┘.
+																						// я┐╜я┐╜я┐╜я┐╜
+																						// я┐╜я┐╜я┐╜я┐╜я┐╜
+																						// ResultSetя┐╜я┐╜
+																						// я┐╜я┐╜я┐╜
+																						// я┐╜я┐╜я┐╜я┐╜
+																						// я┐╜▐╝╥╡я┐╜я┐╜
+																						// я┐╜╓╖я┐╜
+																						// SELECTя┐╜я┐╜я┐╜я┐╜
+																						// я┐╜я┐╜я┐╜╦┤╧┤я┐╜.
 
 			while (rs.next()) {
-				Float flo = rs.getFloat(3);// ┐┬╡╡
-				temp7h[0][i] = flo;// ┐┬╡╡ ╣ш┐н┐б └·└х
+				Float flo = rs.getFloat(3);// я┐╜┬╡я┐╜
+				temp7h[0][i] = flo;// я┐╜┬╡я┐╜ я┐╜ш┐ня┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
 				i++;
 			}
 
 			i = 0;
 			rs = st.executeQuery("SELECT age, date, temp from temp_age where age=10 ;"); // select//
-																							// ─ї╕о
-																							// ░с░·╕ж
-																							// ResultSet└╗
-																							// ╛Є▒т
-																							// └з╟╤
-																							// ╕▐╝╥╡х╖╬
-																							// ┴╓╖╬
-																							// SELECT╣о┐б
-																							// ╗ч┐ы╡╦┤╧┤┘.
+																							// я┐╜я┐╜я┐╜я┐╜
+																							// я┐╜я┐╜я┐╜я┐╜я┐╜
+																							// ResultSetя┐╜я┐╜
+																							// я┐╜я┐╜я┐╜
+																							// я┐╜я┐╜я┐╜я┐╜
+																							// я┐╜▐╝╥╡я┐╜я┐╜
+																							// я┐╜╓╖я┐╜
+																							// SELECTя┐╜я┐╜я┐╜я┐╜
+																							// я┐╜я┐╜я┐╜╦┤╧┤я┐╜.
 
 			while (rs.next()) {
-				Float flo = rs.getFloat(3);// ┐┬╡╡
-				temp7h[1][i] = flo;// ┐┬╡╡ ╣ш┐н┐б └·└х
+				Float flo = rs.getFloat(3);// я┐╜┬╡я┐╜
+				temp7h[1][i] = flo;// я┐╜┬╡я┐╜ я┐╜ш┐ня┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
 				i++;
 			}
 
 			i = 0;
 			rs = st.executeQuery("SELECT age, date, temp from temp_age where age=20 ;"); // select//
-																							// ─ї╕о
-																							// ░с░·╕ж
-																							// ResultSet└╗
-																							// ╛Є▒т
-																							// └з╟╤
-																							// ╕▐╝╥╡х╖╬
-																							// ┴╓╖╬
-																							// SELECT╣о┐б
-																							// ╗ч┐ы╡╦┤╧┤┘.
+																							// я┐╜я┐╜я┐╜я┐╜
+																							// я┐╜я┐╜я┐╜я┐╜я┐╜
+																							// ResultSetя┐╜я┐╜
+																							// я┐╜я┐╜я┐╜
+																							// я┐╜я┐╜я┐╜я┐╜
+																							// я┐╜▐╝╥╡я┐╜я┐╜
+																							// я┐╜╓╖я┐╜
+																							// SELECTя┐╜я┐╜я┐╜я┐╜
+																							// я┐╜я┐╜я┐╜╦┤╧┤я┐╜.
 
 			while (rs.next()) {
-				Float flo = rs.getFloat(3);// ┐┬╡╡
-				temp7h[2][i] = flo;// ┐┬╡╡ ╣ш┐н┐б └·└х
+				Float flo = rs.getFloat(3);// я┐╜┬╡я┐╜
+				temp7h[2][i] = flo;// я┐╜┬╡я┐╜ я┐╜ш┐ня┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
 				i++;
 			}
 
 			i = 0;
 			rs = st.executeQuery("SELECT age, date, temp from temp_age where age=30 ;"); // select//
-																							// ─ї╕о
-																							// ░с░·╕ж
-																							// ResultSet└╗
-																							// ╛Є▒т
-																							// └з╟╤
-																							// ╕▐╝╥╡х╖╬
-																							// ┴╓╖╬
-																							// SELECT╣о┐б
-																							// ╗ч┐ы╡╦┤╧┤┘.
+																							// я┐╜я┐╜я┐╜я┐╜
+																							// я┐╜я┐╜я┐╜я┐╜я┐╜
+																							// ResultSetя┐╜я┐╜
+																							// я┐╜я┐╜я┐╜
+																							// я┐╜я┐╜я┐╜я┐╜
+																							// я┐╜▐╝╥╡я┐╜я┐╜
+																							// я┐╜╓╖я┐╜
+																							// SELECTя┐╜я┐╜я┐╜я┐╜
+																							// я┐╜я┐╜я┐╜╦┤╧┤я┐╜.
 
 			while (rs.next()) {
-				Float flo = rs.getFloat(3);// ┐┬╡╡
-				temp7h[3][i] = flo;// ┐┬╡╡ ╣ш┐н┐б └·└х
+				Float flo = rs.getFloat(3);// я┐╜┬╡я┐╜
+				temp7h[3][i] = flo;// я┐╜┬╡я┐╜ я┐╜ш┐ня┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
 				i++;
 			}
 
 			i = 0;
 			rs = st.executeQuery("SELECT age, date, temp from temp_age where age=40 ;"); // select//
-																							// ─ї╕о
-																							// ░с░·╕ж
-																							// ResultSet└╗
-																							// ╛Є▒т
-																							// └з╟╤
-																							// ╕▐╝╥╡х╖╬
-																							// ┴╓╖╬
-																							// SELECT╣о┐б
-																							// ╗ч┐ы╡╦┤╧┤┘.
+																							// я┐╜я┐╜я┐╜я┐╜
+																							// я┐╜я┐╜я┐╜я┐╜я┐╜
+																							// ResultSetя┐╜я┐╜
+																							// я┐╜я┐╜я┐╜
+																							// я┐╜я┐╜я┐╜я┐╜
+																							// я┐╜▐╝╥╡я┐╜я┐╜
+																							// я┐╜╓╖я┐╜
+																							// SELECTя┐╜я┐╜я┐╜я┐╜
+																							// я┐╜я┐╜я┐╜╦┤╧┤я┐╜.
 
 			while (rs.next()) {
-				Float flo = rs.getFloat(3);// ┐┬╡╡
-				temp7h[4][i] = flo;// ┐┬╡╡ ╣ш┐н┐б └·└х
+				Float flo = rs.getFloat(3);// я┐╜┬╡я┐╜
+				temp7h[4][i] = flo;// я┐╜┬╡я┐╜ я┐╜ш┐ня┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
 				i++;
 			}
 
 			i = 0;
 			rs = st.executeQuery("SELECT age, date, temp from temp_age where age=50 ;"); // select//
-																							// ─ї╕о
-																							// ░с░·╕ж
-																							// ResultSet└╗
-																							// ╛Є▒т
-																							// └з╟╤
-																							// ╕▐╝╥╡х╖╬
-																							// ┴╓╖╬
-																							// SELECT╣о┐б
-																							// ╗ч┐ы╡╦┤╧┤┘.
+																							// я┐╜я┐╜я┐╜я┐╜
+																							// я┐╜я┐╜я┐╜я┐╜я┐╜
+																							// ResultSetя┐╜я┐╜
+																							// я┐╜я┐╜я┐╜
+																							// я┐╜я┐╜я┐╜я┐╜
+																							// я┐╜▐╝╥╡я┐╜я┐╜
+																							// я┐╜╓╖я┐╜
+																							// SELECTя┐╜я┐╜я┐╜я┐╜
+																							// я┐╜я┐╜я┐╜╦┤╧┤я┐╜.
 
 			while (rs.next()) {
-				Float flo = rs.getFloat(3);// ┐┬╡╡
-				temp7h[5][i] = flo;// ┐┬╡╡ ╣ш┐н┐б └·└х
+				Float flo = rs.getFloat(3);// я┐╜┬╡я┐╜
+				temp7h[5][i] = flo;// я┐╜┬╡я┐╜ я┐╜ш┐ня┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
 				i++;
 			}
 
 			i = 0;
 			rs = st.executeQuery("SELECT age, date, temp from temp_age where age=60 ;"); // select//
-																							// ─ї╕о
-																							// ░с░·╕ж
-																							// ResultSet└╗
-																							// ╛Є▒т
-																							// └з╟╤
-																							// ╕▐╝╥╡х╖╬
-																							// ┴╓╖╬
-																							// SELECT╣о┐б
-																							// ╗ч┐ы╡╦┤╧┤┘.
+																							// я┐╜я┐╜я┐╜я┐╜
+																							// я┐╜я┐╜я┐╜я┐╜я┐╜
+																							// ResultSetя┐╜я┐╜
+																							// я┐╜я┐╜я┐╜
+																							// я┐╜я┐╜я┐╜я┐╜
+																							// я┐╜▐╝╥╡я┐╜я┐╜
+																							// я┐╜╓╖я┐╜
+																							// SELECTя┐╜я┐╜я┐╜я┐╜
+																							// я┐╜я┐╜я┐╜╦┤╧┤я┐╜.
 
 			while (rs.next()) {
-				Float flo = rs.getFloat(3);// ┐┬╡╡
-				temp7h[6][i] = flo;// ┐┬╡╡ ╣ш┐н┐б └·└х
+				Float flo = rs.getFloat(3);// я┐╜┬╡я┐╜
+				temp7h[6][i] = flo;// я┐╜┬╡я┐╜ я┐╜ш┐ня┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
 				i++;
 			}
 
 			i = 0;
 			rs = st.executeQuery("SELECT age, date, temp from temp_age where age=70 ;"); // select//
-																							// ─ї╕о
-																							// ░с░·╕ж
-																							// ResultSet└╗
-																							// ╛Є▒т
-																							// └з╟╤
-																							// ╕▐╝╥╡х╖╬
-																							// ┴╓╖╬
-																							// SELECT╣о┐б
-																							// ╗ч┐ы╡╦┤╧┤┘.
+																							// я┐╜я┐╜я┐╜я┐╜
+																							// я┐╜я┐╜я┐╜я┐╜я┐╜
+																							// ResultSetя┐╜я┐╜
+																							// я┐╜я┐╜я┐╜
+																							// я┐╜я┐╜я┐╜я┐╜
+																							// я┐╜▐╝╥╡я┐╜я┐╜
+																							// я┐╜╓╖я┐╜
+																							// SELECTя┐╜я┐╜я┐╜я┐╜
+																							// я┐╜я┐╜я┐╜╦┤╧┤я┐╜.
 
 			while (rs.next()) {
-				Float flo = rs.getFloat(3);// ┐┬╡╡
-				temp7h[7][i] = flo;// ┐┬╡╡ ╣ш┐н┐б └·└х
+				Float flo = rs.getFloat(3);// я┐╜┬╡я┐╜
+				temp7h[7][i] = flo;// я┐╜┬╡я┐╜ я┐╜ш┐ня┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
 				i++;
 			}
 
-			// ┐б╖п ├│╕о
+			// я┐╜я┐╜я┐╜я┐╜ ├│я┐╜я┐╜
 		} catch (SQLException sqex) {
 			System.out.println("SQLException: " + sqex.getMessage());
 			System.out.println("SQLState: " + sqex.getSQLState());
@@ -176,38 +182,44 @@ public class database_load_age {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		con.close(); // ┐м░с└╗ │б│╗┴▌┤╧┤┘. -> ╗ч┐ы┐╧╖с
+		con.close(); // я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜▌┤╧┤я┐╜. -> я┐╜я┐╜я┐╜╧╖я┐╜
 
-		return temp7h; // └·└х╟╤ ┐┬╡╡ ╡е└╠┼═ ╕о┼╧
+		return temp7h; // я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜┬╡я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
 	}
 
 	public static double[][] dload_avg_per() throws SQLException {
-		// ╟╩┐ф╟╤ ║п╝Ў ╝▒╛Ё ├╩▒т╚н
-		Connection con = null;// Database┐═└╟ ┐м░с└╗ └з╟╤ ║п╝Ў
-		java.sql.Statement st = null;// mysql ┐б░╘ ╕э╖╔└╗ │╗╕о▒т └з╟╪
-		ResultSet rs = null; // mysql ┐б╝н└╟ ░с░·╕ж ╣▐╛╞┐╚. (╟╤┴┘╛┐?)
-		double[][] fever_per = new double[8][1]; // 0 -> │▓└┌ / 1 -> ┐й└┌
+		// я┐╜╩┐я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜ я┐╜╩▒я┐╜╚н
+		Connection con = null;// Databaseя┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
+		java.sql.Statement st = null;// mysql я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
+		ResultSet rs = null; // mysql я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜▐╛╞┐я┐╜. (я┐╜я┐╜я┐╜┘╛я┐╜?)
+		double[][] fever_per = new double[8][1]; // 0 -> я┐╜я┐╜я┐╜я┐╜ / 1 -> я┐╜я┐╜я┐╜я┐╜
 		try {
 
-			String dbURL = "jdbc:mysql://127.0.0.1:3306?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
-			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection(dbURL, "root", "asdasd"); // ┐м░с┐б
-																		// ▒╟╟╤
-																		// ║╬┐й?
-
-			st = con.createStatement();// ┐м░с
-			st.execute("USE chois;");// ╡е└╠┼═ ║г└╠╜║ ╗ч┐ы
+			//HY--------------------------------------------------------------------------------------------------------------
+			//String dbURL = "jdbc:mysql://127.0.0.1:3306?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
+			//Class.forName("com.mysql.jdbc.Driver");
+			//con = DriverManager.getConnection(dbURL,"root","asdasd"); // я┐╜я┐╜я┐╜с┐б я┐╜я┐╜я┐╜я┐╜ я┐╜╬┐я┐╜? 
+			//st = con.createStatement();// я┐╜я┐╜я┐╜я┐╜
+			//st.execute("USE chois;");//я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜╠╜я┐╜ я┐╜я┐╜я┐╜
+			//---------------------------------------------------------------------------------------------------------------
+			//JJ ------------------------------------------------------------------------------------------------------------
+			String dbURL =  "jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(dbURL,"root","1234"); // я┐╜я┐╜я┐╜с┐б я┐╜я┐╜я┐╜я┐╜ я┐╜╬┐я┐╜? 
+			st = con.createStatement();// я┐╜я┐╜я┐╜я┐╜
+			st.execute("USE hy2;");//я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜╠╜я┐╜ я┐╜я┐╜я┐╜
+			//--------------------------------------------------------------------------------------------------------------
 
 			rs = st.executeQuery("SELECT category, number from population;"); // select//
-																				// ─ї╕о
-																				// ░с░·╕ж
-																				// ResultSet└╗
-																				// ╛Є▒т
-																				// └з╟╤
-																				// ╕▐╝╥╡х╖╬
-																				// ┴╓╖╬
-																				// SELECT╣о┐б
-																				// ╗ч┐ы╡╦┤╧┤┘.
+																				// я┐╜я┐╜я┐╜я┐╜
+																				// я┐╜я┐╜я┐╜я┐╜я┐╜
+																				// ResultSetя┐╜я┐╜
+																				// я┐╜я┐╜я┐╜
+																				// я┐╜я┐╜я┐╜я┐╜
+																				// я┐╜▐╝╥╡я┐╜я┐╜
+																				// я┐╜╓╖я┐╜
+																				// SELECTя┐╜я┐╜я┐╜я┐╜
+																				// я┐╜я┐╜я┐╜╦┤╧┤я┐╜.
 
 			int total0 = 0;
 			int total1 = 0;
@@ -275,7 +287,7 @@ public class database_load_age {
 			fever_per[6][0] = (double)fever6/(double)total6;
 			fever_per[7][0] = (double)fever7/(double)total7;
 			
-			// ┐б╖п ├│╕о
+			// я┐╜я┐╜я┐╜я┐╜ ├│я┐╜я┐╜
 		} catch (SQLException sqex) {
 			System.out.println("SQLException: " + sqex.getMessage());
 			System.out.println("SQLState: " + sqex.getSQLState());
@@ -283,8 +295,8 @@ public class database_load_age {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		con.close(); // ┐м░с└╗ │б│╗┴▌┤╧┤┘. -> ╗ч┐ы┐╧╖с
+		con.close(); // я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜▌┤╧┤я┐╜. -> я┐╜я┐╜я┐╜╧╖я┐╜
 
-		return fever_per; // └·└х╟╤ ┐┬╡╡ ╡е└╠┼═ ╕о┼╧
+		return fever_per; // я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜┬╡я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
 	}
 }

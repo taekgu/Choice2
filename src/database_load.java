@@ -30,7 +30,7 @@ public class database_load {
 			java.sql.Statement st = null;
 			ResultSet rs = null;
 			st = con.createStatement();
-			st.execute("USE newschema4;");
+			st.execute("USE newschema5;");
 			//rs = st.executeQuery("SELECT COUNT(temp) FROM tp WHERE id = 1 AND LEFT(date,10) = " + "'2016-03-11'" + ";");
 			
 			COUNT = 276;

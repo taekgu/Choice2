@@ -81,7 +81,7 @@ public class jPanel01 {
 			con = DriverManager.getConnection(dbURL,"root", "1234");
 			st = con.createStatement();
 			ResultSet rs = null;
-			st.execute("USE newschema4;");
+			st.execute("USE newschema5;");
 			//st.execute("USE testschema;");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -1,4 +1,4 @@
-package practice;
+//package practice;
 import java.io.*;
 import java.awt.Color;
 import java.awt.event.ActionEvent;

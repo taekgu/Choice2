@@ -148,7 +148,7 @@ public class gui extends JFrame {
 			con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234");
 			st = con.createStatement();
 			//sb
-			rs = st.executeQuery("use newschema4");
+			rs = st.executeQuery("use newschema5");
 			//rs = st.executeQuery("use newschema");
 			//rs = st.executeQuery("use testschema");
 			
@@ -198,6 +198,8 @@ public class gui extends JFrame {
 		tabbedPane.add("Data", panel1);
 		tabbedPane.add("Map", panel2);
 		tabbedPane.add("Third", panel3);
+		tabbedPane.setFont( new Font( "Dialog", 0 , 20 ) );
+		
 		//Font nf = get_Font();
 		//tabbedPane.setFont(nf);
 		//tabbedPane.setFont( new Font( "Dialog", Font.BOLD|Font.ITALIC, 24 ) );
@@ -226,18 +228,21 @@ public class gui extends JFrame {
 		b1 = new JButton();
 		b1.setText("User List");
 		b1.setBounds(0, 0,100,50);
+		b1.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		b1.addActionListener(new MyActionListener2()); 
 		panel1.add(b1);
 		
 		b2 = new JButton();
 		b2.setText("Show Chart");
 		b2.setBounds(0, 200,100,50);
+		b2.setFont( new Font( "Dialog", Font.BOLD , 12 ) );
 		b2.addActionListener(new MyActionListener2()); 
 		panel1.add(b2);
 		
 		b3 = new JButton();
 		b3.setText("Date List");
 		b3.setBounds(0, 100, 100, 50);
+		b3.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		b3.addActionListener(new MyActionListener2()); 
 		panel1.add(b3);
 		
@@ -285,7 +290,7 @@ public class gui extends JFrame {
 		
 		
 		//panel1.add(Bgroup);
-		CP = new ChartPanel(new jPanel01().DrawMyChart(database_load.dload("0", "2016-10-21"), "0", "2016-10-21"));
+		CP = new ChartPanel(new jPanel01().DrawMyChart(database_load.dload("0", "2016-04-07"), "0", "2016-04-07"));
 				
 		CP.setBounds(100, 0, 1810, 980);
 		panel1.add(CP);
@@ -375,23 +380,23 @@ public class gui extends JFrame {
 		}
 		
 		A_Button.setText("t_temp");
-		A_Button.setBounds(0,650,100,50);
+		A_Button.setBounds(0,620,100,50);
 		A_Button.addActionListener(new MyActionListener());
 		
 		AA_Button.setText("t_h_temp");
-		AA_Button.setBounds(0,700,100,50);
+		AA_Button.setBounds(0,670,100,50);
 		AA_Button.addActionListener(new MyActionListener());
 		
 		do_Button.setText("start");
-		do_Button.setBounds(0,800,100,50);
+		do_Button.setBounds(0,770,100,50);
 		do_Button.addActionListener(new MyActionListener());
 		
 		T_Button.setText("p_temp");
-		T_Button.setBounds(0, 900, 100, 50);
+		T_Button.setBounds(0, 870, 100, 50);
 		T_Button.addActionListener(new MyActionListener());
 		
 		TT_Button.setText("p_h_temp");
-		TT_Button.setBounds(0, 950, 100, 50);
+		TT_Button.setBounds(0, 920, 100, 50);
 		TT_Button.addActionListener(new MyActionListener());
 		
 		
