@@ -197,7 +197,7 @@ public class gui extends JFrame {
 		
 		tabbedPane.add("Data", panel1);
 		tabbedPane.add("Map", panel2);
-		tabbedPane.add("Third", panel3);
+		tabbedPane.add("Statistics", panel3);
 		tabbedPane.setFont( new Font( "Dialog", 0 , 20 ) );
 		
 		//Font nf = get_Font();
@@ -227,21 +227,21 @@ public class gui extends JFrame {
 		
 		b1 = new JButton();
 		b1.setText("User List");
-		b1.setBounds(0, 0,100,50);
+		b1.setBounds(0, 0,130,50);
 		b1.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		b1.addActionListener(new MyActionListener2()); 
 		panel1.add(b1);
 		
 		b2 = new JButton();
 		b2.setText("Show Chart");
-		b2.setBounds(0, 200,100,50);
-		b2.setFont( new Font( "Dialog", Font.BOLD , 12 ) );
+		b2.setBounds(0, 200,130,50);
+		b2.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		b2.addActionListener(new MyActionListener2()); 
 		panel1.add(b2);
 		
 		b3 = new JButton();
 		b3.setText("Date List");
-		b3.setBounds(0, 100, 100, 50);
+		b3.setBounds(0, 100, 130, 50);
 		b3.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		b3.addActionListener(new MyActionListener2()); 
 		panel1.add(b3);
@@ -251,7 +251,7 @@ public class gui extends JFrame {
 		//Radio Button--------------------------------------
 		
 		p3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Option", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0,0,0)));
-		p3.setBounds(5, 400, 85, 115);
+		p3.setBounds(5, 400, 100, 115);
 		p3.setLayout(new FlowLayout(FlowLayout.LEFT));
 		
 		rb1.setText("All");
@@ -280,7 +280,7 @@ public class gui extends JFrame {
 		
 		p4.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "User Info", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0,0,0)));
 		p4.setLayout(new FlowLayout(FlowLayout.LEFT));
-		p4.setBounds(5, 600, 85, 115);
+		p4.setBounds(5, 600, 115, 115);
 		p4.add(jl1);
 		p4.add(jl2);
 		p4.add(jl3);
@@ -292,7 +292,7 @@ public class gui extends JFrame {
 		//panel1.add(Bgroup);
 		CP = new ChartPanel(new jPanel01().DrawMyChart(database_load.dload("0", "2016-04-07"), "0", "2016-04-07"));
 				
-		CP.setBounds(100, 0, 1810, 980);
+		CP.setBounds(130, 0, 1780, 980);
 		panel1.add(CP);
 		rs = st.executeQuery("SELECT DISTINCT id FROM tp");
 		while(rs.next()){
@@ -303,8 +303,9 @@ public class gui extends JFrame {
 		//JLabel label1 = new JLabel("User Select : ");
 		//label1.setBounds(10, 0, 100, 20);
 		//panel1.add(label1);
-		box1.setBounds(0,50,100,50);
+		box1.setBounds(0,50,130,50);
 		box1.setVisible(false);
+		
 		panel1.add(box1);
 		
 		//JButton b1 = new JButton();
@@ -319,13 +320,13 @@ public class gui extends JFrame {
 		//JLabel label2 = new JLabel("Date : ");
 		//label2.setBounds(10, 50, 50, 20);
 		//panel1.add(label2);
-		box2.setBounds(0,150,100,50);
+		box2.setBounds(0,150,130,50);
 		box2.setVisible(false);
 		panel1.add(box2);
 
 		b2 = new JButton();
 		b2.setText("Check");
-		b2.setBounds(150, 50,70,20);
+		b2.setBounds(150, 50,100,20);
 		
 		panel1.setVisible(true);
 	}
@@ -581,7 +582,7 @@ public class gui extends JFrame {
 					panel1.remove(CP);
 					CP = new ChartPanel(new jPanel01().DrawMyChart(new_data, box1.getSelectedItem().toString(), box2.getSelectedItem().toString()));
 					
-					CP.setBounds(100, 0, 1820, 980);
+					CP.setBounds(130, 0, 1780, 980);
 					panel1.add(CP);
 					panel1.repaint();
 					panel1.setVisible(true);
