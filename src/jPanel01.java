@@ -64,6 +64,8 @@ public class jPanel01 {
 	JComboBox<String> box2;
 	JPanel p1 ;
 	ChartPanel CP;
+	String gender;
+	String birth;
 		
 	public jPanel01()
 	{
@@ -80,7 +82,7 @@ public class jPanel01 {
 			dbURL=  "jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
 			con = DriverManager.getConnection(dbURL,"root", "1234");
 			st = con.createStatement();
-			ResultSet rs = null;
+			rs = null;
 			st.execute("USE newschema5;");
 			//st.execute("USE testschema;");
 		} catch (SQLException e) {
@@ -94,11 +96,24 @@ public class jPanel01 {
 		int SAMPLE_NUM = database_load.COUNT;
 
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();                // bar chart 1
-
+		try {
+			rs = st.executeQuery("SELECT Distinct sex, birth FROM tp WHERE id = "+ User_num +" AND LEFT(date,10) = '" + Date + "';" );
+			rs.next();
+			int num = rs.getInt(1);
+			if (num == 0)
+				gender = "Male";
+			else
+				gender = "Female";
+			birth = rs.getString(2);
+			System.out.println(gender + " / " + birth);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		for (int i = 0; i < SAMPLE_NUM; i++){	
-		    dataset.addValue(floats[0][i],"User " + User_num + " / " + Date, i+1 + "시");
-
+		    dataset.addValue(floats[0][i],"User : " + User_num + "  /  Date : " + Date+  "  /  Gender : " + gender + "  /  Birth : " + birth, i+1 + "시");
 		}
 		
 		final LineAndShapeRenderer renderer = new LineAndShapeRenderer();
@@ -107,7 +122,7 @@ public class jPanel01 {
 		             ItemLabelAnchor.OUTSIDE6, TextAnchor.TOP_LEFT
 		             );
 		Font f = new Font("Gulim", Font.PLAIN, 10);
-		Font axisF = new Font("Gulim", Font.PLAIN, 10);
+		Font axisF = new Font("Gulim", Font.BOLD, 10);
 		
 		renderer.setBaseItemLabelsVisible(true);
 		renderer.setBaseShapesVisible(true);

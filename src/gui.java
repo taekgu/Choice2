@@ -96,11 +96,7 @@ public class gui extends JFrame {
 	JRadioButton rb2;
 	JRadioButton rb3;
 	ButtonGroup Bgroup;
-	
-	JPanel p4;
-	JLabel jl1;
-	JLabel jl2;
-	JLabel jl3;
+
 	Font f;
 	
 	
@@ -124,11 +120,7 @@ public class gui extends JFrame {
 		rb2 = new JRadioButton();
 		rb3 = new JRadioButton();
 		Bgroup = new ButtonGroup();
-		
-		p4 = new JPanel();
-		jl1 = new JLabel("ID     : ");
-		jl2 = new JLabel("Gender : ");
-		jl3 = new JLabel("Birth  : ");
+
 		//f = new JTabbedPane().getFont();
 		/*
 	    Font currentFont = super.getFont();
@@ -144,12 +136,12 @@ public class gui extends JFrame {
 		
 		try {
 			//sb
-			con = DriverManager.getConnection("jdbc:mysql://localhost","root", "1234"); 
-			//con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234");
+			//con = DriverManager.getConnection("jdbc:mysql://localhost","root", "1234"); 
+			con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234");
 			st = con.createStatement();
 			//sb
-			//rs = st.executeQuery("use newschema5");
-			rs = st.executeQuery("use newschema");
+			rs = st.executeQuery("use newschema5");
+			//rs = st.executeQuery("use newschema");
 			//rs = st.executeQuery("use testschema");
 			
 			
@@ -278,14 +270,8 @@ public class gui extends JFrame {
 		Bgroup.add(rb3);
 		panel1.add(p3);
 		
-		p4.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "User Info", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0,0,0)));
-		p4.setLayout(new FlowLayout(FlowLayout.LEFT));
-		p4.setBounds(5, 600, 115, 115);
-		p4.add(jl1);
-		p4.add(jl2);
-		p4.add(jl3);
-		p4.setVisible(true);
-		panel1.add(p4);
+
+		//panel1.add(p4);
 		//---------------------------------------------------
 		
 		
