@@ -8,58 +8,65 @@ import java.sql.SQLException;
 public class database_load_season {
 	public static Float[][] dload_avg() throws SQLException {
 
-		// ╟╩┐ф╟╤ ║п╝Ў ╝▒╛Ё ├╩▒т╚н
-		Float[][] temp7h = new Float[4][694]; // ┐┬╡╡└·└х ╣ш┐н
-		Connection con = null;// Database┐═└╟ ┐м░с└╗ └з╟╤ ║п╝Ў
-		java.sql.Statement st = null;// mysql ┐б░╘ ╕э╖╔└╗ │╗╕о▒т └з╟╪
-		ResultSet rs = null; // mysql ┐б╝н└╟ ░с░·╕ж ╣▐╛╞┐╚. (╟╤┴┘╛┐?)
-		int i0 = 0,i1 = 0, i2 =0 , i3 = 0; // for ╣о┐б ╗ч┐ы
+		// я┐╜╩┐я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜ я┐╜╩▒я┐╜╚н
+		Float[][] temp7h = new Float[4][694]; // я┐╜┬╡я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜ш┐н
+		Connection con = null;// Databaseя┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
+		java.sql.Statement st = null;// mysql я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
+		ResultSet rs = null; // mysql я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜▐╛╞┐я┐╜. (я┐╜я┐╜я┐╜┘╛я┐╜?)
+		int i0 = 0,i1 = 0, i2 =0 , i3 = 0; // for я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜
 		try {
 
-			String dbURL = "jdbc:mysql://127.0.0.1:3306?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
-			Class.forName("com.mysql.jdbc.Driver");
-			
-			con = DriverManager.getConnection(dbURL, "root", "asdasd"); // ┐м░с┐б
-							
-			st = con.createStatement();// ┐м░с
-			st.execute("USE chois;");// ╡е└╠┼═ ║г└╠╜║ ╗ч┐ы
+			//HY--------------------------------------------------------------------------------------------------------------
+			//String dbURL = "jdbc:mysql://127.0.0.1:3306?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
+			//Class.forName("com.mysql.jdbc.Driver");
+			//con = DriverManager.getConnection(dbURL,"root","asdasd"); // я┐╜я┐╜я┐╜с┐б я┐╜я┐╜я┐╜я┐╜ я┐╜╬┐я┐╜? 
+			//st = con.createStatement();// я┐╜я┐╜я┐╜я┐╜
+			//st.execute("USE chois;");//я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜╠╜я┐╜ я┐╜я┐╜я┐╜
+			//---------------------------------------------------------------------------------------------------------------
+			//JJ ------------------------------------------------------------------------------------------------------------
+			String dbURL =  "jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(dbURL,"root","1234"); // я┐╜я┐╜я┐╜с┐б я┐╜я┐╜я┐╜я┐╜ я┐╜╬┐я┐╜? 
+			st = con.createStatement();// я┐╜я┐╜я┐╜я┐╜
+			st.execute("USE hy2;");//я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜╠╜я┐╜ я┐╜я┐╜я┐╜
+			//--------------------------------------------------------------------------------------------------------------
 
 			rs = st.executeQuery("SELECT season, date, temp from temp_season;"); 
 
-			System.out.println("╡щ╛ю┐╘┤┘");
+			System.out.println("я┐╜я┐╜я┐╜╘┤я┐╜");
 			while (rs.next())
 			{
 				int season = 5;
 				
-				Float flo = rs.getFloat(3);// ┐┬╡╡
+				Float flo = rs.getFloat(3);// я┐╜┬╡я┐╜
 				
-				if(rs.getString(1).equals("SP")) // ║╜
+				if(rs.getString(1).equals("SP")) // я┐╜я┐╜
 				{
 					season = 0;
-					temp7h[season][i0] = flo;// ┐┬╡╡ ╣ш┐н┐б └·└х
+					temp7h[season][i0] = flo;// я┐╜┬╡я┐╜ я┐╜ш┐ня┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
 					i0++;
 				}
-				else if(rs.getString(1).equals("SU")) // ┐й╕з
+				else if(rs.getString(1).equals("SU")) // я┐╜я┐╜я┐╜я┐╜
 				{
 					season = 1;
-					temp7h[season][i1] = flo;// ┐┬╡╡ ╣ш┐н┐б └·└х
+					temp7h[season][i1] = flo;// я┐╜┬╡я┐╜ я┐╜ш┐ня┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
 					i1++;
 				}
-				else if(rs.getString(1).equals("AT")) // ░б└╗
+				else if(rs.getString(1).equals("AT")) // я┐╜я┐╜я┐╜я┐╜
 				{
 					season = 2;
-					temp7h[season][i2] = flo;// ┐┬╡╡ ╣ш┐н┐б └·└х
+					temp7h[season][i2] = flo;// я┐╜┬╡я┐╜ я┐╜ш┐ня┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
 					i2++;
 				}
-				else if(rs.getString(1).equals("WT"))//░▄┐я
+				else if(rs.getString(1).equals("WT"))//я┐╜▄┐я┐╜
 				{
 					season = 3;
-					temp7h[season][i3] = flo;// ┐┬╡╡ ╣ш┐н┐б └·└х
+					temp7h[season][i3] = flo;// я┐╜┬╡я┐╜ я┐╜ш┐ня┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
 					i3++;
 				}
 			}
 
-			// ┐б╖п ├│╕о
+			// я┐╜я┐╜я┐╜я┐╜ ├│я┐╜я┐╜
 		} catch (SQLException sqex) {
 			System.out.println("SQLException: " + sqex.getMessage());
 			System.out.println("SQLState: " + sqex.getSQLState());
@@ -67,27 +74,33 @@ public class database_load_season {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		con.close(); // ┐м░с└╗ │б│╗┴▌┤╧┤┘. -> ╗ч┐ы┐╧╖с
+		con.close(); // я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜▌┤╧┤я┐╜. -> я┐╜я┐╜я┐╜╧╖я┐╜
 
-		return temp7h; // └·└х╟╤ ┐┬╡╡ ╡е└╠┼═ ╕о┼╧
+		return temp7h; // я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜┬╡я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
 	}
 
 	public static double[][] dload_avg_per() throws SQLException {
-		// ╟╩┐ф╟╤ ║п╝Ў ╝▒╛Ё ├╩▒т╚н
-		Connection con = null;// Database┐═└╟ ┐м░с└╗ └з╟╤ ║п╝Ў
-		java.sql.Statement st = null;// mysql ┐б░╘ ╕э╖╔└╗ │╗╕о▒т └з╟╪
-		ResultSet rs = null; // mysql ┐б╝н└╟ ░с░·╕ж ╣▐╛╞┐╚. (╟╤┴┘╛┐?)
-		double[][] fever_per = new double[4][1]; // 0 -> │▓└┌ / 1 -> ┐й└┌
+		// я┐╜╩┐я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜ я┐╜╩▒я┐╜╚н
+		Connection con = null;// Databaseя┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
+		java.sql.Statement st = null;// mysql я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
+		ResultSet rs = null; // mysql я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜▐╛╞┐я┐╜. (я┐╜я┐╜я┐╜┘╛я┐╜?)
+		double[][] fever_per = new double[4][1]; // 0 -> я┐╜я┐╜я┐╜я┐╜ / 1 -> я┐╜я┐╜я┐╜я┐╜
 		try {
 
-			String dbURL = "jdbc:mysql://127.0.0.1:3306?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
-			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection(dbURL, "root", "asdasd"); // ┐м░с┐б
-																		// ▒╟╟╤
-																		// ║╬┐й?
-
-			st = con.createStatement();// ┐м░с
-			st.execute("USE chois;");// ╡е└╠┼═ ║г└╠╜║ ╗ч┐ы
+			//HY--------------------------------------------------------------------------------------------------------------
+			//String dbURL = "jdbc:mysql://127.0.0.1:3306?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
+			//Class.forName("com.mysql.jdbc.Driver");
+			//con = DriverManager.getConnection(dbURL,"root","asdasd"); // я┐╜я┐╜я┐╜с┐б я┐╜я┐╜я┐╜я┐╜ я┐╜╬┐я┐╜? 
+			//st = con.createStatement();// я┐╜я┐╜я┐╜я┐╜
+			//st.execute("USE chois;");//я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜╠╜я┐╜ я┐╜я┐╜я┐╜
+			//---------------------------------------------------------------------------------------------------------------
+			//JJ ------------------------------------------------------------------------------------------------------------
+			String dbURL =  "jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC";
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(dbURL,"root","1234"); // я┐╜я┐╜я┐╜с┐б я┐╜я┐╜я┐╜я┐╜ я┐╜╬┐я┐╜? 
+			st = con.createStatement();// я┐╜я┐╜я┐╜я┐╜
+			st.execute("USE hy2;");//я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜╠╜я┐╜ я┐╜я┐╜я┐╜
+			//--------------------------------------------------------------------------------------------------------------
 
 			rs = st.executeQuery("SELECT category, number from population;"); 
 
@@ -128,7 +141,7 @@ public class database_load_season {
 			fever_per[1][0] = (double)fever1/(double)total1;
 			fever_per[2][0] = (double)fever2/(double)total2;
 			fever_per[3][0] = (double)fever3/(double)total3;
-			// ┐б╖п ├│╕о
+			// я┐╜я┐╜я┐╜я┐╜ ├│я┐╜я┐╜
 		} catch (SQLException sqex) {
 			System.out.println("SQLException: " + sqex.getMessage());
 			System.out.println("SQLState: " + sqex.getSQLState());
@@ -136,8 +149,8 @@ public class database_load_season {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		con.close(); // ┐м░с└╗ │б│╗┴▌┤╧┤┘. -> ╗ч┐ы┐╧╖с
+		con.close(); // я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜▌┤╧┤я┐╜. -> я┐╜я┐╜я┐╜╧╖я┐╜
 
-		return fever_per; // └·└х╟╤ ┐┬╡╡ ╡е└╠┼═ ╕о┼╧
+		return fever_per; // я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜┬╡я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
 	}
 }
