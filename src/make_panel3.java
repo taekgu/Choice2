@@ -1,4 +1,3 @@
-//package practice;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -14,21 +13,23 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+// 1420, 490, 500, 480
+// 1420, 490, 500, 480
 //b1.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 public class make_panel3 implements ActionListener {
 	static private JPanel panel = new JPanel(null);
 
 	static private int Temp_G_X_Size = 1270, Temp_G_Y_Size = 1000;
-
-	// ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ & ï¿½Ê±ï¿½È­
-	static jPanel03 jP3 = new jPanel03(); // ï¿½Ä³ï¿½ ï¿½ï¿½Ã¼
-	static ChartPanel CP3; // ï¿½ï¿½Æ® ï¿½×¸ï¿½
-	static ChartPanel PieChart; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+	//static private int Temp_G_X_Size = 890, Temp_G_Y_Size = 800;
+	// »ç¿ëÇÏ´Â º¯¼ö ¼±¾ð & ÃÊ±âÈ­
+	static jPanel03 jP3 = new jPanel03(); // ÆÄ³Ú ÀüÃ¼
+	static ChartPanel CP3; // Â÷Æ® ±×¸²
+	static ChartPanel PieChart; // ÆÄÀÌÂ÷Æ®
 
 	final static JButton button1 = new JButton("Condition1");
 	final static JButton button2 = new JButton("Condition2");
 	final static JButton button3 = new JButton("Show Chart");
-	// genderï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
+	// gender¿¡¼­ »ç¿ëÇÏ´Â º¯¼ö
 	static Float[][] gdarrdata;
 	static XYSeries gdseries1;
 	static XYSeries gdseries2;
@@ -74,7 +75,7 @@ public class make_panel3 implements ActionListener {
 	static ChartPanel ssPieChart2;
 	static ChartPanel ssPieChart3;
 	
-	// listï¿½ï¿½ ï¿½ï¿½î°¥ ï¿½ï¿½ï¿½ï¿½ï¿½
+	// list¿¡ µé¾î°¥ ³»¿ëµé
 	static String[] condition = { "All", "Gender", "Age", "Season" };
 	static String[] age = { "0~9", "10~19", "20~29", "30~39", "40~49", "50~59", "60~69", "70~79" };
 	static String[] gender = { "Male", "Female" };
@@ -88,7 +89,7 @@ public class make_panel3 implements ActionListener {
 
 	public static JPanel make(JFrame JF) {
 
-		// ---------------------------ï¿½ï¿½Ã¼ ------------------------------------//
+		// ---------------------------ÀüÃ¼ ------------------------------------//
 
 		button1.addActionListener(new ActionListener() // Condition1
 		{
@@ -99,12 +100,12 @@ public class make_panel3 implements ActionListener {
 				if (cond1_flag) // true -> comboBox x
 				{
 					cond1_flag = false;
-					box1.setVisible(cond1_flag); // ï¿½Èºï¿½ï¿½ï¿½
+					box1.setVisible(cond1_flag); // ¾Èº¸ÀÓ
 					// box1.removeAllItems();
 				} else // false -> comboBox o
 				{
 					cond1_flag = true;
-					box1.setVisible(cond1_flag); // ï¿½ï¿½ï¿½ï¿½
+					box1.setVisible(cond1_flag); // º¸ÀÓ
 				}
 			}
 		});
@@ -118,12 +119,12 @@ public class make_panel3 implements ActionListener {
 				if (cond2_flag) // true -> comboBox x
 				{
 					cond2_flag = false;
-					box2.setVisible(cond2_flag); // ï¿½Èºï¿½ï¿½ï¿½
+					box2.setVisible(cond2_flag); // ¾Èº¸ÀÓ
 				} else // false -> comboBox o
 				{
 					set_list(box1.getSelectedItem().toString());
 					cond2_flag = true;
-					box2.setVisible(cond2_flag); // ï¿½ï¿½ï¿½ï¿½
+					box2.setVisible(cond2_flag); // º¸ÀÓ
 				}
 			}
 		});
@@ -142,11 +143,11 @@ public class make_panel3 implements ActionListener {
 		});
 
 		button1.setBounds(0, 0, 150, 50);
-		button1.setFont( new Font( "Dialog", Font.BOLD , 15 )); // ï¿½ï¿½Æ® ï¿½âº» -> 12
+		button1.setFont( new Font( "Dialog", Font.BOLD , 15 )); // ÆùÆ® ±âº» -> 12
 		box1.setBounds(0, 50, 150, 50);
 		box1.setVisible(cond1_flag);
 		box1.setFont( new Font( "Dialog", Font.BOLD , 15 ));
-
+		
 		button2.setBounds(0, 100, 150, 50);
 		button2.setFont( new Font( "Dialog", Font.BOLD , 15 ));
 		box2.setBounds(0, 150, 150, 50);
@@ -170,9 +171,14 @@ public class make_panel3 implements ActionListener {
 	}
 
 	public static void Draw_Chart(String b1, String b2) {
+		
+		// ----------------------------------------------------------------------------//
+		// |                                 All                                      |//
+		// ----------------------------------------------------------------------------//
+		
 		if (b1.equals(condition[0])) // all
 		{
-			// ---------------ï¿½×·ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ --------------------------//
+			// ---------------±×·¡ÇÁ ±×¸®±â --------------------------//
 			try {
 				Float[][] arrdata = database_load_avg.dload_avg();
 				XYSeries series = new XYSeries("total");
@@ -195,10 +201,10 @@ public class make_panel3 implements ActionListener {
 				e1.printStackTrace();
 			}
 
-			// --------------------ï¿½ï¿½ï¿½Ì±×·ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ----------------------//
-			// ï¿½ï¿½ï¿½ï¿½É¸ï¿½ ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½//
+			// --------------------ÆÄÀÌ±×·¡ÇÁ ±×¸®±â ----------------------//
+			// °¨±â°É¸° »ç¶÷ ÆÛ¼¾Å×ÀÌÁö °è»ê//
 			try {
-				double fever_per = database_load_avg.dload_avg_per(); // ï¿½ï¿½ï¿½ï¿½É¸ï¿½ï¿½ï¿½ï¿½
+				double fever_per = database_load_avg.dload_avg_per(); // °¨±â°É¸°»ç¶÷
 																		// %
 				try {
 					PieChart = new ChartPanel(jP3.DrawAllPiChart(fever_per));
@@ -227,7 +233,9 @@ public class make_panel3 implements ActionListener {
 			panel.repaint();
 		}
 
-		// -------------------------------Gender-----------------------------//
+		// ----------------------------------------------------------------------------//
+		// |                               Gender                                     |//
+		// ----------------------------------------------------------------------------//
 		else if (b1.equals(condition[1]))// gender
 		{
 			try {
@@ -321,7 +329,6 @@ public class make_panel3 implements ActionListener {
 				panel.repaint();
 			}
 		}
-
 		
 		// ----------------------------------------------------------------------------//
 		// |                                age                                       |//
@@ -781,9 +788,9 @@ public class make_panel3 implements ActionListener {
 				panel.add(CP3);
 				panel.repaint();
 			}
-			
 		}
 	}
+	
 	public static void set_list(String S) {
 		box2.removeAllItems();
 		if (S.equals(condition[0])) // all
@@ -806,7 +813,5 @@ public class make_panel3 implements ActionListener {
 				box2.addItem(season[i]);
 			}
 		}
-
 	}
-
 }
