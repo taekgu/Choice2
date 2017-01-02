@@ -48,7 +48,7 @@ public class jPanel03 implements ActionListener {
 	    domain.setAutoRange(true);
 	    final ValueAxis rangeAxis = plot.getRangeAxis();
 	    rangeAxis.setAutoRange(true);
-	    rangeAxis.setRangeWithMargins(30, 40);
+	    rangeAxis.setRangeWithMargins(33, 42);
 	    return chart;
 	}
 	
