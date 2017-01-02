@@ -1,4 +1,4 @@
-package practice;
+
 import java.io.*;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -45,10 +45,10 @@ public class jPanel03 implements ActionListener {
 	    plot.addAnnotation(ta);
 	    
 	    ValueAxis domain = plot.getDomainAxis();
-	    domain.setRange(35, 45);
+	    domain.setAutoRange(true);
 	    final ValueAxis rangeAxis = plot.getRangeAxis();
-	    rangeAxis.setRangeWithMargins(35, 45);
-	    
+	    rangeAxis.setAutoRange(true);
+	    rangeAxis.setRangeWithMargins(30, 40);
 	    return chart;
 	}
 	
