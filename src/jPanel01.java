@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -27,12 +28,16 @@ import java.awt.Paint;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.annotations.XYTitleAnnotation;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.labels.CategoryItemLabelGenerator;
 import org.jfree.chart.labels.ItemLabelAnchor;
 import org.jfree.chart.labels.ItemLabelPosition;
@@ -40,14 +45,21 @@ import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.DatasetRenderingOrder;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.ValueMarker;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.chart.renderer.category.StandardBarPainter;
+import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.GradientPaintTransformType;
 import org.jfree.ui.HorizontalAlignment;
+import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.StandardGradientPaintTransformer;
 import org.jfree.ui.TextAnchor;
 
@@ -66,7 +78,8 @@ public class jPanel01 {
 	ChartPanel CP;
 	String gender;
 	String birth;
-		
+	ValueMarker mark;
+	//DateFormat time;	
 	public jPanel01()
 	{
 		
@@ -76,6 +89,9 @@ public class jPanel01 {
 		box2 = new JComboBox<String>();
 		p1 = new JPanel(new GridBagLayout());
 		CP = new ChartPanel(null);
+		mark = null;
+		
+		//time = Date(HH:MM:SS);
 		try
 		{
 			con = null;
@@ -91,10 +107,9 @@ public class jPanel01 {
 		}
 	}
 	
-	public JFreeChart DrawMyChart(Float[][] floats, String User_num, String Date) throws IOException, ClassCastException, IllegalArgumentException
+	public JFreeChart DrawMyChart(Float[][] floats, String User_num, String Date, Double mark_temp) throws IOException, ClassCastException, IllegalArgumentException
 	{
 		int SAMPLE_NUM = database_load.COUNT;
-
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();                // bar chart 1
 		try {
 			rs = st.executeQuery("SELECT Distinct sex, birth FROM tp WHERE id = "+ User_num +" AND LEFT(date,10) = '" + Date + "';" );
@@ -106,6 +121,7 @@ public class jPanel01 {
 				gender = "Female";
 			birth = rs.getString(2);
 			System.out.println(gender + " / " + birth);
+
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -115,6 +131,9 @@ public class jPanel01 {
 		for (int i = 0; i < SAMPLE_NUM; i++){	
 		    dataset.addValue(floats[0][i],"User : " + User_num + "  /  Date : " + Date+  "  /  Gender : " + gender + "  /  Birth : " + birth, i+1 + "시");
 		}
+		//chart2 = ChartFactory.createXYLineChart(null, "Time", "Temp", dataset, PlotOrientation.VERTICAL, true, true, false);
+		
+		
 		
 		final LineAndShapeRenderer renderer = new LineAndShapeRenderer();
 		   
@@ -160,12 +179,87 @@ public class jPanel01 {
 		        // Y�� ����
 		plot.setRangeAxis(new NumberAxis());                 // Y�� ���� ����
 		plot.getRangeAxis().setTickLabelFont(axisF);  // Y�� ���ݶ� ��Ʈ ����
-		plot.getRangeAxis().setRange(((double)database_load.Min_val)-0.1, ((double)database_load.Max_val)+0.1);
-		
+		//plot.getRangeAxis().setRange(((double)database_load.Min_val)-0.1, ((double)database_load.Max_val)+0.1);
+		plot.getRangeAxis().setRange(((double)33.0), ((double)42.0));
 		JFreeChart chart = new JFreeChart(plot);
 
 	
 		return chart;
+	}
+	
+	public JFreeChart DrawMyChart2(String User_num, String Date, Double mark_temp) throws IOException, SQLException
+	{
+		try {
+			rs = st.executeQuery("SELECT Distinct sex, birth FROM tp WHERE id = "+ User_num +" AND LEFT(date,10) = '" + Date + "';" );
+			rs.next();
+			int num = rs.getInt(1);
+			if (num == 0)
+				gender = "Male";
+			else
+				gender = "Female";
+			birth = rs.getString(2);
+			System.out.println(gender + " / " + birth);
+
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+		Float[][] arrdata = database_load.dload(User_num, Date);
+		XYSeries series = new XYSeries("User : " + User_num + "  /  Date : " + Date+  "  /  Gender : " + gender + "  /  Birth : " + birth);
+		//XYSeries series2 = new XYSeries("High Temperature");
+		XYSeriesCollection dataset = new XYSeriesCollection();
+		//XYSeriesCollection dataset2 = new XYSeriesCollection();
+		XYDataset xydataset = dataset;
+		//XYDataset xydataset2 = dataset2;
+		
+
+		for(int i=0;i<288;i++){
+               series.add(i*300000-32400000,arrdata[0][i]);
+               //series2.add(i*300000-32400000,Mark_temp[i]);
+        }
+
+		dataset.addSeries(series);
+		//dataset.addSeries(series2);
+		
+		 // create the chart...              
+	    final JFreeChart chart = ChartFactory.createTimeSeriesChart(
+	        null,      // chart title
+	        "Time",                      // x axis label
+	        "Temperature",                      // y axis label
+	        xydataset,                  // data
+	        true,                     // include legend
+	        true,                     // tooltips
+	        false                     // urls
+	    );
+	     
+	    final XYPlot plot = chart.getXYPlot();
+	    
+	    LegendTitle legend = chart.getLegend();
+	    legend.setBackgroundPaint(new Color(200, 200, 255, 100));
+	    legend.setFrame(new BlockBorder(Color.white));
+	    legend.setVisible(false);
+	    XYTitleAnnotation ta = new XYTitleAnnotation(0.99, 0.99, legend,RectangleAnchor.TOP_RIGHT);
+	    ta.setMaxWidth(0.48);
+	    plot.addAnnotation(ta);
+	    plot.setDataset(0,xydataset);
+	    
+	    plot.getRenderer().setSeriesPaint(0, Color.BLUE);	    
+	    plot.getRenderer().setSeriesPaint(1, Color.RED);
+	    plot.getRangeAxis().setRange(((double)33.0), ((double)42.0));
+	    
+	    ValueMarker marker = new ValueMarker(mark_temp);  // position is the value on the axis
+	    marker.setPaint(Color.RED);
+	    //marker.setLabel("here"); // see JavaDoc for labels, colors, strokes
+
+	    plot.addRangeMarker(marker);
+	    ValueAxis domain = plot.getDomainAxis();
+	    domain.setAutoRange(true);       
+	    // ValueAxis rangeAxis = plot.getRangeAxis();
+	    //rangeAxis.setAutoRange(true);
+
+	    return chart;
 	}
 }
 

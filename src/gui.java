@@ -37,6 +37,9 @@ import javax.swing.border.TitledBorder;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 
 
@@ -84,10 +87,11 @@ public class gui extends JFrame {
 	JButton b1;
 	JButton b2;
 	JButton b3;
+	JButton b4;
 
 	JComboBox<String> box1;
 	JComboBox<String> box2;
-	JComboBox<String> box3;
+	JComboBox<Double> box3;
 	JPanel p1;
 	JPanel p3;
 	ChartPanel CP;
@@ -109,10 +113,11 @@ public class gui extends JFrame {
 		b1 = new JButton();
 		b2 = new JButton();
 		b3 = new JButton();
+		b4 = new JButton();
 		
 		box1 = new JComboBox<String>();
 		box2 = new JComboBox<String>();
-		
+		box3 = new JComboBox<Double>();
 		//p1 = new JPanel(new GridBagLayout());
 		CP = new ChartPanel(null);
 		p3 = new JPanel();
@@ -162,7 +167,7 @@ public class gui extends JFrame {
 		
 				
 		// add chart in JPanel
-		jPanel01 jP = new jPanel01();
+		
 		p2 = new Map();
 		//panel2 = p2.Map_init();
 
@@ -178,7 +183,7 @@ public class gui extends JFrame {
 						
 		//p2 = new Map();
 		Map_panel = p2.Map_init("0","0","init");
-		Map_panel.setBounds(100, 0, 1820, 1000);
+		Map_panel.setBounds(150, 0, 1770, 1000);
 		Map_panel.setVisible(true);
 		
 		panel2.add(Map_panel);
@@ -206,7 +211,7 @@ public class gui extends JFrame {
 		jF.add(tabbedPane);
 		jF.setSize((int)di.getWidth(),(int)di.getWidth()-200); // Full Screen
 		//jF.setSize(800, 600);
-		jF.setTitle("Choice Tech"); // 李� �뜝�룞�삕�뜝�룞�삕
+		jF.setTitle("Chois Tech"); // 李� �뜝�룞�삕�뜝�룞�삕
 		jF.setExtendedState(JFrame.MAXIMIZED_BOTH); // �뜝�뙇�뙋�삕�솕
 		jF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		jF.setVisible(true);
@@ -237,6 +242,13 @@ public class gui extends JFrame {
 		b3.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		b3.addActionListener(new MyActionListener2()); 
 		panel1.add(b3);
+		
+		b4.setText("High Temp");
+		b4.setBounds(0, 270, 130, 50);
+		b4.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
+		b4.addActionListener(new MyActionListener2());
+		panel1.add(b4);
+		//b4.//
 		
 		
 		
@@ -276,14 +288,41 @@ public class gui extends JFrame {
 		
 		
 		//panel1.add(Bgroup);
-		CP = new ChartPanel(new jPanel01().DrawMyChart(database_load.dload("0", "2016-04-07"), "0", "2016-04-07"));
+		//CP = new ChartPanel(new jPanel01().DrawMyChart(database_load.dload("0", "2016-04-07"), "0", "2016-04-07", null));
 				
-		CP.setBounds(130, 0, 1780, 980);
-		panel1.add(CP);
+		//CP.setBounds(130, 0, 1780, 980);
+		//panel1.add(CP);
 		rs = st.executeQuery("SELECT DISTINCT id FROM tp");
 		while(rs.next()){
 			box1.addItem(rs.getString("id"));
 		}
+		box3.addItem(36.0);
+		box3.addItem(36.5);
+		box3.addItem(37.0);
+		box3.addItem(37.5);
+		box3.addItem(38.0);
+		box3.addItem(38.5);
+		box3.addItem(39.0);
+		box3.addItem(39.5);
+		box3.addItem(40.0);
+		
+		
+			/*
+			Float[][] arrdata = database_load.dload("0", "2016-04-07");
+			XYSeries series = new XYSeries("total");
+			XYSeriesCollection dataset = new XYSeriesCollection();
+			XYDataset xydataset = dataset;
+
+			for(int i=0;i<288;i++){
+	               series.add(i*300000-32400000,arrdata[0][i]);
+	        }
+
+			dataset.addSeries(series);*/
+
+			CP = new ChartPanel(new jPanel01().DrawMyChart2("0", "2016-04-08", 37.9));
+			CP.setBounds(130, 0, 1780, 980);
+			panel1.add(CP);
+		
 		
 		//box1.addActionListener(box1);
 		//JLabel label1 = new JLabel("User Select : ");
@@ -313,6 +352,10 @@ public class gui extends JFrame {
 		b2 = new JButton();
 		b2.setText("Check");
 		b2.setBounds(150, 50,100,20);
+		b4.setBounds(0, 270, 130, 50);
+		box3.setBounds(0, 320, 130, 50);
+		box3.setVisible(false);
+		panel1.add(box3);
 		
 		panel1.setVisible(true);
 	}
@@ -336,11 +379,11 @@ public class gui extends JFrame {
 			String buf_f = null;
 			rs = st.executeQuery("select distinct date from tp");
 			
-			D_Button.setText("t_date");
-	    	D_Button.setBounds(0, 0, 100, 50);
+			D_Button.setText("Date");
+	    	D_Button.setBounds(0, 0, 150, 50);
 	    	D_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 	    	D_Button.addActionListener(new MyActionListener());
-	    	combo_d.setBounds(0, 50, 100, 50);
+	    	combo_d.setBounds(0, 50, 150, 50);
 			while(rs.next()){
 				if(rs.getString("date").substring(0, 10).equals(buf_f))
 				{
@@ -357,10 +400,10 @@ public class gui extends JFrame {
 			rs = st.executeQuery("select distinct id from tp");
 			
 			U_Button.setText("User");
-			U_Button.setBounds(0, 500, 100, 50);
+			U_Button.setBounds(0, 500, 150, 50);
 			U_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 			U_Button.addActionListener(new MyActionListener());
-			combo_u.setBounds(0, 550, 100, 50);
+			combo_u.setBounds(0, 550, 150, 50);
 			combo_u.setVisible(false);
 			
 		} catch (SQLException e) {
@@ -368,29 +411,29 @@ public class gui extends JFrame {
 			e.printStackTrace();
 		}
 		
-		A_Button.setText("t_temp");
-		A_Button.setBounds(0,620,100,50);
+		A_Button.setText("Total tmp");
+		A_Button.setBounds(0,620,150,50);
 		A_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		A_Button.addActionListener(new MyActionListener());
 		
-		AA_Button.setText("t_h_temp");
-		AA_Button.setBounds(0,670,100,50);
+		AA_Button.setText("Total high tmp");
+		AA_Button.setBounds(0,670,150,50);
 		AA_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		AA_Button.addActionListener(new MyActionListener());
 		
-		do_Button.setText("start");
-		do_Button.setBounds(0,770,100,50);
+		do_Button.setText("Start");
+		do_Button.setBounds(0,770,150,50);
 		do_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		do_Button.addActionListener(new MyActionListener());
 		
-		T_Button.setText("p_temp");
-		T_Button.setBounds(0, 870, 100, 50);
-		T_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
+		T_Button.setText("personal tmp");
+		T_Button.setBounds(0, 870, 150, 50);
+		T_Button.setFont( new Font( "Dialog", Font.BOLD , 13 ) );
 		T_Button.addActionListener(new MyActionListener());
 		
-		TT_Button.setText("p_h_temp");
-		TT_Button.setBounds(0, 920, 100, 50);
-		TT_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
+		TT_Button.setText("personal high tmp");
+		TT_Button.setBounds(0, 920, 150, 50);
+		TT_Button.setFont( new Font( "Dialog", Font.BOLD , 13 ) );
 		TT_Button.addActionListener(new MyActionListener());
 		
 		
@@ -410,12 +453,12 @@ public class gui extends JFrame {
         public void actionPerformed(ActionEvent e) {
         	//------------------date-----------------
             JButton b = (JButton) e.getSource();
-            if (b.getText().equals("t_date")){
-            	b.setText("s_date");
+            if (b.getText().equals("Date")){
+            	b.setText("Date select");
             	combo_d.setVisible(true);
             }      	
-            else if(b.getText().equals("s_date")){
-            	b.setText("t_date");
+            else if(b.getText().equals("Date select")){
+            	b.setText("Date");
             	date = combo_d.getSelectedItem().toString();            
             	setTitle(b.getText());
             	            	
@@ -428,12 +471,12 @@ public class gui extends JFrame {
             		b.setText("User");
             		combo_u.setVisible(false);
             	}else{
-            		b.setText("User_s");
+            		b.setText("User select");
             		set_User(date);
                 	combo_u.setVisible(true);
             	}
             }      	
-            else if(b.getText().equals("User_s")){
+            else if(b.getText().equals("User select")){
             	b.setText("User");
             	user = combo_u.getSelectedItem().toString();
             	setTitle(b.getText());
@@ -443,25 +486,25 @@ public class gui extends JFrame {
             }
             
             //--------------temp-----------------
-            if (b.getText().equals("t_temp")){
+            if (b.getText().equals("Total tmp")){
             	temp = b.getText();
             }      	
             
-            if(b.getText().equals("t_h_temp")){
+            if(b.getText().equals("Total high tmp")){
             	temp = b.getText();
             }
             
-            if (b.getText().equals("start")){
+            if (b.getText().equals("Start")){
             	// 占쎄텊筌욑옙, 占쎄텢占쎌뿺, �⑨옙-占쏙옙占쎌궔
             	// date, user, temp
             	showMap(date, user, temp);
             } 
             
-            if(b.getText().equals("p_temp")){
+            if(b.getText().equals("personal tmp")){
             	temp = b.getText();
             }   
             
-            if(b.getText().equals("p_h_temp")){
+            if(b.getText().equals("personal high tmp")){
             	temp = b.getText();
             }   
 
@@ -475,7 +518,7 @@ public class gui extends JFrame {
     	
     	p2 = new Map();
 		Map_panel = p2.Map_init(d, u, t);
-		Map_panel.setBounds(100, 0, 1820, 1000);
+		Map_panel.setBounds(150, 0, 1770, 1000);
 		Map_panel.setVisible(true);
 		
 		panel2.add(Map_panel);
@@ -563,17 +606,18 @@ public class gui extends JFrame {
             
             else if(b.getText().equals("Show Chart")){
 
-            	Float[][] new_data = new Float[1][1000];
+            	//Float[][] new_data = new Float[1][1000];
 
             	System.out.println("Redraw");
             
             	try {
-					new_data = database_load.dload(box1.getSelectedItem().toString(), box2.getSelectedItem().toString());
+					//new_data = database_load.dload(box1.getSelectedItem().toString(), box2.getSelectedItem().toString());
 					System.out.println(box1.getSelectedItem().toString() + " / " + box2.getSelectedItem().toString());
 					//ChartPanel NCP = new ChartPanel(new jPanel01().DrawMyChart(new_data));
 					//NCP.setBounds(300, 10, 1610, 980);
 					panel1.remove(CP);
-					CP = new ChartPanel(new jPanel01().DrawMyChart(new_data, box1.getSelectedItem().toString(), box2.getSelectedItem().toString()));
+					
+					CP = new ChartPanel(new jPanel01().DrawMyChart2(box1.getSelectedItem().toString(), box2.getSelectedItem().toString(), 36.0));
 					
 					CP.setBounds(130, 0, 1780, 980);
 					panel1.add(CP);
@@ -581,10 +625,7 @@ public class gui extends JFrame {
 					panel1.setVisible(true);
 
 
-				} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ClassCastException e1) {
+				}  catch (ClassCastException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (IllegalArgumentException e1) {
@@ -597,7 +638,39 @@ public class gui extends JFrame {
 				} /*catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}*/
+				}*/ catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+            }
+            else if(b.getText().equals("High Temp"))
+            {
+            	box3.setVisible(true);
+            	b4.setText("Temp Select");
+            	
+            }
+            else if(b.getText().equals("Temp Select"))
+            {
+            	box3.setVisible(false);
+            	b4.setText("High Temp");
+            	
+				panel1.remove(CP);
+				
+				try {
+					CP = new ChartPanel(new jPanel01().DrawMyChart2(box1.getSelectedItem().toString(), box2.getSelectedItem().toString(), (Double)box3.getSelectedItem()));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				CP.setBounds(130, 0, 1780, 980);
+				panel1.add(CP);
+				panel1.repaint();
+				panel1.setVisible(true);
+            	
             }
         }
     }

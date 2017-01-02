@@ -85,7 +85,7 @@ public class Map extends JFrame{
     	map_panel.setLayout(null);
     	    
     	
-    	if(m_temp.equals("p_temp")){
+    	if(m_temp.equals("personal tmp")){
     		//전체
     		try {
 				st = con.createStatement();
@@ -114,7 +114,7 @@ public class Map extends JFrame{
 			}
 
     		//test
-    	}else if(m_temp.equals("p_h_temp")){
+    	}else if(m_temp.equals("personal high tmp")){
     		
     		try {
 				st = con.createStatement();
@@ -140,7 +140,7 @@ public class Map extends JFrame{
     	}else if(m_temp.equals("init")){   		
     		
     		return map_panel;
-    	}else if(m_temp.equals("t_temp")){//전체
+    	}else if(m_temp.equals("Total tmp")){//전체
     		
     		try {
 				st = con.createStatement();
@@ -160,7 +160,7 @@ public class Map extends JFrame{
     		//setMAap(100,500,0);
     		//setMAap(200,600,0);
     		//setMAap(300,700,0);  
-    	}else if(m_temp.equals("t_h_temp")){//전체
+    	}else if(m_temp.equals("Total high tmp")){//전체
     		
     		try {
 				st = con.createStatement();
@@ -193,7 +193,7 @@ public class Map extends JFrame{
     public void setMAap(int a, int b, int cnt){
     	
     	jb[cnt] = new JButton(new ImageIcon("check_blue.png"));
-    	jb[cnt].setBounds(a+100, b, 30, 30);
+    	jb[cnt].setBounds(a+150, b, 30, 30);
     	jb[cnt].setBorderPainted(false);
     	jb[cnt].setContentAreaFilled(false);
     	map_panel.add(jb[cnt]);
@@ -202,7 +202,7 @@ public class Map extends JFrame{
     public void setMAap_up(int a, int b, int cnt){
     	
     	jb[cnt] = new JButton(new ImageIcon("check.png"));
-    	jb[cnt].setBounds(a+100, b, 30, 30);
+    	jb[cnt].setBounds(a+150, b, 30, 30);
     	jb[cnt].setBorderPainted(false);
     	jb[cnt].setContentAreaFilled(false);
     	map_panel.add(jb[cnt]);
