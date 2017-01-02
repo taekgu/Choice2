@@ -1,4 +1,4 @@
-//package practice;
+package practice;
 import java.io.*;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -14,7 +14,7 @@ import org.jfree.chart.title.LegendTitle;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.RectangleAnchor;
-
+//1440 900
 public class jPanel03 implements ActionListener {
 
 	public jPanel03()
@@ -45,10 +45,10 @@ public class jPanel03 implements ActionListener {
 	    plot.addAnnotation(ta);
 	    
 	    ValueAxis domain = plot.getDomainAxis();
-	    domain.setAutoRange(true);       
+	    domain.setRange(35, 45);
 	    final ValueAxis rangeAxis = plot.getRangeAxis();
-	    rangeAxis.setAutoRange(true);
-
+	    rangeAxis.setRangeWithMargins(35, 45);
+	    
 	    return chart;
 	}
 	
