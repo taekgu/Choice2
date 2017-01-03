@@ -181,9 +181,10 @@ public class gui extends JFrame {
 		
 		//--------MAP--------------------------------------------------------------------------
 						
+		//1290,820
 		//p2 = new Map();
 		Map_panel = p2.Map_init("0","0","init");
-		Map_panel.setBounds(150, 0, 1770, 1000);
+		Map_panel.setBounds(150, 0, 1290, 820);
 		Map_panel.setVisible(true);
 		
 		panel2.add(Map_panel);
@@ -203,16 +204,16 @@ public class gui extends JFrame {
 		//tabbedPane.setFont(new Font())
 		//tabbedPane.add("Th)
 		
-		//�뜝�룞�삕�겕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝占�
+		//占쎈쐻占쎈짗占쎌굲占쎄쾿占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻�뜝占�
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension di  = tk.getScreenSize();
-		//�뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕
+		//占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲
 		jF = new JFrame();
 		jF.add(tabbedPane);
 		jF.setSize((int)di.getWidth(),(int)di.getWidth()-200); // Full Screen
 		//jF.setSize(800, 600);
-		jF.setTitle("Chois Tech"); // 李� �뜝�룞�삕�뜝�룞�삕
-		jF.setExtendedState(JFrame.MAXIMIZED_BOTH); // �뜝�뙇�뙋�삕�솕
+		jF.setTitle("Chois Tech"); // 筌∽옙 占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲
+		jF.setExtendedState(JFrame.MAXIMIZED_BOTH); // 占쎈쐻占쎈솂占쎈솇占쎌굲占쎌넅
 		jF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		jF.setVisible(true);
 	
@@ -463,7 +464,7 @@ public class gui extends JFrame {
             	setTitle(b.getText());
             	            	
             	combo_d.setVisible(false);
-            	// InnerClassListener占쎌벥 筌롢끇苡�占쎄돌 JFrame占쎌벥 筌롢끇苡� 占쎌깈�빊占�
+            	// InnerClassListener�뜝�럩踰� 嶺뚮、�걞�떋占썲뜝�럡�룎 JFrame�뜝�럩踰� 嶺뚮、�걞�떋占� �뜝�럩源덌옙鍮듿뜝占�
             }
             //---------------user---------------------
             if (b.getText().equals("User")){
@@ -495,7 +496,7 @@ public class gui extends JFrame {
             }
             
             if (b.getText().equals("Start")){
-            	// 占쎄텊筌욑옙, 占쎄텢占쎌뿺, �⑨옙-占쏙옙占쎌궔
+            	// �뜝�럡�뀏嶺뚯쉻�삕, �뜝�럡�뀬�뜝�럩肉�, 占썩뫅�삕-�뜝�룞�삕�뜝�럩沅�
             	// date, user, temp
             	showMap(date, user, temp);
             } 
@@ -518,7 +519,7 @@ public class gui extends JFrame {
     	
     	p2 = new Map();
 		Map_panel = p2.Map_init(d, u, t);
-		Map_panel.setBounds(150, 0, 1770, 1000);
+		Map_panel.setBounds(150, 0, 1290, 820);
 		Map_panel.setVisible(true);
 		
 		panel2.add(Map_panel);
