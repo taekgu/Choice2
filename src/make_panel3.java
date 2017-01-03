@@ -13,14 +13,15 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-// 1420, 490, 500, 480
-// 1420, 490, 500, 480
+// 1040, 400, 400, 400
+// 1420, 490, 500/, 480
+// 1040, 400, 400, 400
 //b1.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 public class make_panel3 implements ActionListener {
 	static private JPanel panel = new JPanel(null);
 
-	static private int Temp_G_X_Size = 1270, Temp_G_Y_Size = 1000;
-	//static private int Temp_G_X_Size = 890, Temp_G_Y_Size = 800;
+	//static private int Temp_G_X_Size = 1270, Temp_G_Y_Size = 1000;
+	static private int Temp_G_X_Size = 890, Temp_G_Y_Size = 800;
 	// 사용하는 변수 선언 & 초기화
 	static jPanel03 jP3 = new jPanel03(); // 파넬 전체
 	static ChartPanel CP3; // 차트 그림
@@ -217,7 +218,7 @@ public class make_panel3 implements ActionListener {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			PieChart.setBounds(1420, 490, 500, 480);
+			PieChart.setBounds(1040, 400, 400, 400);
 			CP3.setBounds(150, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 			panel.add(button1);
@@ -280,7 +281,7 @@ public class make_panel3 implements ActionListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				m_PieChart.setBounds(1420, 490, 500, 480);
+				m_PieChart.setBounds(1040, 400, 400, 400);
 				CP3.setBounds(150, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -314,7 +315,7 @@ public class make_panel3 implements ActionListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				f_PieChart.setBounds(1420, 490, 500, 480);
+				f_PieChart.setBounds(1040, 400, 400, 400);
 				CP3.setBounds(150, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -384,7 +385,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				agePieChart0.setBounds(1420, 490, 500, 480);
+				agePieChart0.setBounds(1040, 400, 400, 400);
 				CP3.setBounds(150, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -417,7 +418,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				agePieChart1.setBounds(1420, 490, 500, 480);
+				agePieChart1.setBounds(1040, 400, 400, 400);
 				CP3.setBounds(150, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -450,7 +451,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				agePieChart2.setBounds(1420, 490, 500, 480);
+				agePieChart2.setBounds(1040, 400, 400, 400);
 				CP3.setBounds(150, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -483,7 +484,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				agePieChart3.setBounds(1420, 490, 500, 480);
+				agePieChart3.setBounds(1040, 400, 400, 400);
 				CP3.setBounds(150, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -515,7 +516,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				agePieChart4.setBounds(1420, 490, 500, 480);
+				agePieChart4.setBounds(1040, 400, 400, 400);
 				CP3.setBounds(150, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -548,7 +549,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				agePieChart5.setBounds(1420, 490, 500, 480);
+				agePieChart5.setBounds(1040, 400, 400, 400);
 				CP3.setBounds(150, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -581,7 +582,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				agePieChart6.setBounds(1420, 490, 500, 480);
+				agePieChart6.setBounds(1040, 400, 400, 400);
 				CP3.setBounds(150, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -614,7 +615,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				agePieChart7.setBounds(1420, 490, 500, 480);
+				agePieChart7.setBounds(1040, 400, 400, 400);
 				CP3.setBounds(150, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -678,7 +679,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				ssPieChart0.setBounds(1420, 490, 500, 480);
+				ssPieChart0.setBounds(1040, 400, 400, 400);
 				CP3.setBounds(150, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -710,7 +711,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				ssPieChart1.setBounds(1420, 490, 500, 480);
+				ssPieChart1.setBounds(1040, 400, 400, 400);
 				CP3.setBounds(150, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -742,7 +743,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				ssPieChart2.setBounds(1420, 490, 500, 480);
+				ssPieChart2.setBounds(1040, 400, 400, 400);
 				CP3.setBounds(150, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
@@ -774,7 +775,7 @@ public class make_panel3 implements ActionListener {
 					e1.printStackTrace();
 				}
 
-				ssPieChart3.setBounds(1420, 490, 500, 480);
+				ssPieChart3.setBounds(1040, 400, 400, 400);
 				CP3.setBounds(100, 0, Temp_G_X_Size, Temp_G_Y_Size);
 
 				panel.add(button1);
