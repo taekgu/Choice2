@@ -183,7 +183,7 @@ public class gui extends JFrame {
 						
 		//p2 = new Map();
 		Map_panel = p2.Map_init("0","0","init");
-		Map_panel.setBounds(150, 0, 1770, 1000);
+		Map_panel.setBounds(150, 0, 1280, 1000);
 		Map_panel.setVisible(true);
 		
 		panel2.add(Map_panel);
@@ -321,7 +321,7 @@ public class gui extends JFrame {
 			dataset.addSeries(series);*/
 
 			CP = new ChartPanel(new jPanel01().DrawMyChart2("0", "2016-04-08", 37.9));
-			CP.setBounds(130, 0, 1780, 980);
+			CP.setBounds(130, 0, 1310, 800);
 			panel1.add(CP);
 		
 		
@@ -622,7 +622,7 @@ public class gui extends JFrame {
 					
 					CP = new ChartPanel(new jPanel01().DrawMyChart2(box1.getSelectedItem().toString(), box2.getSelectedItem().toString(), 36.0));
 					
-					CP.setBounds(130, 0, 1780, 980);
+					CP.setBounds(130, 0, 1310, 800);
 					panel1.add(CP);
 					panel1.repaint();
 					panel1.setVisible(true);
@@ -669,7 +669,7 @@ public class gui extends JFrame {
 					e1.printStackTrace();
 				}
 				
-				CP.setBounds(130, 0, 1780, 980);
+				CP.setBounds(130, 0, 1310, 800);
 				panel1.add(CP);
 				panel1.repaint();
 				panel1.setVisible(true);
