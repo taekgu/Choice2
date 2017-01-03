@@ -305,6 +305,7 @@ public class gui extends JFrame {
 		box3.addItem(39.0);
 		box3.addItem(39.5);
 		box3.addItem(40.0);
+
 		
 		
 			/*
@@ -330,6 +331,7 @@ public class gui extends JFrame {
 		//panel1.add(label1);
 		box1.setBounds(0,50,130,50);
 		box1.setVisible(false);
+
 		
 		panel1.add(box1);
 		
@@ -347,6 +349,7 @@ public class gui extends JFrame {
 		//panel1.add(label2);
 		box2.setBounds(0,150,130,50);
 		box2.setVisible(false);
+		
 		panel1.add(box2);
 
 		b2 = new JButton();
@@ -356,7 +359,7 @@ public class gui extends JFrame {
 		box3.setBounds(0, 320, 130, 50);
 		box3.setVisible(false);
 		panel1.add(box3);
-		
+
 		panel1.setVisible(true);
 	}
 	public Font get_Font()
