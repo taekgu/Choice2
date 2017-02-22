@@ -15,5 +15,10 @@
 	<classpathentry kind="lib" path="C:/Users/jazz0/Documents/GitHub/Choice2/lib/orsonpdf-1.6-eval.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jazz0/Documents/GitHub/Choice2/lib/servlet.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jazz0/Documents/GitHub/Choice2/lib/swtgraphics2d.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jazz0/Desktop/jxmapviewer2-master.zip"/>
+	<classpathentry kind="lib" path="C:/Users/jazz0/Documents/GitHub/Choice2/lib/JMapViewer-2.0/JMapViewer.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jazz0/Documents/GitHub/Choice2/lib/org/jxmapviewer/jxmapviewer2/2.2/jxmapviewer2-2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jazz0/Documents/GitHub/Choice2/lib/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jazz0/Documents/GitHub/Choice2/lib/json_simple-1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

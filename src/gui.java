@@ -43,7 +43,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 
 
-public class gui extends JFrame {
+public class gui extends JFrame{
 	
 	private static final long serialVersionUID = 5193460907470526697L;
 	
@@ -53,7 +53,8 @@ public class gui extends JFrame {
 	public JPanel panel2;
 	private JPanel panel3;
 	private JPanel Map_panel;
-	
+	private JPanel testmapPanel;
+	private JPanel testmap;
 	//private JLabel label1;
 	private JLabel label2;
 	private JLabel label3;
@@ -76,6 +77,18 @@ public class gui extends JFrame {
 	private JButton do_Button = new JButton();
 	
 	
+	//---------------------------------------------------
+	private JComboBox<String> combo_d2 = new JComboBox();
+	private JComboBox<String> combo_u2 = new JComboBox();
+	private JButton D_Button2 = new JButton();
+	private JButton U_Button2 = new JButton();
+	private JButton T_Button2 = new JButton();
+	private JButton TT_Button2 = new JButton();
+	private JButton A_Button2 = new JButton();
+	private JButton AA_Button2 = new JButton();
+	
+	private JButton do_Button2 = new JButton();
+	//---------------------------------------------------
 	private String date = "";
 	private String user;
 	private String temp = "";
@@ -102,7 +115,11 @@ public class gui extends JFrame {
 	ButtonGroup Bgroup;
 
 	Font f;
+	String date2;
+	String user2;
+	String[][] user_date;
 	
+	int sel_state, sel_state2 , count;
 	
 	public gui() throws IOException, SQLException
 	{
@@ -125,19 +142,21 @@ public class gui extends JFrame {
 		rb2 = new JRadioButton();
 		rb3 = new JRadioButton();
 		Bgroup = new ButtonGroup();
-
-		//f = new JTabbedPane().getFont();
-		/*
-	    Font currentFont = super.getFont();
-	    String fontName = currentFont.getFontName();
-	    int fontStyle = currentFont.getStyle();
-	    int fontSize = currentFont.getSize() + 4;
-	    super.setFont(new Font(fontName, fontStyle, fontSize));*/
-		//f = super.getFont();
 		
 		
+		testmapPanel = new JPanel();
+		testmap = new JPanel();
+		user2 = null;
+		date2 = null;
 		
-		//Bgroup2 = new ButtonGroup();w
+		user_date = new String[2][];
+		user_date[0] = new String[1000];
+		user_date[1] = new String[1000];
+			
+	
+		sel_state = 0;
+		sel_state2 = 0;
+		count = 0;
 		
 		try {
 			//sb
@@ -183,13 +202,39 @@ public class gui extends JFrame {
 						
 		//1290,820
 		//p2 = new Map();
+	
+		
 		Map_panel = p2.Map_init("0","0","init");
+		Map_panel.setBounds(150, 0, 1290, 820);
+		Map_panel.setVisible(true);
+
+		
+		testmap = new OSM().OSM_init(null,null,0);
+		testmap.setBounds(150, 0, 1290, 800);
+		testmap.setVisible(true);
+		
+		testmapPanel.setLayout(null);
+		testmapPanel_init();
+		testmapPanel.add(testmap);
+		testmapPanel.setVisible(true);
+		panel2.add(Map_panel);
+		
+/////////////////////////////////////////////////////
+		Map_panel = p2.Map_init("0","0","init");
+
+
 
 		Map_panel.setBounds(150, 0, 1290, 820);
 
+
+
 		Map_panel.setVisible(true);
+
 		
+
 		panel2.add(Map_panel);
+////////////////////////////////////////////////////
+		
 				
 		setUser();
 
@@ -198,24 +243,18 @@ public class gui extends JFrame {
 		tabbedPane.add("Data", panel1);
 		tabbedPane.add("Map", panel2);
 		tabbedPane.add("Statistics", panel3);
+		tabbedPane.addTab("test", testmapPanel);
 		tabbedPane.setFont( new Font( "Dialog", 0 , 20 ) );
 		
-		//Font nf = get_Font();
-		//tabbedPane.setFont(nf);
-		//tabbedPane.setFont( new Font( "Dialog", Font.BOLD|Font.ITALIC, 24 ) );
-		//tabbedPane.setFont(new Font())
-		//tabbedPane.add("Th)
 		
-		//占쎈쐻占쎈짗占쎌굲占쎄쾿占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻�뜝占�
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension di  = tk.getScreenSize();
-		//占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲
+
 		jF = new JFrame();
 		jF.add(tabbedPane);
 		jF.setSize((int)di.getWidth(),(int)di.getWidth()-200); // Full Screen
-		//jF.setSize(800, 600);
-		jF.setTitle("Chois Tech"); // 筌∽옙 占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲
-		jF.setExtendedState(JFrame.MAXIMIZED_BOTH); // 占쎈쐻占쎈솂占쎈솇占쎌굲占쎌넅
+		jF.setTitle("Chois Tech");
+		jF.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		jF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		jF.setVisible(true);
 	
@@ -223,8 +262,7 @@ public class gui extends JFrame {
 
 	public void panel1_init() throws SQLException, ClassCastException, IllegalArgumentException, IOException
 	{
-		
-		
+				
 		b1 = new JButton();
 		b1.setText("User List");
 		b1.setBounds(0, 0,130,50);
@@ -286,15 +324,7 @@ public class gui extends JFrame {
 		panel1.add(p3);
 		
 
-		//panel1.add(p4);
-		//---------------------------------------------------
-		
-		
-		//panel1.add(Bgroup);
-		//CP = new ChartPanel(new jPanel01().DrawMyChart(database_load.dload("0", "2016-04-07"), "0", "2016-04-07", null));
-				
-		//CP.setBounds(130, 0, 1780, 980);
-		//panel1.add(CP);
+
 		rs = st.executeQuery("SELECT DISTINCT id FROM tp");
 		while(rs.next()){
 			box1.addItem(rs.getString("id"));
@@ -309,47 +339,18 @@ public class gui extends JFrame {
 		box3.addItem(39.5);
 		box3.addItem(40.0);
 
-		
-		
-			/*
-			Float[][] arrdata = database_load.dload("0", "2016-04-07");
-			XYSeries series = new XYSeries("total");
-			XYSeriesCollection dataset = new XYSeriesCollection();
-			XYDataset xydataset = dataset;
 
-			for(int i=0;i<288;i++){
-	               series.add(i*300000-32400000,arrdata[0][i]);
-	        }
+		CP = new ChartPanel(new jPanel01().DrawMyChart2("0", "2016-04-08", 37.9));
+		CP.setBounds(130, 0, 1310, 800);
+		panel1.add(CP);
 
-			dataset.addSeries(series);*/
-
-			CP = new ChartPanel(new jPanel01().DrawMyChart2("0", "2016-04-08", 37.9));
-			CP.setBounds(130, 0, 1310, 800);
-			panel1.add(CP);
-		
-		
-		//box1.addActionListener(box1);
-		//JLabel label1 = new JLabel("User Select : ");
-		//label1.setBounds(10, 0, 100, 20);
-		//panel1.add(label1);
 		box1.setBounds(0,50,130,50);
 		box1.setVisible(false);
 
 		
 		panel1.add(box1);
 		
-		//JButton b1 = new JButton();
-		//b1 = new JButton();
-		//b1.setText("Select");
-		//b1.setBounds(150, 0,70,20);
-		//b1.addActionListener(new MyActionListener2()); 
 
-	
-		
-
-		//JLabel label2 = new JLabel("Date : ");
-		//label2.setBounds(10, 50, 50, 20);
-		//panel1.add(label2);
 		box2.setBounds(0,150,130,50);
 		box2.setVisible(false);
 		
@@ -365,18 +366,88 @@ public class gui extends JFrame {
 
 		panel1.setVisible(true);
 	}
-	public Font get_Font()
+	
+	public void testmapPanel_init()
 	{
-			//Font cf, nf;
-			//cf= super.getFont();
-			//String fontName = cf.get().toString();
-			//System.out.println(fontName);
-			//int fontStyle = cf.getStyle();
-			//int fontSize = cf.getSize() + 4;
-			//nf = new Font(super.getFont().getFontName(), super.getFont().getStyle(), super.getFont().getSize() + 4);
+		/*
+		private JComboBox combo_d2 = new JComboBox();
+		private JComboBox combo_u2 = new JComboBox();
+		private JButton D_Button2 = new JButton();
+		private JButton U_Button2 = new JButton();
+		private JButton T_Button2 = new JButton();
+		private JButton TT_Button2 = new JButton();
+		private JButton A_Button2 = new JButton();
+		private JButton AA_Button2 = new JButton();
+		
+		private JButton do_Button2 = new JButton();
+		*/
+		try {
+			st = con.createStatement();
 			
-			return null;
+			String buf_f = null;
+			rs = st.executeQuery("select distinct date from tp ORDER BY date");
+			
+			D_Button2.setText("Date");
+	    	D_Button2.setBounds(0, 0, 150, 50);
+	    	D_Button2.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
+	    	D_Button2.addActionListener(new MyActionListener4());
+	    	combo_d2.setBounds(0, 50, 150, 50);
+	    	
+			while(rs.next()){
+				if(rs.getString("date").substring(0, 10).equals(buf_f))
+				{
+					continue;
+				}else{
+					buf_f = rs.getString("date").substring(0, 10);
+					combo_d2.addItem(buf_f);
+					//System.out.println("test : "+buf_f);
+				}
+			}
+			
+			combo_d2.setVisible(false);
+			combo_u2.setBounds(0, 200, 150, 50);
+			combo_u2.setVisible(false);
+			
+			U_Button2.setText("User");
+			U_Button2.setBounds(0, 150, 150, 50);
+			U_Button2.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
+			U_Button2.setVisible(true);
+			U_Button2.addActionListener(new MyActionListener4());
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		do_Button2.setText("Start");
+		do_Button2.setBounds(0,450,150,50);
+		do_Button2.setVisible(true);
+		do_Button2.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
+		do_Button2.addActionListener(new MyActionListener4());
+		
+		A_Button2.setText("Total tmp");
+		A_Button2.setBounds(0,300,150,50);
+		A_Button2.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
+		A_Button2.addActionListener(new MyActionListener4());
+		
+		AA_Button2.setText("Total high tmp");
+		AA_Button2.setBounds(0,350,150,50);
+		AA_Button2.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
+		AA_Button2.addActionListener(new MyActionListener4());
+				
+		testmapPanel.add(D_Button2);
+		testmapPanel.add(U_Button2);
+		testmapPanel.add(combo_d2);
+		testmapPanel.add(combo_u2);
+		testmapPanel.add(do_Button2);
+		testmapPanel.add(A_Button2);
+		testmapPanel.add(AA_Button2);
+		//testmapPanel.setVisible(true);
+
+	
+		
 	}
+	
 	public void setUser(){
 		
 		try {
@@ -399,17 +470,17 @@ public class gui extends JFrame {
 					combo_d.addItem(buf_f);
 					//System.out.println("test : "+buf_f);
 				}
-				
 			}
+			
 			combo_d.setVisible(false);
 			
 			rs = st.executeQuery("select distinct id from tp");
 			
 			U_Button.setText("User");
-			U_Button.setBounds(0, 500, 150, 50);
+			U_Button.setBounds(0, 150, 150, 50);
 			U_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 			U_Button.addActionListener(new MyActionListener());
-			combo_u.setBounds(0, 550, 150, 50);
+			combo_u.setBounds(0, 200, 150, 50);
 			combo_u.setVisible(false);
 			
 		} catch (SQLException e) {
@@ -418,27 +489,27 @@ public class gui extends JFrame {
 		}
 		
 		A_Button.setText("Total tmp");
-		A_Button.setBounds(0,620,150,50);
+		A_Button.setBounds(0,300,150,50);
 		A_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		A_Button.addActionListener(new MyActionListener());
 		
 		AA_Button.setText("Total high tmp");
-		AA_Button.setBounds(0,670,150,50);
+		AA_Button.setBounds(0,350,150,50);
 		AA_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		AA_Button.addActionListener(new MyActionListener());
 		
 		do_Button.setText("Start");
-		do_Button.setBounds(0,770,150,50);
+		do_Button.setBounds(0,450,150,50);
 		do_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		do_Button.addActionListener(new MyActionListener());
 		
 		T_Button.setText("personal tmp");
-		T_Button.setBounds(0, 870, 150, 50);
+		T_Button.setBounds(0, 550, 150, 50);
 		T_Button.setFont( new Font( "Dialog", Font.BOLD , 13 ) );
 		T_Button.addActionListener(new MyActionListener());
 		
 		TT_Button.setText("personal high tmp");
-		TT_Button.setBounds(0, 920, 150, 50);
+		TT_Button.setBounds(0, 600, 150, 50);
 		TT_Button.setFont( new Font( "Dialog", Font.BOLD , 13 ) );
 		TT_Button.addActionListener(new MyActionListener());
 		
@@ -453,8 +524,7 @@ public class gui extends JFrame {
 		panel2.add(combo_d);
 		panel2.add(combo_u);
     }
-    
-	
+		
     private class MyActionListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
         	//------------------date-----------------
@@ -529,7 +599,7 @@ public class gui extends JFrame {
 		
 		panel2.add(Map_panel);
 		tabbedPane.add("Map", panel2);
-		tabbedPane.add("Third", panel3);
+		tabbedPane.add("Statistics", panel3);
 		jF.add(tabbedPane);
     	
     }
@@ -726,7 +796,138 @@ public class gui extends JFrame {
             }
         }
 	}
-				
+		
+    private class MyActionListener4 implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+
+        	//------------------date-----------------
+            JButton b = (JButton) e.getSource();
+            if (b.getText().equals("Date")){
+            	b.setText("Date select");
+            	combo_d2.setVisible(true);
+            }      	
+            else if(b.getText().equals("Date select")){
+            	b.setText("Date");
+            	
+            	date2 = combo_d2.getSelectedItem().toString();            
+            	combo_d2.setVisible(false);
+            	combo_u2.removeAllItems();
+
+        		try {
+					rs = st.executeQuery("SELECT DISTINCT id FROM tp WHERE date = '" + date2 + "'");
+					while(rs.next()){
+						combo_u2.addItem(rs.getString("id"));
+	        		}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+        		sel_state = 0;
+            }
+            
+            //---------------user---------------------
+            if (b.getText().equals("User")){
+            		b.setText("User select");
+                	combo_u2.setVisible(true);
+                	sel_state2 = 1;
+            }      	
+            else if(b.getText().equals("User select")){
+            	b.setText("User");
+            	user2 = combo_u2.getSelectedItem().toString();
+            	setTitle(b.getText());
+            	
+          		//combo_u.removeAllItems();
+          		combo_u2.setVisible(false);
+            }
+            
+            //--------------temp-----------------
+            if (b.getText().equals("Total tmp")){
+            	int idx = 0;
+            	sel_state = 1;
+            	sel_state2 = 1;
+        		try {
+					rs = st.executeQuery("SELECT DISTINCT id,LEFT(date,10) FROM tp;");
+					rs.next();
+					while(rs.next()){
+						user_date[0][idx] = rs.getString(1);
+						user_date[1][idx] = rs.getString(2);
+						
+						System.out.println("id : " + user_date[0][idx].toString() + " // date : " +  user_date[1][idx].toString());
+						idx++;
+					}
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+            }      	
+            
+            if(b.getText().equals("Total high tmp")){
+        		testmap.repaint();
+        		System.out.println("repaint");
+        		testmap.setBounds(150, 0, 1290, 800);
+        		testmap.setVisible(true);
+        		
+
+        		testmapPanel.add(testmap);
+        		testmapPanel.repaint();
+        		testmapPanel.setVisible(true);
+        		//System.out.println("repaint");
+            }
+            
+            if (b.getText().equals("Start")){
+            	if (sel_state2 == 1)
+            	{
+	            	testmapPanel.remove(testmap);
+	            	testmap.setVisible(false);
+	            	testmap.removeAll();
+	            	if (sel_state == 0)
+	            	{
+	            		testmap = new OSM().OSM_init(date2,user2,1);
+	            	}
+	            	else if (sel_state == 1)
+	            	{
+	            		testmap = new OSM().OSM_init(user_date, 1);
+	            	}
+	        		testmap.repaint();
+	        		
+	        		testmap.setBounds(150, 0, 1290, 800);
+	        		testmap.setVisible(true);
+	        		
+	
+	        		testmapPanel.add(testmap);
+	        		testmapPanel.repaint();
+	        		testmapPanel.setVisible(true);
+            	}
+            	else if (sel_state2 == 2)
+            	{
+	    			testmapPanel.remove(testmap);
+	    			testmap.setVisible(false);
+	    			testmap.removeAll();
+	    			if (sel_state == 0)
+	    			{
+	    				testmap = new OSM().OSM_init(date2,user2,1);
+	    			}
+	    			else if (sel_state == 1)
+	    			{
+	    				testmap = new OSM().OSM_init(user_date, 1);
+	    			}
+	            	Runnable r = new runnableImplements();
+	            	Thread t = new Thread(r);
+	            	t.start();
+            	}
+            } 
+            
+            if(b.getText().equals("personal tmp")){
+            	temp = b.getText();
+            }   
+            
+            if(b.getText().equals("personal high tmp")){
+            	temp = b.getText();
+            }   
+
+        }
+    }
 
     
 
@@ -734,5 +935,29 @@ public class gui extends JFrame {
 	{
 		
 	}
+
+	class runnableImplements implements Runnable{
+		public void run() {
+			
+			// TODO Auto-generated method stub
+			while(OSM.test_thread1.getState() != Thread.State.TERMINATED);
+
+			
+			testmap = OSM.mapViewer;
+			testmap.repaint();
+			
+			testmap.setBounds(150, 0, 1290, 800);
+			testmap.setVisible(true);
+			
+			
+			testmapPanel.add(testmap);
+			testmapPanel.repaint();
+			testmapPanel.setVisible(true);
+			OSM.temp2 = 0;
+			System.out.println("done2");
+		}
+	}
+
+
 	
 }
