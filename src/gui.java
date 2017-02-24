@@ -9,7 +9,7 @@ import java.awt.Frame;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-
+import java.awt.Insets;
 import java.awt.Graphics;
 
 import java.awt.Toolkit;
@@ -34,6 +34,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.JSlider;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -42,19 +45,21 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 
-
 public class gui extends JFrame{
 	
 	private static final long serialVersionUID = 5193460907470526697L;
 	
 	public JFrame jF;
 	public JTabbedPane tabbedPane;
-	public JPanel panel1;
+	public JPanel temperature_distribution;
 	public JPanel panel2;
 	private JPanel panel3;
 	private JPanel Map_panel;
+	private JPanel Graph_panel;
+	private JPanel Information;
 	private JPanel testmapPanel;
 	private JPanel testmap;
+	
 	//private JLabel label1;
 	private JLabel label2;
 	private JLabel label3;
@@ -78,17 +83,30 @@ public class gui extends JFrame{
 	
 	
 	//---------------------------------------------------
-	private JComboBox<String> combo_d2 = new JComboBox();
-	private JComboBox<String> combo_u2 = new JComboBox();
-	private JButton D_Button2 = new JButton();
+	private JComboBox<String> Combo_Date = new JComboBox();
+	private JComboBox<String> Combo_User = new JComboBox();
+	private JButton Date_Button = new JButton();
 	private JButton U_Button2 = new JButton();
 	private JButton T_Button2 = new JButton();
 	private JButton TT_Button2 = new JButton();
-	private JButton A_Button2 = new JButton();
-	private JButton AA_Button2 = new JButton();
+	//private JButton A_Button2 = new JButton();
+	//private JButton AA_Button2 = new JButton();
 	
-	private JButton do_Button2 = new JButton();
+	//private JButton do_Button2 = new JButton();
 	//---------------------------------------------------
+	private RangeSlider rangeSlider;
+	private JLabel rangeSliderLabel1 = new JLabel();
+	private JLabel rangeSliderValue1 = new JLabel();
+	private JLabel rangeSliderLabel2 = new JLabel();
+	private JLabel rangeSliderValue2 = new JLabel();
+	
+	private RangeSlider rangeSlider2;
+	private JLabel rangeSliderLabel3 = new JLabel();
+	private JLabel rangeSliderValue3 = new JLabel();
+	private JLabel rangeSliderLabel4 = new JLabel();
+	private JLabel rangeSliderValue4 = new JLabel();
+	
+	
 	private String date = "";
 	private String user;
 	private String temp = "";
@@ -105,14 +123,16 @@ public class gui extends JFrame{
 	JComboBox<String> box1;
 	JComboBox<String> box2;
 	JComboBox<Double> box3;
-	JPanel p1;
+	//JPanel p1;
 	JPanel p3;
+	JPanel p4;
 	ChartPanel CP;
 	
 	JRadioButton rb1;
 	JRadioButton rb2;
 	JRadioButton rb3;
 	ButtonGroup Bgroup;
+	
 
 	Font f;
 	String date2;
@@ -125,7 +145,9 @@ public class gui extends JFrame{
 	{
 
 		tabbedPane  = new JTabbedPane();	
-		panel1 = new JPanel();
+		temperature_distribution = new JPanel();
+		
+		
 		
 		b1 = new JButton();
 		b2 = new JButton();
@@ -138,6 +160,7 @@ public class gui extends JFrame{
 		//p1 = new JPanel(new GridBagLayout());
 		CP = new ChartPanel(null);
 		p3 = new JPanel();
+		p4 = new JPanel();
 		rb1 = new JRadioButton();
 		rb2 = new JRadioButton();
 		rb3 = new JRadioButton();
@@ -145,6 +168,11 @@ public class gui extends JFrame{
 		
 		
 		testmapPanel = new JPanel();
+		Graph_panel = new JPanel();
+		Information = new JPanel();
+		
+		rangeSlider = new RangeSlider();
+		
 		testmap = new JPanel();
 		user2 = null;
 		date2 = null;
@@ -178,7 +206,7 @@ public class gui extends JFrame{
 
 		tabbedPane  = new JTabbedPane();
 				
-		panel1 = new JPanel();
+		temperature_distribution = new JPanel();
 		panel2 = new JPanel();
 		panel2.setLayout(null);
 		
@@ -187,14 +215,14 @@ public class gui extends JFrame{
 				
 		// add chart in JPanel
 		
-		p2 = new Map();
+		//p2 = new Map();
 		//panel2 = p2.Map_init();
 
-		//panel1.setLayout(null);
+		//temperature_distribution.setLayout(null);
 		//ChartPanel CP = new ChartPanel(jP.DrawMyChart(database_load.dload()));
 
-		panel1.setLayout(null);
-		panel1_init();
+		temperature_distribution.setLayout(null);
+		temperature_distribution_init();
 
 		
 		
@@ -204,9 +232,9 @@ public class gui extends JFrame{
 		//p2 = new Map();
 	
 		
-		Map_panel = p2.Map_init("0","0","init");
-		Map_panel.setBounds(150, 0, 1290, 820);
-		Map_panel.setVisible(true);
+		//Map_panel = p2.Map_init("0","0","init");
+		//Map_panel.setBounds(150, 0, 1290, 820);
+		//Map_panel.setVisible(true);
 
 		
 		testmap = new OSM().OSM_init(null,null,0);
@@ -217,33 +245,35 @@ public class gui extends JFrame{
 		testmapPanel_init();
 		testmapPanel.add(testmap);
 		testmapPanel.setVisible(true);
-		panel2.add(Map_panel);
+		panel2.add(Graph_panel);
 		
 /////////////////////////////////////////////////////
-		Map_panel = p2.Map_init("0","0","init");
+		//Map_panel = p2.Map_init("0","0","init");
 
 
 
-		Map_panel.setBounds(150, 0, 1290, 820);
+		//Map_panel.setBounds(150, 0, 1290, 820);
 
 
 
-		Map_panel.setVisible(true);
+		//Map_panel.setVisible(true);
 
 		
 
-		panel2.add(Map_panel);
+		//panel2.add(Map_panel);
 ////////////////////////////////////////////////////
 		
 				
 		setUser();
 
 		//----------------------------------------------------------------------------------------------
+		tabbedPane.addTab("Map", testmapPanel);
+		tabbedPane.addTab("GRAPH", panel2);
+		tabbedPane.addTab("인원정보보기", Information);
+		tabbedPane.add("Data", temperature_distribution);
+		//tabbedPane.add("Map", panel2);
+		//tabbedPane.add("Statistics", panel3);
 		
-		tabbedPane.add("Data", panel1);
-		tabbedPane.add("Map", panel2);
-		tabbedPane.add("Statistics", panel3);
-		tabbedPane.addTab("test", testmapPanel);
 		tabbedPane.setFont( new Font( "Dialog", 0 , 20 ) );
 		
 		
@@ -260,7 +290,7 @@ public class gui extends JFrame{
 	
 	}
 
-	public void panel1_init() throws SQLException, ClassCastException, IllegalArgumentException, IOException
+	public void temperature_distribution_init() throws SQLException, ClassCastException, IllegalArgumentException, IOException
 	{
 				
 		b1 = new JButton();
@@ -268,27 +298,27 @@ public class gui extends JFrame{
 		b1.setBounds(0, 0,130,50);
 		b1.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		b1.addActionListener(new MyActionListener2()); 
-		panel1.add(b1);
+		temperature_distribution.add(b1);
 		
 		b2 = new JButton();
 		b2.setText("Show Chart");
 		b2.setBounds(0, 200,130,50);
 		b2.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		b2.addActionListener(new MyActionListener2()); 
-		panel1.add(b2);
+		temperature_distribution.add(b2);
 		
 		b3 = new JButton();
 		b3.setText("Date List");
 		b3.setBounds(0, 100, 130, 50);
 		b3.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		b3.addActionListener(new MyActionListener2()); 
-		panel1.add(b3);
+		temperature_distribution.add(b3);
 		
 		b4.setText("High Temp");
 		b4.setBounds(0, 270, 130, 50);
 		b4.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		b4.addActionListener(new MyActionListener2());
-		panel1.add(b4);
+		temperature_distribution.add(b4);
 		//b4.//
 		
 		
@@ -321,7 +351,7 @@ public class gui extends JFrame{
 		Bgroup.add(rb1);
 		Bgroup.add(rb2);
 		Bgroup.add(rb3);
-		panel1.add(p3);
+		temperature_distribution.add(p3);
 		
 
 
@@ -342,19 +372,19 @@ public class gui extends JFrame{
 
 		CP = new ChartPanel(new jPanel01().DrawMyChart2("0", "2016-04-08", 37.9));
 		CP.setBounds(130, 0, 1310, 800);
-		panel1.add(CP);
+		temperature_distribution.add(CP);
 
 		box1.setBounds(0,50,130,50);
 		box1.setVisible(false);
 
 		
-		panel1.add(box1);
+		temperature_distribution.add(box1);
 		
 
 		box2.setBounds(0,150,130,50);
 		box2.setVisible(false);
 		
-		panel1.add(box2);
+		temperature_distribution.add(box2);
 
 		b2 = new JButton();
 		b2.setText("Check");
@@ -362,51 +392,80 @@ public class gui extends JFrame{
 		b4.setBounds(0, 270, 130, 50);
 		box3.setBounds(0, 320, 130, 50);
 		box3.setVisible(false);
-		panel1.add(box3);
+		temperature_distribution.add(box3);
 
-		panel1.setVisible(true);
+		temperature_distribution.setVisible(true);
 	}
 	
 	public void testmapPanel_init()
 	{
-		/*
-		private JComboBox combo_d2 = new JComboBox();
-		private JComboBox combo_u2 = new JComboBox();
-		private JButton D_Button2 = new JButton();
-		private JButton U_Button2 = new JButton();
-		private JButton T_Button2 = new JButton();
-		private JButton TT_Button2 = new JButton();
-		private JButton A_Button2 = new JButton();
-		private JButton AA_Button2 = new JButton();
-		
-		private JButton do_Button2 = new JButton();
-		*/
 		try {
 			st = con.createStatement();
 			
 			String buf_f = null;
 			rs = st.executeQuery("select distinct date from tp ORDER BY date");
 			
-			D_Button2.setText("Date");
-	    	D_Button2.setBounds(0, 0, 150, 50);
-	    	D_Button2.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
-	    	D_Button2.addActionListener(new MyActionListener4());
-	    	combo_d2.setBounds(0, 50, 150, 50);
+			Date_Button.setText("Date");
+	    	Date_Button.setBounds(0, 50, 150, 50);
+	    	Date_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
+	    	Date_Button.addActionListener(new MyActionListener4());
+	    	Combo_Date.setBounds(0, 100, 150, 50);
 	    	
+	    	
+	        //rangeSliderValue1.setHorizontalAlignment(JLabel.LEFT);
+	       // rangeSliderValue2.setHorizontalAlignment(JLabel.LEFT);
+	    	rangeSlider.setPreferredSize(new Dimension(100, 100));
+	        rangeSlider.setMinimum(0);
+	        rangeSlider.setMaximum(10);
+	        rangeSliderLabel1.setText("Lower value:");
+	        rangeSliderLabel2.setText("Upper value:");
+	        
+
+	        rangeSlider.setValue(3);
+	        rangeSlider.setUpperValue(7);
+
+	        rangeSliderLabel1.setBounds(0,700,100,50);
+	        rangeSliderLabel1.setVisible(true);
+	        rangeSliderValue1.setBounds(85,700,100,50);
+	        rangeSliderValue1.setVisible(true);
+	        
+	        rangeSliderLabel2.setBounds(0,725,100,50);
+	        rangeSliderLabel2.setVisible(true);
+	        rangeSliderValue2.setBounds(85,725,100,50);
+	        rangeSliderValue2.setVisible(true);
+	        
+	        rangeSliderValue1.setText(String.valueOf(rangeSlider.getValue()));
+	        rangeSliderValue2.setText(String.valueOf(rangeSlider.getUpperValue()));
+	        rangeSlider.addChangeListener(new ChangeListener() {
+	            public void stateChanged(ChangeEvent e) {
+	                RangeSlider slider = (RangeSlider) e.getSource();
+	                rangeSliderValue1.setText(String.valueOf((slider.getValue())*10));
+	                rangeSliderValue2.setText(String.valueOf((slider.getUpperValue())*10));
+	            }
+	        });
+	        
+	        rangeSlider.setBounds(5, 800, 130,100);
+	        rangeSlider.setVisible(true);
+	        //testmapPanel.add(rangeSlider);
+	        rangeSliderValue1.setText("30");
+	        rangeSliderValue2.setText("70");
+	        
 			while(rs.next()){
 				if(rs.getString("date").substring(0, 10).equals(buf_f))
 				{
 					continue;
 				}else{
 					buf_f = rs.getString("date").substring(0, 10);
-					combo_d2.addItem(buf_f);
+					Combo_Date.addItem(buf_f);
 					//System.out.println("test : "+buf_f);
 				}
 			}
 			
-			combo_d2.setVisible(false);
-			combo_u2.setBounds(0, 200, 150, 50);
-			combo_u2.setVisible(false);
+			//rangeSlider.setBounds(x, y, width, height);
+			
+			Combo_Date.setVisible(false);
+			Combo_User.setBounds(0, 200, 150, 50);
+			Combo_User.setVisible(false);
 			
 			U_Button2.setText("User");
 			U_Button2.setBounds(0, 150, 150, 50);
@@ -414,37 +473,52 @@ public class gui extends JFrame{
 			U_Button2.setVisible(true);
 			U_Button2.addActionListener(new MyActionListener4());
 			
+			//Radio Button--------------------------------------
+			
+			p4.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Option", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0,0,0)));
+			p4.setBounds(25, 250, 100, 115);
+			p4.setLayout(new FlowLayout(FlowLayout.LEADING));
+			
+			rb1.setText("All");
+			//rb1.setBounds(0, 400, 70, 20);
+			rb1.setVisible(true);
+			rb1.setSelected(true);
+			rb1.addActionListener(new MyActionListener3());
+			p4.add(rb1);
+			
+			rb2.setText("Male");
+			//rb2.setBounds(0, 450, 70, 20);
+			rb2.setVisible(true);
+			rb2.addActionListener(new MyActionListener3());
+			p4.add(rb2);
+			
+			rb3.setText("Female");
+			//rb3.setBounds(0, 500, 70, 20);
+			rb3.setVisible(true);
+			rb3.addActionListener(new MyActionListener3());
+			p4.add(rb3);
+			p4.setVisible(true);
+			Bgroup.add(rb1);
+			Bgroup.add(rb2);
+			Bgroup.add(rb3);
+			testmapPanel.add(p4);
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	
-		do_Button2.setText("Start");
-		do_Button2.setBounds(0,450,150,50);
-		do_Button2.setVisible(true);
-		do_Button2.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
-		do_Button2.addActionListener(new MyActionListener4());
 		
-		A_Button2.setText("Total tmp");
-		A_Button2.setBounds(0,300,150,50);
-		A_Button2.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
-		A_Button2.addActionListener(new MyActionListener4());
-		
-		AA_Button2.setText("Total high tmp");
-		AA_Button2.setBounds(0,350,150,50);
-		AA_Button2.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
-		AA_Button2.addActionListener(new MyActionListener4());
 				
-		testmapPanel.add(D_Button2);
+		testmapPanel.add(Date_Button);
 		testmapPanel.add(U_Button2);
-		testmapPanel.add(combo_d2);
-		testmapPanel.add(combo_u2);
-		testmapPanel.add(do_Button2);
-		testmapPanel.add(A_Button2);
-		testmapPanel.add(AA_Button2);
-		//testmapPanel.setVisible(true);
-
-	
+		testmapPanel.add(Combo_Date);
+		testmapPanel.add(Combo_User);
+		testmapPanel.add(rangeSliderLabel1);
+		testmapPanel.add(rangeSliderLabel2);
+		testmapPanel.add(rangeSliderValue1);
+		testmapPanel.add(rangeSliderValue2);
+		testmapPanel.add(rangeSlider);
 		
 	}
 	
@@ -573,7 +647,7 @@ public class gui extends JFrame{
             if (b.getText().equals("Start")){
             	// �뜝�럡�뀏嶺뚯쉻�삕, �뜝�럡�뀬�뜝�럩肉�, 占썩뫅�삕-�뜝�룞�삕�뜝�럩沅�
             	// date, user, temp
-            	showMap(date, user, temp);
+            	//showMap(date, user, temp);
             } 
             
             if(b.getText().equals("personal tmp")){
@@ -597,8 +671,8 @@ public class gui extends JFrame{
 		Map_panel.setBounds(150, 0, 1290, 820);
 		Map_panel.setVisible(true);
 		
-		panel2.add(Map_panel);
-		tabbedPane.add("Map", panel2);
+	//	panel2.add(Map_panel);
+		//tabbedPane.add("Map", panel2);
 		tabbedPane.add("Statistics", panel3);
 		jF.add(tabbedPane);
     	
@@ -691,14 +765,14 @@ public class gui extends JFrame{
 					System.out.println(box1.getSelectedItem().toString() + " / " + box2.getSelectedItem().toString());
 					//ChartPanel NCP = new ChartPanel(new jPanel01().DrawMyChart(new_data));
 					//NCP.setBounds(300, 10, 1610, 980);
-					panel1.remove(CP);
+					temperature_distribution.remove(CP);
 					
 					CP = new ChartPanel(new jPanel01().DrawMyChart2(box1.getSelectedItem().toString(), box2.getSelectedItem().toString(), 36.0));
 					
 					CP.setBounds(130, 0, 1310, 800);
-					panel1.add(CP);
-					panel1.repaint();
-					panel1.setVisible(true);
+					temperature_distribution.add(CP);
+					temperature_distribution.repaint();
+					temperature_distribution.setVisible(true);
 
 
 				}  catch (ClassCastException e1) {
@@ -730,7 +804,7 @@ public class gui extends JFrame{
             	box3.setVisible(false);
             	b4.setText("High Temp");
             	
-				panel1.remove(CP);
+				temperature_distribution.remove(CP);
 				
 				try {
 					CP = new ChartPanel(new jPanel01().DrawMyChart2(box1.getSelectedItem().toString(), box2.getSelectedItem().toString(), (Double)box3.getSelectedItem()));
@@ -743,9 +817,9 @@ public class gui extends JFrame{
 				}
 				
 				CP.setBounds(130, 0, 1310, 800);
-				panel1.add(CP);
-				panel1.repaint();
-				panel1.setVisible(true);
+				temperature_distribution.add(CP);
+				temperature_distribution.repaint();
+				temperature_distribution.setVisible(true);
             	
             }
         }
@@ -796,7 +870,9 @@ public class gui extends JFrame{
             }
         }
 	}
-		
+	
+	
+	
     private class MyActionListener4 implements ActionListener {
         public void actionPerformed(ActionEvent e) {
 
@@ -804,19 +880,19 @@ public class gui extends JFrame{
             JButton b = (JButton) e.getSource();
             if (b.getText().equals("Date")){
             	b.setText("Date select");
-            	combo_d2.setVisible(true);
+            	Combo_Date.setVisible(true);
             }      	
             else if(b.getText().equals("Date select")){
             	b.setText("Date");
             	
-            	date2 = combo_d2.getSelectedItem().toString();            
-            	combo_d2.setVisible(false);
-            	combo_u2.removeAllItems();
+            	date2 = Combo_Date.getSelectedItem().toString();            
+            	Combo_Date.setVisible(false);
+            	Combo_User.removeAllItems();
 
         		try {
 					rs = st.executeQuery("SELECT DISTINCT id FROM tp WHERE date = '" + date2 + "'");
 					while(rs.next()){
-						combo_u2.addItem(rs.getString("id"));
+						Combo_User.addItem(rs.getString("id"));
 	        		}
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -828,16 +904,57 @@ public class gui extends JFrame{
             //---------------user---------------------
             if (b.getText().equals("User")){
             		b.setText("User select");
-                	combo_u2.setVisible(true);
+                	Combo_User.setVisible(true);
                 	sel_state2 = 1;
             }      	
             else if(b.getText().equals("User select")){
             	b.setText("User");
-            	user2 = combo_u2.getSelectedItem().toString();
+            	user2 = Combo_User.getSelectedItem().toString();
             	setTitle(b.getText());
             	
           		//combo_u.removeAllItems();
-          		combo_u2.setVisible(false);
+          		Combo_User.setVisible(false);
+          		
+            	if (sel_state2 == 1)
+            	{
+	            	testmapPanel.remove(testmap);
+	            	testmap.setVisible(false);
+	            	testmap.removeAll();
+	            	if (sel_state == 0)
+	            	{
+	            		testmap = new OSM().OSM_init(date2,user2,1);
+	            	}
+	            	else if (sel_state == 1)
+	            	{
+	            		testmap = new OSM().OSM_init(user_date, 1);
+	            	}
+	        		testmap.repaint();
+	        		
+	        		testmap.setBounds(150, 0, 1290, 800);
+	        		testmap.setVisible(true);
+	        		
+	
+	        		testmapPanel.add(testmap);
+	        		testmapPanel.repaint();
+	        		testmapPanel.setVisible(true);
+            	}
+            	else if (sel_state2 == 2)
+            	{
+	    			testmapPanel.remove(testmap);
+	    			testmap.setVisible(false);
+	    			testmap.removeAll();
+	    			if (sel_state == 0)
+	    			{
+	    				testmap = new OSM().OSM_init(date2,user2,1);
+	    			}
+	    			else if (sel_state == 1)
+	    			{
+	    				testmap = new OSM().OSM_init(user_date, 1);
+	    			}
+	            	Runnable r = new runnableImplements();
+	            	Thread t = new Thread(r);
+	            	t.start();
+            	}
             }
             
             //--------------temp-----------------
@@ -925,8 +1042,9 @@ public class gui extends JFrame{
             if(b.getText().equals("personal high tmp")){
             	temp = b.getText();
             }   
-
+            //System.out.println("state1 : " + sel_state + " / state2 : " + sel_state2);
         }
+        
     }
 
     

@@ -3,15 +3,35 @@
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JToolTip;
+
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.painter.Painter;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+import java.awt.geom.Point2D;
+
+import javax.swing.JFrame;
+import javax.swing.JToolTip;
+
+import org.jxmapviewer.JXMapKit;
+import org.jxmapviewer.JXMapViewer;
+import org.jxmapviewer.OSMTileFactoryInfo;
+import org.jxmapviewer.viewer.DefaultTileFactory;
+import org.jxmapviewer.viewer.GeoPosition;
+import org.jxmapviewer.viewer.TileFactoryInfo;
 
 /**
  * Paints a route
@@ -32,6 +52,53 @@ public class RoutePainter implements Painter<JXMapViewer>
 		// copy the list so that changes in the 
 		// original list do not have an effect here
 		this.track = new ArrayList<GeoPosition>(track);
+		/*
+		final JXMapKit jXMapKit = new JXMapKit();
+        TileFactoryInfo info = new OSMTileFactoryInfo();
+        DefaultTileFactory tileFactory = new DefaultTileFactory(info);
+        jXMapKit.setTileFactory(tileFactory);
+		final JToolTip tooltip = new JToolTip();
+        tooltip.setTipText("Java");
+        tooltip.setComponent(jXMapKit.getMainMap());
+        jXMapKit.getMainMap().add(tooltip);
+
+       // jXMapKit.setZoom(11);
+        jXMapKit.setAddressLocation(gp);
+
+        jXMapKit.getMainMap().addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) { 
+                // ignore
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e)
+            {
+                JXMapViewer map = jXMapKit.getMainMap();
+
+                // convert to world bitmap
+                Point2D worldPos = map.getTileFactory().geoToPixel(gp, map.getZoom());
+
+                // convert to screen
+                Rectangle rect = map.getViewportBounds();
+                int sx = (int) worldPos.getX() - rect.x;
+                int sy = (int) worldPos.getY() - rect.y;
+                Point screenPos = new Point(sx, sy);
+
+                // check if near the mouse
+                if (screenPos.distance(e.getPoint()) < 20)
+                {
+                    screenPos.x -= tooltip.getWidth() / 2;
+
+                    tooltip.setLocation(screenPos);
+                    tooltip.setVisible(true);
+                }
+                else
+                {
+                    tooltip.setVisible(false);
+                }
+            }
+        });*/
 	}
 
 	@Override
@@ -59,6 +126,8 @@ public class RoutePainter implements Painter<JXMapViewer>
 		drawRoute(g, map);
 
 		g.dispose();
+		/////////////////////////////////////////////////////////////////////////
+		
 	}
 
 	/**
@@ -90,4 +159,6 @@ public class RoutePainter implements Painter<JXMapViewer>
 			lastY = (int) pt.getY();
 		}
 	}
+	
+	
 }
