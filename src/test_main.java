@@ -20,7 +20,9 @@ public class test_main {
 		//MyChart MC = new MyChart();
 		//MC.get_MyChart(mean);
 		
+		
 		new gui();
+
 		//database_load.dload();
 		//new Map();
 		

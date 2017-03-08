@@ -693,11 +693,15 @@ public class OSM extends Thread{
 				while(rs.next()){
 					id = rs.getString("id");
 					birth = rs.getString(3);
-					gender = rs.getString("sex");
+					if (rs.getInt("sex") == 0)
+						gender = "Male";
+					else 
+						gender = "Female";
+					
 					Geo_lat = rs.getDouble("gps_lat");
 					Geo_har = rs.getDouble("gps_har");
 					load_sw.Geolist.add(new GeoPosition(Geo_lat, Geo_har));
-					load_sw.waypoints.add(new SwingWaypoint(id, birth, gender, new GeoPosition(Geo_lat, Geo_har)));
+					load_sw.waypoints.add(new SwingWaypoint(Sel_date,Sel_user, id, birth, gender, Geo_lat, Geo_har, new GeoPosition(Geo_lat, Geo_har)));
 					
 					//load_glc.Geolist.add(new GeoPosition(Geo_lat, Geo_har));
 					//load_glc.waypoints.add(new DefaultWaypoint(Geo_lat, Geo_har));

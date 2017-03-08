@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Event;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
@@ -15,6 +16,7 @@ import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.sql.Connection;
@@ -22,6 +24,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
 import javax.swing.ImageIcon;
@@ -57,8 +60,9 @@ public class gui extends JFrame{
 	private JPanel Map_panel;
 	private JPanel Graph_panel;
 	private JPanel Information;
-	private JPanel testmapPanel;
-	private JPanel testmap;
+	private JPanel Information_sheet_panel;
+	public JPanel testmapPanel;
+	public JPanel testmap;
 	
 	//private JLabel label1;
 	private JLabel label2;
@@ -95,24 +99,76 @@ public class gui extends JFrame{
 	//private JButton do_Button2 = new JButton();
 	//---------------------------------------------------
 	private RangeSlider rangeSlider;
+	private JLabel rangeSliderLabel0 = new JLabel();
 	private JLabel rangeSliderLabel1 = new JLabel();
 	private JLabel rangeSliderValue1 = new JLabel();
 	private JLabel rangeSliderLabel2 = new JLabel();
 	private JLabel rangeSliderValue2 = new JLabel();
 	
 	private RangeSlider rangeSlider2;
+	private JLabel rangeSliderLabel0_2 = new JLabel();
 	private JLabel rangeSliderLabel3 = new JLabel();
 	private JLabel rangeSliderValue3 = new JLabel();
 	private JLabel rangeSliderLabel4 = new JLabel();
 	private JLabel rangeSliderValue4 = new JLabel();
 	
+	/////////////////////////////////////////////////////////
+	private JButton Date_Button_tp = new JButton();
+	private JComboBox<String> Combo_Date_tp = new JComboBox();
+	private JComboBox<String> Combo_User_tp = new JComboBox();
+	private JButton U_Button2_tp = new JButton();
+	private JButton T_Button2_tp = new JButton();
+	private JButton TT_Button2_tp = new JButton();
+
+	private RangeSlider rangeSlider_tp;
+	private JLabel rangeSliderLabel0_tp = new JLabel();
+	private JLabel rangeSliderLabel1_tp = new JLabel();
+	private JLabel rangeSliderValue1_tp = new JLabel();
+	private JLabel rangeSliderLabel2_tp = new JLabel();
+	private JLabel rangeSliderValue2_tp = new JLabel();
 	
+	private RangeSlider rangeSlider2_tp;
+	private JLabel rangeSliderLabel0_2_tp = new JLabel();
+	private JLabel rangeSliderLabel3_tp = new JLabel();
+	private JLabel rangeSliderValue3_tp = new JLabel();
+	private JLabel rangeSliderLabel4_tp = new JLabel();
+	private JLabel rangeSliderValue4_tp = new JLabel();
+	
+	
+	/////////////////////////////////////////////////////////
+	
+	private JButton Date_Button_gp = new JButton();
+	private JComboBox<String> Combo_Date_gp = new JComboBox();
+	private JComboBox<String> Combo_User_gp = new JComboBox();
+	private JButton U_Button2_gp = new JButton();
+	private JButton T_Button2_gp = new JButton();
+	private JButton TT_Button2_gp = new JButton();
+
+	private RangeSlider rangeSlider_gp;
+	private JLabel rangeSliderLabel0_gp = new JLabel();
+	private JLabel rangeSliderLabel1_gp = new JLabel();
+	private JLabel rangeSliderValue1_gp = new JLabel();
+	private JLabel rangeSliderLabel2_gp = new JLabel();
+	private JLabel rangeSliderValue2_gp = new JLabel();
+	
+	private RangeSlider rangeSlider2_gp;
+	private JLabel rangeSliderLabel0_2_gp = new JLabel();
+	private JLabel rangeSliderLabel3_gp = new JLabel();
+	private JLabel rangeSliderValue3_gp = new JLabel();
+	private JLabel rangeSliderLabel4_gp = new JLabel();
+	private JLabel rangeSliderValue4_gp = new JLabel();
+	
+	
+	
+	private XYBarChart XYBarClass;
+	private JPanel XYBarChartPanel;
 	private String date = "";
 	private String user;
 	private String temp = "";
 	
 	ImageIcon icon;
 	public Map p2;
+	public int swing_click;
 	//--------------------------------
 	//JJ
 	JButton b1;
@@ -126,20 +182,38 @@ public class gui extends JFrame{
 	//JPanel p1;
 	JPanel p3;
 	JPanel p4;
+	JPanel p5;
+	JPanel p6;
 	ChartPanel CP;
 	
 	JRadioButton rb1;
 	JRadioButton rb2;
 	JRadioButton rb3;
-	ButtonGroup Bgroup;
 	
-
+	JRadioButton rb1_tp;
+	JRadioButton rb2_tp;
+	JRadioButton rb3_tp;
+	
+	JRadioButton rb1_gp;
+	JRadioButton rb2_gp;
+	JRadioButton rb3_gp;
+	
+	ButtonGroup Bgroup;
+	ButtonGroup Bgroup2;
+	ButtonGroup Bgroup3;
+	
 	Font f;
 	String date2;
 	String user2;
 	String[][] user_date;
 	
 	int sel_state, sel_state2 , count;
+	
+	interface swing_event{
+		
+		int clicked = 0;
+		
+	}
 	
 	public gui() throws IOException, SQLException
 	{
@@ -161,17 +235,38 @@ public class gui extends JFrame{
 		CP = new ChartPanel(null);
 		p3 = new JPanel();
 		p4 = new JPanel();
+		p5 = new JPanel();
+		p6 = new JPanel();
+		
 		rb1 = new JRadioButton();
 		rb2 = new JRadioButton();
 		rb3 = new JRadioButton();
-		Bgroup = new ButtonGroup();
 		
+		rb1_tp = new JRadioButton();
+		rb2_tp = new JRadioButton();
+		rb3_tp = new JRadioButton();
+		
+		rb1_gp = new JRadioButton();
+		rb2_gp = new JRadioButton();
+		rb3_gp = new JRadioButton();
+		
+		Bgroup = new ButtonGroup();
+		Bgroup2 = new ButtonGroup();
+		Bgroup3 = new ButtonGroup();
 		
 		testmapPanel = new JPanel();
 		Graph_panel = new JPanel();
 		Information = new JPanel();
+		Information_sheet_panel = new JPanel();
 		
 		rangeSlider = new RangeSlider();
+		rangeSlider2 = new RangeSlider();
+		
+		rangeSlider_tp = new RangeSlider();
+		rangeSlider2_tp = new RangeSlider();
+		
+		rangeSlider_gp = new RangeSlider();
+		rangeSlider2_gp = new RangeSlider();
 		
 		testmap = new JPanel();
 		user2 = null;
@@ -185,22 +280,17 @@ public class gui extends JFrame{
 		sel_state = 0;
 		sel_state2 = 0;
 		count = 0;
+		swing_click = 0;
 		
 		try {
-			//sb
-			//con = DriverManager.getConnection("jdbc:mysql://localhost","root", "1234"); 
 			con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234");
 			st = con.createStatement();
-			//sb
 			rs = st.executeQuery("use newschema5");
-			//rs = st.executeQuery("use newschema");
-			//rs = st.executeQuery("use testschema");
-			
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		
 		icon = new ImageIcon("Seoul.JPG");
 
@@ -209,34 +299,10 @@ public class gui extends JFrame{
 		temperature_distribution = new JPanel();
 		panel2 = new JPanel();
 		panel2.setLayout(null);
-		
-		panel3 = make_panel3.make(jF);
-		
-				
-		// add chart in JPanel
-		
-		//p2 = new Map();
-		//panel2 = p2.Map_init();
-
-		//temperature_distribution.setLayout(null);
-		//ChartPanel CP = new ChartPanel(jP.DrawMyChart(database_load.dload()));
 
 		temperature_distribution.setLayout(null);
 		temperature_distribution_init();
 
-		
-		
-		//--------MAP--------------------------------------------------------------------------
-						
-		//1290,820
-		//p2 = new Map();
-	
-		
-		//Map_panel = p2.Map_init("0","0","init");
-		//Map_panel.setBounds(150, 0, 1290, 820);
-		//Map_panel.setVisible(true);
-
-		
 		testmap = new OSM().OSM_init(null,null,0);
 		testmap.setBounds(150, 0, 1290, 800);
 		testmap.setVisible(true);
@@ -245,8 +311,26 @@ public class gui extends JFrame{
 		testmapPanel_init();
 		testmapPanel.add(testmap);
 		testmapPanel.setVisible(true);
-		panel2.add(Graph_panel);
+		//panel2.add(Graph_panel);
+		panel2.setBounds(0, 0, 1280, 800);
+		panel2.setVisible(true);
 		
+		
+		InformationPanel_init();
+		JTablePanel jTablePanel = new JTablePanel();
+		
+		
+		
+		//Information_sheet_panel.setLayout(null);
+		//Information_sheet_panel.add(jTablePanel.JTable_init());
+		//Information_sheet_panel.setBounds(150, 0, 1140, 800);
+		//Information_sheet_panel.setVisible(true);
+		
+		Information.setLayout(null);
+		Information.add(jTablePanel.JTable_init());
+		//Information.add(jTablePanel.JTable_init());
+		Information.setBounds(150, 0, 1290, 800);
+		Information.setVisible(true);
 /////////////////////////////////////////////////////
 		//Map_panel = p2.Map_init("0","0","init");
 
@@ -264,12 +348,13 @@ public class gui extends JFrame{
 ////////////////////////////////////////////////////
 		
 				
-		setUser();
+		//make_GraphPanel();
+		make_GraphPanel2();
 
 		//----------------------------------------------------------------------------------------------
 		tabbedPane.addTab("Map", testmapPanel);
 		tabbedPane.addTab("GRAPH", panel2);
-		tabbedPane.addTab("인원정보보기", Information);
+		tabbedPane.add("인원정보보기", Information);
 		tabbedPane.add("Data", temperature_distribution);
 		//tabbedPane.add("Map", panel2);
 		//tabbedPane.add("Statistics", panel3);
@@ -333,24 +418,24 @@ public class gui extends JFrame{
 		//rb1.setBounds(0, 400, 70, 20);
 		rb1.setVisible(true);
 		rb1.setSelected(true);
-		rb1.addActionListener(new MyActionListener3());
+		//rb1.addItemListener(new SelectItemListener());
 		p3.add(rb1);
 		
 		rb2.setText("Male");
 		//rb2.setBounds(0, 450, 70, 20);
 		rb2.setVisible(true);
-		rb2.addActionListener(new MyActionListener3());
+		//rb2.addItemListener(new SelectItemListener());
 		p3.add(rb2);
 		
 		rb3.setText("Female");
 		//rb3.setBounds(0, 500, 70, 20);
 		rb3.setVisible(true);
-		rb3.addActionListener(new MyActionListener3());
+		//rb3.addItemListener(new SelectItemListener());
 		p3.add(rb3);
 		p3.setVisible(true);
-		Bgroup.add(rb1);
-		Bgroup.add(rb2);
-		Bgroup.add(rb3);
+		//Bgroup.add(rb1);
+		//Bgroup.add(rb2);
+		//Bgroup.add(rb3);
 		temperature_distribution.add(p3);
 		
 
@@ -397,7 +482,7 @@ public class gui extends JFrame{
 		temperature_distribution.setVisible(true);
 	}
 	
-	public void testmapPanel_init()
+	public void testmapPanel_init() // tab 1
 	{
 		try {
 			st = con.createStatement();
@@ -417,21 +502,23 @@ public class gui extends JFrame{
 	    	rangeSlider.setPreferredSize(new Dimension(100, 100));
 	        rangeSlider.setMinimum(0);
 	        rangeSlider.setMaximum(10);
+	        rangeSliderLabel0.setText("Age Range");
 	        rangeSliderLabel1.setText("Lower value:");
 	        rangeSliderLabel2.setText("Upper value:");
 	        
 
 	        rangeSlider.setValue(3);
 	        rangeSlider.setUpperValue(7);
-
-	        rangeSliderLabel1.setBounds(0,700,100,50);
+	        rangeSliderLabel0.setBounds(15, 400, 100, 20);
+	        rangeSliderLabel0.setVisible(true);
+	        rangeSliderLabel1.setBounds(15,420,100,20);
 	        rangeSliderLabel1.setVisible(true);
-	        rangeSliderValue1.setBounds(85,700,100,50);
+	        rangeSliderValue1.setBounds(100,420,100,20);
 	        rangeSliderValue1.setVisible(true);
 	        
-	        rangeSliderLabel2.setBounds(0,725,100,50);
+	        rangeSliderLabel2.setBounds(15,440,100,20);
 	        rangeSliderLabel2.setVisible(true);
-	        rangeSliderValue2.setBounds(85,725,100,50);
+	        rangeSliderValue2.setBounds(100,440,100,20);
 	        rangeSliderValue2.setVisible(true);
 	        
 	        rangeSliderValue1.setText(String.valueOf(rangeSlider.getValue()));
@@ -441,14 +528,73 @@ public class gui extends JFrame{
 	                RangeSlider slider = (RangeSlider) e.getSource();
 	                rangeSliderValue1.setText(String.valueOf((slider.getValue())*10));
 	                rangeSliderValue2.setText(String.valueOf((slider.getUpperValue())*10));
+	    	      
+	                rangeSlider_tp.setValue(rangeSlider.getValue());
+	    	        rangeSlider_tp.setUpperValue(rangeSlider.getUpperValue());
+	                rangeSliderValue1_tp.setText(String.valueOf((slider.getValue())*10));
+	                rangeSliderValue2_tp.setText(String.valueOf((slider.getUpperValue())*10));
+	                
+	                rangeSlider_gp.setValue(rangeSlider.getValue());
+	    	        rangeSlider_gp.setUpperValue(rangeSlider.getUpperValue());
+	                rangeSliderValue1_gp.setText(String.valueOf((slider.getValue())*10));
+	                rangeSliderValue2_gp.setText(String.valueOf((slider.getUpperValue())*10));
 	            }
 	        });
 	        
-	        rangeSlider.setBounds(5, 800, 130,100);
+	        rangeSlider.setBounds(13, 460, 130,20);
 	        rangeSlider.setVisible(true);
 	        //testmapPanel.add(rangeSlider);
 	        rangeSliderValue1.setText("30");
 	        rangeSliderValue2.setText("70");
+
+	        ////////
+	    	rangeSlider2.setPreferredSize(new Dimension(100, 100));
+	        rangeSlider2.setMinimum(34);
+	        rangeSlider2.setMaximum(42);
+	        rangeSliderLabel0_2.setText("Temp Range");
+	        rangeSliderLabel3.setText("Lower value:");
+	        rangeSliderLabel4.setText("Upper value:");
+	        
+
+	        rangeSlider2.setValue(36);
+	        rangeSlider2.setUpperValue(40);
+	        rangeSliderLabel0_2.setBounds(15,500, 100, 20);
+	        rangeSliderLabel0_2.setVisible(true);
+	        rangeSliderLabel3.setBounds(15,520,100,20);
+	        rangeSliderLabel3.setVisible(true);
+	        rangeSliderValue3.setBounds(100,520,100,20);
+	        rangeSliderValue4.setVisible(true);
+	        
+	        rangeSliderLabel4.setBounds(15,540,100,20);
+	        rangeSliderLabel4.setVisible(true);
+	        rangeSliderValue4.setBounds(100,540,100,20);
+	        rangeSliderValue4.setVisible(true);
+	        
+	        rangeSliderValue3.setText(String.valueOf(rangeSlider.getValue()));
+	        rangeSliderValue4.setText(String.valueOf(rangeSlider.getUpperValue()));
+	        rangeSlider2.addChangeListener(new ChangeListener() {
+	            public void stateChanged(ChangeEvent e) {
+	                RangeSlider slider2 = (RangeSlider) e.getSource();
+	                rangeSliderValue3.setText(String.valueOf(slider2.getValue()));
+	                rangeSliderValue4.setText(String.valueOf(slider2.getUpperValue()));
+	                
+	                rangeSlider2_tp.setValue(rangeSlider2.getValue());
+	    	        rangeSlider2_tp.setUpperValue(rangeSlider2.getUpperValue());
+	                rangeSliderValue3_tp.setText(String.valueOf(slider2.getValue()));
+	                rangeSliderValue4_tp.setText(String.valueOf(slider2.getUpperValue()));
+	                
+	                rangeSlider2_gp.setValue(rangeSlider2.getValue());
+	    	        rangeSlider2_gp.setUpperValue(rangeSlider2.getUpperValue());
+	                rangeSliderValue3_gp.setText(String.valueOf(slider2.getValue()));
+	                rangeSliderValue4_gp.setText(String.valueOf(slider2.getUpperValue()));
+	            }
+	        });
+	        
+	        rangeSlider2.setBounds(13, 560, 130,20);
+	        rangeSlider2.setVisible(true);
+	        //testmapPanel.add(rangeSlider);
+	        rangeSliderValue3.setText("36");
+	        rangeSliderValue4.setText("40");
 	        
 			while(rs.next()){
 				if(rs.getString("date").substring(0, 10).equals(buf_f))
@@ -483,19 +629,20 @@ public class gui extends JFrame{
 			//rb1.setBounds(0, 400, 70, 20);
 			rb1.setVisible(true);
 			rb1.setSelected(true);
-			rb1.addActionListener(new MyActionListener3());
+			//rb1.addActionListener(new MyActionListener3());
+			rb1.addItemListener(new SelectItemListener());
 			p4.add(rb1);
 			
 			rb2.setText("Male");
 			//rb2.setBounds(0, 450, 70, 20);
 			rb2.setVisible(true);
-			rb2.addActionListener(new MyActionListener3());
+			rb2.addItemListener(new SelectItemListener());
 			p4.add(rb2);
 			
 			rb3.setText("Female");
 			//rb3.setBounds(0, 500, 70, 20);
 			rb3.setVisible(true);
-			rb3.addActionListener(new MyActionListener3());
+			rb3.addItemListener(new SelectItemListener());
 			p4.add(rb3);
 			p4.setVisible(true);
 			Bgroup.add(rb1);
@@ -514,15 +661,434 @@ public class gui extends JFrame{
 		testmapPanel.add(U_Button2);
 		testmapPanel.add(Combo_Date);
 		testmapPanel.add(Combo_User);
+		testmapPanel.add(rangeSliderLabel0);
 		testmapPanel.add(rangeSliderLabel1);
 		testmapPanel.add(rangeSliderLabel2);
 		testmapPanel.add(rangeSliderValue1);
 		testmapPanel.add(rangeSliderValue2);
 		testmapPanel.add(rangeSlider);
+		testmapPanel.add(rangeSliderLabel0_2);
+		testmapPanel.add(rangeSliderLabel3);
+		testmapPanel.add(rangeSliderLabel4);
+		testmapPanel.add(rangeSliderValue3);
+		testmapPanel.add(rangeSliderValue4);
+		testmapPanel.add(rangeSlider2);
 		
 	}
 	
-	public void setUser(){
+	
+	public void InformationPanel_init() // return information
+	{
+		try {
+			st = con.createStatement();
+			
+			String buf_f_tp = null;
+			rs = st.executeQuery("select distinct date from tp ORDER BY date");
+			
+			Date_Button_tp.setText("Date");
+	    	Date_Button_tp.setBounds(0, 50, 150, 50);
+	    	Date_Button_tp.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
+	    	Date_Button_tp.addActionListener(new MyActionListener4());
+	    	Combo_Date_tp.setBounds(0, 100, 150, 50);
+	    	
+	    	
+	        //rangeSliderValue1.setHorizontalAlignment(JLabel.LEFT);
+	       // rangeSliderValue2.setHorizontalAlignment(JLabel.LEFT);
+	    	rangeSlider_tp.setPreferredSize(new Dimension(100,100));
+	    	
+	        rangeSlider_tp.setMinimum(0);
+	        rangeSlider_tp.setMaximum(10);
+	        rangeSliderLabel0_tp.setText("Age Range");
+	        rangeSliderLabel1_tp.setText("Lower value:");
+	        rangeSliderLabel2_tp.setText("Upper value:");
+	        
+
+	        rangeSlider_tp.setValue(3);
+	        rangeSlider_tp.setUpperValue(7);
+	        rangeSliderLabel0_tp.setBounds(15, 400, 100, 20);
+	        rangeSliderLabel0_tp.setVisible(true);
+	        rangeSliderLabel1_tp.setBounds(15,420,100,20);
+	        rangeSliderLabel1_tp.setVisible(true);
+	        rangeSliderValue1_tp.setBounds(100,420,100,20);
+	        rangeSliderValue1_tp.setVisible(true);
+	        
+	        rangeSliderLabel2_tp.setBounds(15,440,100,20);
+	        rangeSliderLabel2_tp.setVisible(true);
+	        rangeSliderValue2_tp.setBounds(100,440,100,20);
+	        rangeSliderValue2_tp.setVisible(true);
+	        
+	        rangeSliderValue1_tp.setText(String.valueOf(rangeSlider_tp.getValue()));
+	        rangeSliderValue2_tp.setText(String.valueOf(rangeSlider_tp.getUpperValue()));
+	        rangeSlider_tp.addChangeListener(new ChangeListener() {
+	            public void stateChanged(ChangeEvent e) {
+	                RangeSlider slider_tp = (RangeSlider) e.getSource();
+	                rangeSliderValue1_tp.setText(String.valueOf((slider_tp.getValue())*10));
+	                rangeSliderValue2_tp.setText(String.valueOf((slider_tp.getUpperValue())*10));
+	                
+	                rangeSlider.setValue(rangeSlider_tp.getValue());
+	    	        rangeSlider.setUpperValue(rangeSlider_tp.getUpperValue());
+	                rangeSliderValue1.setText(String.valueOf((slider_tp.getValue())*10));
+	                rangeSliderValue2.setText(String.valueOf((slider_tp.getUpperValue())*10));
+	                
+	                rangeSlider_gp.setValue(rangeSlider_tp.getValue());
+	    	        rangeSlider_gp.setUpperValue(rangeSlider_tp.getUpperValue());
+	                rangeSliderValue1_gp.setText(String.valueOf((slider_tp.getValue())*10));
+	                rangeSliderValue2_gp.setText(String.valueOf((slider_tp.getUpperValue())*10));
+	            }
+	        });
+	        
+	        rangeSlider_tp.setBounds(13, 460, 130,20);
+	        rangeSlider_tp.setVisible(true);
+	        //testmapPanel.add(rangeSlider);
+	        rangeSliderValue1_tp.setText("30");
+	        rangeSliderValue2_tp.setText("70");
+
+	        ////////
+	    	rangeSlider2_tp.setPreferredSize(new Dimension(100, 100));
+	        rangeSlider2_tp.setMinimum(34);
+	        rangeSlider2_tp.setMaximum(42);
+	        rangeSliderLabel0_2_tp.setText("Temp Range");
+	        rangeSliderLabel3_tp.setText("Lower value:");
+	        rangeSliderLabel4_tp.setText("Upper value:");
+	        
+
+	        rangeSlider2_tp.setValue(36);
+	        rangeSlider2_tp.setUpperValue(40);
+	        rangeSliderLabel0_2_tp.setBounds(15,500, 100, 20);
+	        rangeSliderLabel0_2_tp.setVisible(true);
+	        rangeSliderLabel3_tp.setBounds(15,520,100,20);
+	        rangeSliderLabel3_tp.setVisible(true);
+	        rangeSliderValue3_tp.setBounds(100,520,100,20);
+	        rangeSliderValue4_tp.setVisible(true);
+	        
+	        rangeSliderLabel4_tp.setBounds(15,540,100,20);
+	        rangeSliderLabel4_tp.setVisible(true);
+	        rangeSliderValue4_tp.setBounds(100,540,100,20);
+	        rangeSliderValue4_tp.setVisible(true);
+	        
+	        rangeSliderValue3_tp.setText(String.valueOf(rangeSlider_tp.getValue()));
+	        rangeSliderValue4_tp.setText(String.valueOf(rangeSlider_tp.getUpperValue()));
+	        rangeSlider2_tp.addChangeListener(new ChangeListener() {
+	            public void stateChanged(ChangeEvent e) {
+	                RangeSlider slider2_tp = (RangeSlider) e.getSource();
+	                rangeSliderValue3_tp.setText(String.valueOf(slider2_tp.getValue()));
+	                rangeSliderValue4_tp.setText(String.valueOf(slider2_tp.getUpperValue()));
+	                
+	                rangeSlider2.setValue(rangeSlider2_tp.getValue());
+	    	        rangeSlider2.setUpperValue(rangeSlider2_tp.getUpperValue());
+	                rangeSliderValue3.setText(String.valueOf(slider2_tp.getValue()));
+	                rangeSliderValue4.setText(String.valueOf(slider2_tp.getUpperValue()));
+	                
+	                rangeSlider2_gp.setValue(rangeSlider2_tp.getValue());
+	    	        rangeSlider2_gp.setUpperValue(rangeSlider2_tp.getUpperValue());
+	                rangeSliderValue3_gp.setText(String.valueOf(slider2_tp.getValue()));
+	                rangeSliderValue4_gp.setText(String.valueOf(slider2_tp.getUpperValue()));
+	            }
+	        });
+	        
+	        rangeSlider2_tp.setBounds(13, 560, 130,20);
+	        rangeSlider2_tp.setVisible(true);
+	        //testmapPanel.add(rangeSlider);
+	        rangeSliderValue3_tp.setText("36");
+	        rangeSliderValue4_tp.setText("40");
+	        
+			while(rs.next()){
+				if(rs.getString("date").substring(0, 10).equals(buf_f_tp))
+				{
+					continue;
+				}else{
+					buf_f_tp = rs.getString("date").substring(0, 10);
+					Combo_Date_tp.addItem(buf_f_tp);
+					//System.out.println("test : "+buf_f);
+				}
+			}
+			
+			//rangeSlider.setBounds(x, y, width, height);
+			
+			Combo_Date_tp.setVisible(false);
+			Combo_User_tp.setBounds(0, 200, 150, 50);
+			Combo_User_tp.setVisible(false);
+			
+			U_Button2_tp.setText("User");
+			U_Button2_tp.setBounds(0, 150, 150, 50);
+			U_Button2_tp.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
+			U_Button2_tp.setVisible(true);
+			U_Button2_tp.addActionListener(new MyActionListener4());
+			
+			//Radio Button--------------------------------------
+			
+			p5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Option", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0,0,0)));
+			p5.setBounds(25, 250, 100, 115);
+			p5.setLayout(new FlowLayout(FlowLayout.LEADING));
+			
+			rb1_tp.setText("All");
+			//rb1.setBounds(0, 400, 70, 20);
+			rb1_tp.setVisible(true);
+			rb1_tp.setSelected(true);
+			rb1_tp.addItemListener(new SelectItemListener());
+			p5.add(rb1_tp);
+			
+			rb2_tp.setText("Male");
+			//rb2.setBounds(0, 450, 70, 20);
+			rb2_tp.setVisible(true);
+			rb2_tp.addItemListener(new SelectItemListener());
+			p5.add(rb2_tp);
+			
+			rb3_tp.setText("Female");
+			//rb3.setBounds(0, 500, 70, 20);
+			rb3_tp.setVisible(true);
+			rb3_tp.addItemListener(new SelectItemListener());
+			p5.add(rb3_tp);
+			p5.setVisible(true);
+			Bgroup2.add(rb1_tp);
+			Bgroup2.add(rb2_tp);
+			Bgroup2.add(rb3_tp);
+			Information.add(p5);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		
+				
+		Information.add(Date_Button_tp);
+		Information.add(U_Button2_tp);
+		Information.add(Combo_Date_tp);
+		Information.add(Combo_User_tp);
+		Information.add(rangeSliderLabel0_tp);
+		Information.add(rangeSliderLabel1_tp);
+		Information.add(rangeSliderLabel2_tp);
+		Information.add(rangeSliderValue1_tp);
+		Information.add(rangeSliderValue2_tp);
+		Information.add(rangeSlider_tp);
+		Information.add(rangeSliderLabel0_2_tp);
+		Information.add(rangeSliderLabel3_tp);
+		Information.add(rangeSliderLabel4_tp);
+		Information.add(rangeSliderValue3_tp);
+		Information.add(rangeSliderValue4_tp);
+		Information.add(rangeSlider2_tp);
+
+		
+	}
+	
+	public JPanel make_XYBarChartPanel(){
+		XYBarClass =  new XYBarChart("test");
+		
+		Graph_panel = XYBarClass.createXYBarChartPanel();
+		Graph_panel.setLayout(null);
+		Graph_panel.setBounds(150,0,1280,800);
+		Graph_panel.setVisible(true);
+		return Graph_panel;
+	}
+	/*
+	public JPanel make_JTablePanel(){
+		JTablePanel Table_Panel_class = new JTablePanel();
+		JPanel Table_Panel = Table_Panel_class.JTable_init();
+		Table_Panel.setLayout(null);
+		Table_Panel.setBounds(0,0,1290,800);
+		Table_Panel.setVisible(true);
+		return Table_Panel;
+	}
+	*/
+	
+	public void make_GraphPanel2()
+	{
+		try {
+			st = con.createStatement();
+			
+			String buf_f_gp = null;
+			rs = st.executeQuery("select distinct date from tp ORDER BY date");
+			
+			Date_Button_gp.setText("Date");
+	    	Date_Button_gp.setBounds(0, 50, 150, 50);
+	    	Date_Button_gp.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
+	    	Date_Button_gp.addActionListener(new MyActionListener4());
+	    	Combo_Date_gp.setBounds(0, 100, 150, 50);
+	    	
+	    	
+	        //rangeSliderValue1.setHorizontalAlignment(JLabel.LEFT);
+	       // rangeSliderValue2.setHorizontalAlignment(JLabel.LEFT);
+	    	rangeSlider_gp.setPreferredSize(new Dimension(100,100));
+	    	
+	        rangeSlider_gp.setMinimum(0);
+	        rangeSlider_gp.setMaximum(10);
+	        rangeSliderLabel0_gp.setText("Age Range");
+	        rangeSliderLabel1_gp.setText("Lower value:");
+	        rangeSliderLabel2_gp.setText("Upper value:");
+	        
+
+	        rangeSlider_gp.setValue(3);
+	        rangeSlider_gp.setUpperValue(7);
+	        rangeSliderLabel0_gp.setBounds(15, 400, 100, 20);
+	        rangeSliderLabel0_gp.setVisible(true);
+	        rangeSliderLabel1_gp.setBounds(15,420,100,20);
+	        rangeSliderLabel1_gp.setVisible(true);
+	        rangeSliderValue1_gp.setBounds(100,420,100,20);
+	        rangeSliderValue1_gp.setVisible(true);
+	        
+	        rangeSliderLabel2_gp.setBounds(15,440,100,20);
+	        rangeSliderLabel2_gp.setVisible(true);
+	        rangeSliderValue2_gp.setBounds(100,440,100,20);
+	        rangeSliderValue2_gp.setVisible(true);
+	        
+	        rangeSliderValue1_gp.setText(String.valueOf(rangeSlider_tp.getValue()));
+	        rangeSliderValue2_gp.setText(String.valueOf(rangeSlider_tp.getUpperValue()));
+	        rangeSlider_gp.addChangeListener(new ChangeListener() {
+	            public void stateChanged(ChangeEvent e) {
+	                RangeSlider slider_gp = (RangeSlider) e.getSource();
+	                rangeSliderValue1.setText(String.valueOf((slider_gp.getValue())*10));
+	                rangeSliderValue2.setText(String.valueOf((slider_gp.getUpperValue())*10));
+	                
+	                rangeSlider.setValue(rangeSlider_gp.getValue());
+	    	        rangeSlider.setUpperValue(rangeSlider_gp.getUpperValue());
+	                rangeSliderValue1.setText(String.valueOf((slider_gp.getValue())*10));
+	                rangeSliderValue2.setText(String.valueOf((slider_gp.getUpperValue())*10));
+	                
+	                rangeSlider_tp.setValue(rangeSlider_gp.getValue());
+	    	        rangeSlider_tp.setUpperValue(rangeSlider_gp.getUpperValue());
+	                rangeSliderValue1_tp.setText(String.valueOf((slider_gp.getValue())*10));
+	                rangeSliderValue2_tp.setText(String.valueOf((slider_gp.getUpperValue())*10));
+	            }
+	        });
+	        
+	        rangeSlider_gp.setBounds(13, 460, 130,20);
+	        rangeSlider_gp.setVisible(true);
+	        //testmapPanel.add(rangeSlider);
+	        rangeSliderValue1_gp.setText("30");
+	        rangeSliderValue2_gp.setText("70");
+
+	        ////////
+	    	rangeSlider2_gp.setPreferredSize(new Dimension(100, 100));
+	        rangeSlider2_gp.setMinimum(34);
+	        rangeSlider2_gp.setMaximum(42);
+	        rangeSliderLabel0_2_gp.setText("Temp Range");
+	        rangeSliderLabel3_gp.setText("Lower value:");
+	        rangeSliderLabel4_gp.setText("Upper value:");
+	        
+
+	        rangeSlider2_gp.setValue(36);
+	        rangeSlider2_gp.setUpperValue(40);
+	        rangeSliderLabel0_2_gp.setBounds(15,500, 100, 20);
+	        rangeSliderLabel0_2_gp.setVisible(true);
+	        rangeSliderLabel3_gp.setBounds(15,520,100,20);
+	        rangeSliderLabel3_gp.setVisible(true);
+	        rangeSliderValue3_gp.setBounds(100,520,100,20);
+	        rangeSliderValue4_gp.setVisible(true);
+	        
+	        rangeSliderLabel4_gp.setBounds(15,540,100,20);
+	        rangeSliderLabel4_gp.setVisible(true);
+	        rangeSliderValue4_gp.setBounds(100,540,100,20);
+	        rangeSliderValue4_gp.setVisible(true);
+	        
+	        rangeSliderValue3_gp.setText(String.valueOf(rangeSlider_tp.getValue()));
+	        rangeSliderValue4_gp.setText(String.valueOf(rangeSlider_tp.getUpperValue()));
+	        rangeSlider2_gp.addChangeListener(new ChangeListener() {
+	            public void stateChanged(ChangeEvent e) {
+	                RangeSlider slider2_gp = (RangeSlider) e.getSource();
+	                rangeSliderValue3_gp.setText(String.valueOf(slider2_gp.getValue()));
+	                rangeSliderValue4_gp.setText(String.valueOf(slider2_gp.getUpperValue()));
+	                
+	                rangeSlider2.setValue(rangeSlider2_gp.getValue());
+	    	        rangeSlider2.setUpperValue(rangeSlider2_gp.getUpperValue());
+	                rangeSliderValue3.setText(String.valueOf(slider2_gp.getValue()));
+	                rangeSliderValue4.setText(String.valueOf(slider2_gp.getUpperValue()));
+	                
+	                rangeSlider2_tp.setValue(rangeSlider2_gp.getValue());
+	    	        rangeSlider2_tp.setUpperValue(rangeSlider2_gp.getUpperValue());
+	                rangeSliderValue3_tp.setText(String.valueOf(slider2_gp.getValue()));
+	                rangeSliderValue4_tp.setText(String.valueOf(slider2_gp.getUpperValue()));
+	            }
+	        });
+	        
+	        rangeSlider2_gp.setBounds(13, 560, 130,20);
+	        rangeSlider2_gp.setVisible(true);
+	        //testmapPanel.add(rangeSlider);
+	        rangeSliderValue3_gp.setText("36");
+	        rangeSliderValue4_gp.setText("40");
+	        
+			while(rs.next()){
+				if(rs.getString("date").substring(0, 10).equals(buf_f_gp))
+				{
+					continue;
+				}else{
+					buf_f_gp = rs.getString("date").substring(0, 10);
+					Combo_Date_tp.addItem(buf_f_gp);
+					//System.out.println("test : "+buf_f);
+				}
+			}
+			
+			//rangeSlider.setBounds(x, y, width, height);
+			
+			Combo_Date_gp.setVisible(false);
+			Combo_User_gp.setBounds(0, 200, 150, 50);
+			Combo_User_gp.setVisible(false);
+			
+			U_Button2_gp.setText("User");
+			U_Button2_gp.setBounds(0, 150, 150, 50);
+			U_Button2_gp.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
+			U_Button2_gp.setVisible(true);
+			U_Button2_gp.addActionListener(new MyActionListener4());
+			
+			//Radio Button--------------------------------------
+			
+			p6.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Option", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0,0,0)));
+			p6.setBounds(25, 250, 100, 115);
+			p6.setLayout(new FlowLayout(FlowLayout.LEADING));
+			
+			rb1_gp.setText("All");
+			//rb1.setBounds(0, 400, 70, 20);
+			rb1_gp.setVisible(true);
+			rb1_gp.setSelected(true);
+			rb1_gp.addItemListener(new SelectItemListener());
+			p6.add(rb1_gp);
+			
+			rb2_gp.setText("Male");
+			//rb2.setBounds(0, 450, 70, 20);
+			rb2_gp.setVisible(true);
+			rb2_gp.addItemListener(new SelectItemListener());
+			p6.add(rb2_gp);
+			
+			rb3_gp.setText("Female");
+			//rb3.setBounds(0, 500, 70, 20);
+			rb3_gp.setVisible(true);
+			rb3_gp.addItemListener(new SelectItemListener());
+			p6.add(rb3_gp);
+			p6.setVisible(true);
+			Bgroup3.add(rb1_gp);
+			Bgroup3.add(rb2_gp);
+			Bgroup3.add(rb3_gp);
+			panel2.add(p6);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		
+				
+		panel2.add(Date_Button_gp);
+		panel2.add(U_Button2_gp);
+		panel2.add(Combo_Date_gp);
+		panel2.add(Combo_User_gp);
+		panel2.add(rangeSliderLabel0_gp);
+		panel2.add(rangeSliderLabel1_gp);
+		panel2.add(rangeSliderLabel2_gp);
+		panel2.add(rangeSliderValue1_gp);
+		panel2.add(rangeSliderValue2_gp);
+		panel2.add(rangeSlider_gp);
+		panel2.add(rangeSliderLabel0_2_gp);
+		panel2.add(rangeSliderLabel3_gp);
+		panel2.add(rangeSliderLabel4_gp);
+		panel2.add(rangeSliderValue3_gp);
+		panel2.add(rangeSliderValue4_gp);
+		panel2.add(rangeSlider2_gp);
+		make_XYBarChartPanel();
+		panel2.add(Graph_panel);
+		
+	}
+	/*
+	public void make_GraphPanel(){
 		
 		try {
 			st = con.createStatement();
@@ -587,7 +1153,7 @@ public class gui extends JFrame{
 		TT_Button.setFont( new Font( "Dialog", Font.BOLD , 13 ) );
 		TT_Button.addActionListener(new MyActionListener());
 		
-		
+		panel2.add(make_XYBarChartPanel());
 		panel2.add(D_Button);
 		panel2.add(U_Button);
 		panel2.add(T_Button);
@@ -598,67 +1164,54 @@ public class gui extends JFrame{
 		panel2.add(combo_d);
 		panel2.add(combo_u);
     }
+	
+	
+	*/
+	public void re_paint(String Sel_date, String Sel_user){
+		testmapPanel.remove(testmap);
+		testmap.setVisible(false);
+		testmap.removeAll();
+		testmap = new OSM().OSM_init(Sel_date, Sel_user, 1);
+		testmap.setBounds(150, 50, 1290, 750);
+		testmap.setVisible(true);
+		testmapPanel.add(testmap);
+		testmapPanel.repaint();
+		testmapPanel.setVisible(true);
+	}
+	
 		
-    private class MyActionListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
+    private class SelectItemListener  implements ItemListener {
+        public void itemStateChanged(ItemEvent e) {
         	//------------------date-----------------
-            JButton b = (JButton) e.getSource();
-            if (b.getText().equals("Date")){
-            	b.setText("Date select");
-            	combo_d.setVisible(true);
-            }      	
-            else if(b.getText().equals("Date select")){
-            	b.setText("Date");
-            	date = combo_d.getSelectedItem().toString();            
-            	setTitle(b.getText());
-            	            	
-            	combo_d.setVisible(false);
-            	// InnerClassListener�뜝�럩踰� 嶺뚮、�걞�떋占썲뜝�럡�룎 JFrame�뜝�럩踰� 嶺뚮、�걞�떋占� �뜝�럩源덌옙鍮듿뜝占�
+        	AbstractButton sel = (AbstractButton)e.getItemSelectable();
+                       
+            if(e.getStateChange() == ItemEvent.SELECTED)
+            {
+                   if ( sel.getText().equals("All") )
+                   {
+                       rb1.setSelected(true);
+                       rb1_tp.setSelected(true);
+                       rb1_gp.setSelected(true);
+           			                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+           			
+                   }
+                   else if ( sel.getText().equals( "Male" ) )
+                   {
+                       rb2.setSelected(true);
+                       rb2_tp.setSelected(true);
+                       rb2_gp.setSelected(true);
+                	  // box2.setSelectedIndex(1);;
+                   }
+                   else if ( sel.getText().equals( "Female" ) )
+                   {
+                       rb3.setSelected(true);
+                       rb3_tp.setSelected(true);
+                       rb3_gp.setSelected(true);
+                	  // box2.setSelectedIndex(2);;
+                   }
             }
-            //---------------user---------------------
-            if (b.getText().equals("User")){
-            	if(date.equals("")){
-            		b.setText("User");
-            		combo_u.setVisible(false);
-            	}else{
-            		b.setText("User select");
-            		set_User(date);
-                	combo_u.setVisible(true);
-            	}
-            }      	
-            else if(b.getText().equals("User select")){
-            	b.setText("User");
-            	user = combo_u.getSelectedItem().toString();
-            	setTitle(b.getText());
-            	
-          		combo_u.removeAllItems();
-          		combo_u.setVisible(false);
+        	
             }
-            
-            //--------------temp-----------------
-            if (b.getText().equals("Total tmp")){
-            	temp = b.getText();
-            }      	
-            
-            if(b.getText().equals("Total high tmp")){
-            	temp = b.getText();
-            }
-            
-            if (b.getText().equals("Start")){
-            	// �뜝�럡�뀏嶺뚯쉻�삕, �뜝�럡�뀬�뜝�럩肉�, 占썩뫅�삕-�뜝�룞�삕�뜝�럩沅�
-            	// date, user, temp
-            	//showMap(date, user, temp);
-            } 
-            
-            if(b.getText().equals("personal tmp")){
-            	temp = b.getText();
-            }   
-            
-            if(b.getText().equals("personal high tmp")){
-            	temp = b.getText();
-            }   
-
-        }
     }
     
     private void showMap(String d, String u, String t){
@@ -673,7 +1226,7 @@ public class gui extends JFrame{
 		
 	//	panel2.add(Map_panel);
 		//tabbedPane.add("Map", panel2);
-		tabbedPane.add("Statistics", panel3);
+		//tabbedPane.add("Statistics", panel3);
 		jF.add(tabbedPane);
     	
     }
@@ -873,7 +1426,8 @@ public class gui extends JFrame{
 	
 	
 	
-    private class MyActionListener4 implements ActionListener {
+	
+    public class MyActionListener4 implements ActionListener { // Map Panel Action Listener
         public void actionPerformed(ActionEvent e) {
 
         	//------------------date-----------------
@@ -890,7 +1444,8 @@ public class gui extends JFrame{
             	Combo_User.removeAllItems();
 
         		try {
-					rs = st.executeQuery("SELECT DISTINCT id FROM tp WHERE date = '" + date2 + "'");
+        			st.executeQuery("use newschema5;");
+					rs = st.executeQuery("SELECT DISTINCT id FROM tp WHERE LEFT(date,10) = '" + date2 + "'");
 					while(rs.next()){
 						Combo_User.addItem(rs.getString("id"));
 	        		}
@@ -958,96 +1513,16 @@ public class gui extends JFrame{
             }
             
             //--------------temp-----------------
-            if (b.getText().equals("Total tmp")){
-            	int idx = 0;
-            	sel_state = 1;
-            	sel_state2 = 1;
-        		try {
-					rs = st.executeQuery("SELECT DISTINCT id,LEFT(date,10) FROM tp;");
-					rs.next();
-					while(rs.next()){
-						user_date[0][idx] = rs.getString(1);
-						user_date[1][idx] = rs.getString(2);
-						
-						System.out.println("id : " + user_date[0][idx].toString() + " // date : " +  user_date[1][idx].toString());
-						idx++;
-					}
-					
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-            }      	
             
-            if(b.getText().equals("Total high tmp")){
-        		testmap.repaint();
-        		System.out.println("repaint");
-        		testmap.setBounds(150, 0, 1290, 800);
-        		testmap.setVisible(true);
-        		
+            
+             
+            
 
-        		testmapPanel.add(testmap);
-        		testmapPanel.repaint();
-        		testmapPanel.setVisible(true);
-        		//System.out.println("repaint");
-            }
-            
-            if (b.getText().equals("Start")){
-            	if (sel_state2 == 1)
-            	{
-	            	testmapPanel.remove(testmap);
-	            	testmap.setVisible(false);
-	            	testmap.removeAll();
-	            	if (sel_state == 0)
-	            	{
-	            		testmap = new OSM().OSM_init(date2,user2,1);
-	            	}
-	            	else if (sel_state == 1)
-	            	{
-	            		testmap = new OSM().OSM_init(user_date, 1);
-	            	}
-	        		testmap.repaint();
-	        		
-	        		testmap.setBounds(150, 0, 1290, 800);
-	        		testmap.setVisible(true);
-	        		
-	
-	        		testmapPanel.add(testmap);
-	        		testmapPanel.repaint();
-	        		testmapPanel.setVisible(true);
-            	}
-            	else if (sel_state2 == 2)
-            	{
-	    			testmapPanel.remove(testmap);
-	    			testmap.setVisible(false);
-	    			testmap.removeAll();
-	    			if (sel_state == 0)
-	    			{
-	    				testmap = new OSM().OSM_init(date2,user2,1);
-	    			}
-	    			else if (sel_state == 1)
-	    			{
-	    				testmap = new OSM().OSM_init(user_date, 1);
-	    			}
-	            	Runnable r = new runnableImplements();
-	            	Thread t = new Thread(r);
-	            	t.start();
-            	}
-            } 
-            
-            if(b.getText().equals("personal tmp")){
-            	temp = b.getText();
-            }   
-            
-            if(b.getText().equals("personal high tmp")){
-            	temp = b.getText();
-            }   
             //System.out.println("state1 : " + sel_state + " / state2 : " + sel_state2);
         }
         
     }
-
-    
+  
 
 	public void start() throws SQLException
 	{
@@ -1076,6 +1551,8 @@ public class gui extends JFrame{
 		}
 	}
 
-
+	
+	
+	
 	
 }
