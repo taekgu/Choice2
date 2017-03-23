@@ -67,7 +67,7 @@ public class Map extends JFrame{
 			st = con.createStatement();
 			//sb
 			//rs = st.executeQuery("use testschema");
-			rs = st.executeQuery("use newschema5");
+			rs = st.executeQuery("use Thermosafer_INU");
 			
 			
 			
@@ -90,8 +90,8 @@ public class Map extends JFrame{
     		try {
 				st = con.createStatement();
 				//wt = con.createStatement();
-				rs = st.executeQuery("select * from tp where id = "+m_user);
-				//ws = wt.executeQuery("select gps_har from tp");
+				rs = st.executeQuery("select * from thermo_data where id = "+m_user);
+				//ws = wt.executeQuery("select gps_har from thermo_data");
 				while(rs.next()){
 					//System.out.println("date : "+rs.getString("date").substring(0, 10));	
 					//System.out.println("m_date : "+m_date);	
@@ -119,8 +119,8 @@ public class Map extends JFrame{
     		try {
 				st = con.createStatement();
 				//wt = con.createStatement();
-				rs = st.executeQuery("select * from tp where temp > 37.3 && id = "+m_user);
-				//ws = wt.executeQuery("select gps_har from tp");
+				rs = st.executeQuery("select * from thermo_data where temp > 37.3 && id = "+m_user);
+				//ws = wt.executeQuery("select gps_har from thermo_data");
 				while(rs.next()){
 					
 					if(rs.getString("date").substring(0, 10).equals(m_date)){
@@ -145,8 +145,8 @@ public class Map extends JFrame{
     		try {
 				st = con.createStatement();
 				//wt = con.createStatement();
-				rs = st.executeQuery("select * from tp");
-				//ws = wt.executeQuery("select gps_har from tp");
+				rs = st.executeQuery("select * from thermo_data");
+				//ws = wt.executeQuery("select gps_har from thermo_data");
 				while(rs.next()){
 					//System.out.println("gps_lat : "+(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639));
 					//System.out.println("gps_har : "+(int)((rs.getFloat("gps_har") - 126.6566)/0.0003632));
@@ -165,8 +165,8 @@ public class Map extends JFrame{
     		try {
 				st = con.createStatement();
 				//wt = con.createStatement();
-				rs = st.executeQuery("select * from tp where temp > 37.3");
-				//ws = wt.executeQuery("select gps_har from tp");
+				rs = st.executeQuery("select * from thermo_data where temp > 37.3");
+				//ws = wt.executeQuery("select gps_har from thermo_data");
 				while(rs.next()){
 					//System.out.println("gps_lat : "+(int)((rs.getFloat("gps_lat") - 37.4531)/0.0002639));
 					//System.out.println("gps_har : "+(int)((rs.getFloat("gps_har") - 126.6566)/0.0003632));

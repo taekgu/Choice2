@@ -7,12 +7,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
@@ -21,6 +23,7 @@ import org.jxmapviewer.OSMTileFactoryInfo;
 import org.jxmapviewer.input.CenterMapListener;
 import org.jxmapviewer.input.PanKeyListener;
 import org.jxmapviewer.input.PanMouseInputListener;
+import org.jxmapviewer.input.ZoomMouseWheelListenerCenter;
 import org.jxmapviewer.input.ZoomMouseWheelListenerCursor;
 import org.jxmapviewer.viewer.DefaultTileFactory;
 import org.jxmapviewer.viewer.DefaultWaypoint;
@@ -53,6 +56,7 @@ public class OSM extends Thread{
 	static int temp2;
 	geo_list_class glc_temp;
 	swing_waypoints sw_temp;
+	int year = Calendar.getInstance().get(Calendar.YEAR);
 	
 	public OSM()
 	{
@@ -60,7 +64,7 @@ public class OSM extends Thread{
 		try {
 			con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234");
 			st = con.createStatement();
-			rs = st.executeQuery("use newschema5");
+			rs = st.executeQuery("use Thermosafer_INU");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -74,161 +78,7 @@ public class OSM extends Thread{
 		glc_temp = new geo_list_class();
 		sw_temp = new swing_waypoints();
 	}
-	/*
-	public JXMapViewer OSM_init(String Sel_date, String Sel_user, int state)
-	{
-		TileFactoryInfo info = new OSMTileFactoryInfo();
-		DefaultTileFactory tileFactory = new DefaultTileFactory(info);
-		mapViewer.setTileFactory(tileFactory);
-		
-
-		tileFactory.setThreadPoolSize(8);
-
-		// Setup local file cache
-		File cacheDir = new File(System.getProperty("user.home") + File.separator + ".jxmapviewer2");
-		LocalResponseCache.installResponseCache(info.getBaseURL(), cacheDir, false);
-
-		GeoPosition seoul = new GeoPosition(37.5653,126.9745);
-
-		// Set the focus
-		mapViewer.setZoom(7);
-		mapViewer.setAddressLocation(seoul);                                                 
 	
-		// Add interactions
-		MouseInputListener mia = new PanMouseInputListener(mapViewer);
-		mapViewer.addMouseListener(mia);
-		mapViewer.addMouseMotionListener(mia);
-
-		mapViewer.addMouseListener(new CenterMapListener(mapViewer));
-		
-		mapViewer.addMouseWheelListener(new ZoomMouseWheelListenerCursor(mapViewer));
-		
-		mapViewer.addKeyListener(new PanKeyListener(mapViewer));
-		
-		// Add a selection painter
-		SelectionAdapter sa = new SelectionAdapter(mapViewer); 
-		SelectionPainter sp = new SelectionPainter(sa); 
-		mapViewer.addMouseListener(sa); 
-		mapViewer.addMouseMotionListener(sa); 
-		mapViewer.setOverlayPainter(sp);
-		
-		//Multi_user("2016-01-14", "89", 1);
-		//Multi_user("2016-12-13", "51", 1);
-		
-		List<GeoPosition> Geolist = get_geolist(Sel_date, Sel_user);
-		//Set<SwingWaypoint> waypoints = new HashSet<SwingWaypoint>(Arrays.asList()
-		RoutePainter routePainter = new RoutePainter(Geolist);
-		//mapViewer.zoomToBestFit(new HashSet<GeoPosition>(Geolist), 0.0);
-		if (state == 1)
-			mapViewer.zoomToBestFit(Geolist_zoom(Sel_date, Sel_user), 0.5);
-		
-		Set<Waypoint> waypoints = get_waypoint(Sel_date, Sel_user);
-		
-		WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<Waypoint>();
-		waypointPainter.setWaypoints(waypoints);
-		
-		// Create a compound painter that uses both the route-painter and the waypoint-painter
-
-		painters.add(routePainter); // Line
-		painters.add(waypointPainter); // Marker
-
-		CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
-		mapViewer.setOverlayPainter(painter);
-
-		return mapViewer;
-	}
-	
-	public JXMapViewer OSM_init()
-	{
-		
-		return mapViewer;
-	}
-	
-	public JXMapViewer OSM_init(String[][] user_date, int state)
-	{
-		geo_list_class glc = new geo_list_class(); 
-		//geo_list_class glc_temp = new geo_list_class();
-		glc_temp = glc.get_list(user_date[1][index], user_date[0][index]);
-		
-		test_thread1 = new Thread(){
-			@Override
-			public void run()
-			{
-				
-				painters.removeAll(painters);
-				while(user_date[0][index] != null) //index
-				{
-					if (temp == 500)
-						break;
-					//List<GeoPosition> Geolist = get_geolist(user_date[1][index], user_date[0][index]);
-					List<GeoPosition> Geolist = glc_temp.Geolist;
-
-					RoutePainter routePainter = new RoutePainter(Geolist);
-		
-					
-					//Set<Waypoint> waypoints = get_waypoint(user_date[1][index], user_date[0][index]);
-					Set<Waypoint> waypoints = glc_temp.waypoints;
-					WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<Waypoint>();
-					waypointPainter.setWaypoints(waypoints);
-					painters.add(routePainter);
-					painters.add(waypointPainter);
-					System.out.println("date : " + user_date[1][index] + " // id : " + user_date[0][index]);
-					index++;
-					temp++;
-				}
-				CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
-				mapViewer.setOverlayPainter(painter);
-				OSM.temp2 = 1;
-			}
-		};
-
-		TileFactoryInfo info = new OSMTileFactoryInfo();
-		DefaultTileFactory tileFactory = new DefaultTileFactory(info);
-		mapViewer.setTileFactory(tileFactory);
-		
-
-		tileFactory.setThreadPoolSize(8);
-
-		// Setup local file cache
-		File cacheDir = new File(System.getProperty("user.home") + File.separator + ".jxmapviewer2");
-		LocalResponseCache.installResponseCache(info.getBaseURL(), cacheDir, false);
-
-		GeoPosition seoul = new GeoPosition(37.5653,126.9745);
-
-		// Set the focus
-		mapViewer.setZoom(7);
-		mapViewer.setAddressLocation(seoul);                                                 
-	
-		// Add interactions
-		MouseInputListener mia = new PanMouseInputListener(mapViewer);
-		mapViewer.addMouseListener(mia);
-		mapViewer.addMouseMotionListener(mia);
-
-		mapViewer.addMouseListener(new CenterMapListener(mapViewer));
-		
-		mapViewer.addMouseWheelListener(new ZoomMouseWheelListenerCursor(mapViewer));
-		
-		mapViewer.addKeyListener(new PanKeyListener(mapViewer));
-		
-		// Add a selection painter
-		SelectionAdapter sa = new SelectionAdapter(mapViewer); 
-		SelectionPainter sp = new SelectionPainter(sa); 
-		mapViewer.addMouseListener(sa); 
-		mapViewer.addMouseMotionListener(sa); 
-		mapViewer.setOverlayPainter(sp);
-		
-		//ExecutorService executorService = Executors.newFixedThreadPool(10);
-		
-		
-		
-		//one_paint("2016-01-10", "97");
-		multi_paint(user_date,state);
-		CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
-		mapViewer.setOverlayPainter(painter);
-		
-		
-		return mapViewer;
-	}*/
 	public JXMapViewer OSM_init(String Sel_date, String Sel_user, int state)
 	{
 		swing_waypoints sw = new swing_waypoints(); 
@@ -439,7 +289,7 @@ public class OSM extends Thread{
 		
 		List<GeoPosition> Geolist = new ArrayList<GeoPosition>();
 		try {
-			rs = st.executeQuery("SELECT gps_lat, gps_har FROM tp WHERE id = " + Sel_user + " AND LEFT(date,10) = '" + Sel_date + "'");
+			rs = st.executeQuery("SELECT gps_lat, gps_har from thermo_data WHERE id = " + Sel_user + " AND LEFT(date,10) = '" + Sel_date + "'");
 			Double Geo_lat = null;
 			Double Geo_har = null;
 			while(rs.next()){
@@ -459,7 +309,7 @@ public class OSM extends Thread{
 	{
 		Set<GeoPosition> Geolist = new HashSet<GeoPosition>();
 		try {
-			rs = st.executeQuery("SELECT gps_lat, gps_har FROM tp WHERE id = " + Sel_user + " AND LEFT(date,10) = '" + Sel_date + "'");
+			rs = st.executeQuery("SELECT gps_lat, gps_har from thermo_data WHERE id = " + Sel_user + " AND LEFT(date,10) = '" + Sel_date + "'");
 			Double Geo_lat = null;
 			Double Geo_har = null;
 			Double Sum1 = 0.0, Sum2 = 0.0;
@@ -486,7 +336,7 @@ public class OSM extends Thread{
 	{
 		Set<Waypoint> waypoints = new HashSet<Waypoint>();
 		try {
-			rs = st.executeQuery("SELECT gps_lat, gps_har FROM tp WHERE id = " + Sel_user + " AND LEFT(date,10) = '" + Sel_date + "'");
+			rs = st.executeQuery("SELECT gps_lat, gps_har from thermo_data WHERE id = " + Sel_user + " AND LEFT(date,10) = '" + Sel_date + "'");
 			Double Geo_lat = null;
 			Double Geo_har = null;
 			while(rs.next()){
@@ -507,7 +357,7 @@ public class OSM extends Thread{
 		
 		//List<GeoPosition> Geolist = new ArrayList<GeoPosition>();
 		try {
-			rs = st.executeQuery("SELECT gps_lat, gps_har FROM tp WHERE id = " + Sel_user + " AND LEFT(date,10) = '" + Sel_date + "'");
+			rs = st.executeQuery("SELECT gps_lat, gps_har from thermo_data WHERE id = " + Sel_user + " AND LEFT(date,10) = '" + Sel_date + "'");
 			Double Geo_lat = null;
 			Double Geo_har = null;
 			Double Sum1 = 0.0, Sum2 = 0.0;
@@ -538,7 +388,7 @@ public class OSM extends Thread{
 		
 		List<GeoPosition> Geolist = new ArrayList<GeoPosition>();
 		try {
-			rs = st.executeQuery("SELECT gps_lat, gps_har FROM tp WHERE id = " + user_date[0] + " AND LEFT(date,10) = '" + user_date[1] + "'");
+			rs = st.executeQuery("SELECT gps_lat, gps_har from thermo_data WHERE id = " + user_date[0] + " AND LEFT(date,10) = '" + user_date[1] + "'");
 			Double Geo_lat = null;
 			Double Geo_har = null;
 			while(rs.next()){
@@ -558,7 +408,7 @@ public class OSM extends Thread{
 	{
 		Set<GeoPosition> Geolist = new HashSet<GeoPosition>();
 		try {
-			rs = st.executeQuery("SELECT gps_lat, gps_har FROM tp WHERE id = " + user_date[0] + " AND LEFT(date,10) = '" + user_date[1] + "'");
+			rs = st.executeQuery("SELECT gps_lat, gps_har from thermo_data WHERE id = " + user_date[0] + " AND LEFT(date,10) = '" + user_date[1] + "'");
 			Double Geo_lat = null;
 			Double Geo_har = null;
 			Double Sum1 = 0.0, Sum2 = 0.0;
@@ -584,7 +434,7 @@ public class OSM extends Thread{
 	{
 		Set<Waypoint> waypoints = new HashSet<Waypoint>();
 		try {
-			rs = st.executeQuery("SELECT gps_lat, gps_har FROM tp WHERE id = " + user_date[0] + " AND LEFT(date,10) = '" + user_date[1] + "'");
+			rs = st.executeQuery("SELECT gps_lat, gps_har from thermo_data WHERE id = " + user_date[0] + " AND LEFT(date,10) = '" + user_date[1] + "'");
 			Double Geo_lat = null;
 			Double Geo_har = null;
 			while(rs.next()){
@@ -611,7 +461,7 @@ public class OSM extends Thread{
 		
 		
 		try {
-			rs = st.executeQuery("SELECT gps_lat, gps_har FROM tp WHERE id = " + user_date[0] + " AND LEFT(date,10) = '" + user_date[1] + "'");
+			rs = st.executeQuery("SELECT gps_lat, gps_har from thermo_data WHERE id = " + user_date[0] + " AND LEFT(date,10) = '" + user_date[1] + "'");
 			Double Geo_lat = null;
 			Double Geo_har = null;
 			Double Sum1 = 0.0, Sum2 = 0.0;
@@ -648,7 +498,7 @@ public class OSM extends Thread{
 			
 			//List<GeoPosition> Geolist = new ArrayList<GeoPosition>();
 			try {
-				rs = st.executeQuery("SELECT gps_lat, gps_har FROM tp WHERE id = " + Sel_user + " AND LEFT(date,10) = '" + Sel_date + "'");
+				rs = st.executeQuery("SELECT gps_lat, gps_har from thermo_data WHERE id = " + Sel_user + " AND LEFT(date,10) = '" + Sel_date + "'");
 				Double Geo_lat = null;
 				Double Geo_har = null;
 				Double Sum1 = 0.0, Sum2 = 0.0;
@@ -676,18 +526,21 @@ public class OSM extends Thread{
 	class swing_waypoints{
 		List<GeoPosition> Geolist = new ArrayList<GeoPosition>();
 		Set<GeoPosition> Geolist2 = new HashSet<GeoPosition>();
+		Set<GeoPosition> Geolist3 = new HashSet<GeoPosition>();
 		Set<SwingWaypoint> waypoints = new HashSet<SwingWaypoint>();
+		GeoPosition geoP;
 		WaypointPainter<SwingWaypoint> swingWaypointPainter = new SwingWaypointOverlayPainter();
 		public swing_waypoints get_Swing_Waypoints(String Sel_date, String Sel_user)
 		{
 			swing_waypoints load_sw = new swing_waypoints();
 			try{
-				rs = st.executeQuery("SELECT id, sex, LEFT(birth,4) , gps_lat, gps_har FROM tp WHERE id = " + Sel_user + " AND LEFT(date,10) = '" + Sel_date + "'");
+				rs = st.executeQuery("SELECT id, sex, LEFT(birth,4) , gps_lat, gps_har, temp from thermo_data WHERE id = " + Sel_user + " AND LEFT(date,10) = '" + Sel_date + "'");
 				String id = null;
 				String birth = null;
 				String gender = null;
 				Double Geo_lat = null;
 				Double Geo_har = null;
+				Double temp = null;
 				Double Sum1 = 0.0, Sum2 = 0.0;
 				Double count = 0.0;
 				while(rs.next()){
@@ -701,7 +554,9 @@ public class OSM extends Thread{
 					Geo_lat = rs.getDouble("gps_lat");
 					Geo_har = rs.getDouble("gps_har");
 					load_sw.Geolist.add(new GeoPosition(Geo_lat, Geo_har));
-					load_sw.waypoints.add(new SwingWaypoint(Sel_date,Sel_user, id, birth, gender, Geo_lat, Geo_har, new GeoPosition(Geo_lat, Geo_har)));
+					load_sw.Geolist3.add(new GeoPosition(Geo_lat, Geo_har));
+					temp = rs.getDouble("temp");
+					load_sw.waypoints.add(new SwingWaypoint(Sel_date,Sel_user, id, birth, gender, Geo_lat, Geo_har, new GeoPosition(Geo_lat, Geo_har), temp));
 					
 					//load_glc.Geolist.add(new GeoPosition(Geo_lat, Geo_har));
 					//load_glc.waypoints.add(new DefaultWaypoint(Geo_lat, Geo_har));
@@ -711,6 +566,84 @@ public class OSM extends Thread{
 				}
 				//System.out.println(birth);
 				load_sw.Geolist2.add(new GeoPosition((Sum1 / count), (Sum2 / count)));
+				
+			}catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return load_sw;
+		} 
+		
+		public swing_waypoints get_Swing_Waypoints_without_Route(String Sel_date, int gender_num, int Upper_age, int Lower_age)
+		{
+			swing_waypoints load_sw = new swing_waypoints();
+			try{
+				//rs = st.executeQuery("SELECT id, sex, LEFT(birth,4) , gps_lat, gps_har from thermo_data WHERE id = " + Sel_user + " AND LEFT(date,10) = '" + Sel_date + "'");
+				st = con.createStatement();
+				st.execute("USE Thermosafer_INU");
+				String SET;
+				String New;
+				Double SET_temp;
+				String id = null;
+				String birth = null;
+				String gender = null;
+				Double Geo_lat = null;
+				Double Geo_har = null;
+				Double Sum1 = 0.0, Sum2 = 0.0;
+				Double count = 0.0;
+				//public static int AGE_RangeSlider_UpperValue, AGE_RangeSlider_LowerValue;
+				//public static int TEMP_RangeSlider_UpperValue, TEMP_RangeSlider_LowerValue;
+				/*
+				if (gender_num == 1) // all
+					rs = st.executeQuery("SELECT date, id, birth, temp, sex, gps_lat, gps_har from thermo_data WHERE (LEFT(date,10) = '" + Sel_date + "') ORDER BY id, date DESC;");
+				else if (gender_num == 2) // male
+					rs = st.executeQuery("SELECT date, id, birth, temp, sex, gps_lat, gps_har from thermo_data WHERE (sex = 0 AND LEFT(date,10) = '" + Sel_date + "') ORDER BY id, date DESC;");
+				else if (gender_num == 3) //female
+					rs = st.executeQuery("SELECT date, id, birth, temp, sex, gps_lat, gps_har from thermo_data WHERE (sex = 1 AND LEFT(date,10) = '" + Sel_date + "') ORDER BY id, date DESC;");
+				*/
+				if (gender_num  == 1){
+					rs = st.executeQuery("SELECT date, id, birth, temp, sex, gps_lat, gps_har from thermo_data WHERE( "+year+" - (LEFT(birth,4)) >= "+Lower_age+" AND "+year+" - LEFT(birth,4) < "+Upper_age+" AND LEFT(date,10) = '" + Sel_date + "') ORDER BY id, date DESC;");
+				}
+				else if (gender_num == 2){ // male
+					rs = st.executeQuery("SELECT date, id, birth, temp, sex, gps_lat, gps_har from thermo_data WHERE( sex = 0 AND "+year+" - (LEFT(birth,4)) >= "+Lower_age+" AND "+year+" - LEFT(birth,4) < "+Upper_age+" AND LEFT(date,10) = '" + Sel_date + "') ORDER BY id, date DESC;");
+				}
+				else if (gender_num == 3){ //female
+					rs = st.executeQuery("SELECT date, id, birth, temp, sex, gps_lat, gps_har from thermo_data WHERE( sex = 1 AND "+year+" - (LEFT(birth,4)) >= "+Lower_age+" AND "+year+" - LEFT(birth,4) < "+Upper_age+" AND LEFT(date,10) = '" + Sel_date + "') ORDER BY id, date DESC;");
+				}
+				
+				
+				//rs.next();
+				SET = "A";
+				while(rs.next()){
+					New = rs.getString(2);
+					if (New.equals(SET)){
+						continue;
+					}
+					SET = rs.getString(2);
+					SET_temp = rs.getDouble("temp");
+					if (rs.getInt("sex") == 0)
+						gender = "Male";
+					else 
+						gender = "Female";
+					
+					Geo_lat = rs.getDouble("gps_lat");
+					Geo_har = rs.getDouble("gps_har");
+					
+					id = rs.getString("id");
+					birth = rs.getString("birth");
+					Sum1 += Geo_lat;
+					Sum2 += Geo_har;
+					
+					count += 1.0;
+					
+					load_sw.Geolist.add(new GeoPosition(Geo_lat, Geo_har));
+					load_sw.waypoints.add(new SwingWaypoint(Sel_date, id, birth, gender, Geo_lat, Geo_har, new GeoPosition(Geo_lat, Geo_har), SET_temp));
+					
+				}
+				
+				while(rs.next()){}
+				//System.out.println(birth);
+				load_sw.Geolist2.add(new GeoPosition((Sum1 / count), (Sum2 / count)));
 
 			}catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -718,9 +651,86 @@ public class OSM extends Thread{
 			}
 			return load_sw;
 		}
-			 
+	}
+
+	public JXMapViewer OSM_init(String Sel_date, int gender, int Upper_age, int Lower_age,int state)
+	{
+		
+		swing_waypoints sw = new swing_waypoints(); 
+		sw_temp = sw.get_Swing_Waypoints_without_Route(Sel_date, gender, Upper_age, Lower_age);
+		TileFactoryInfo info = new OSMTileFactoryInfo();
+		DefaultTileFactory tileFactory = new DefaultTileFactory(info);
+		mapViewer.setTileFactory(tileFactory);
+		
+
+		tileFactory.setThreadPoolSize(8);
+
+		// Setup local file cache
+		File cacheDir = new File(System.getProperty("user.home") + File.separator + ".jxmapviewer2");
+		LocalResponseCache.installResponseCache(info.getBaseURL(), cacheDir, false);
+
+		GeoPosition seoul = new GeoPosition(37.5653,126.9745);
+
+		// Set the focus
+		mapViewer.setZoom(7);
+		mapViewer.setAddressLocation(seoul);                                                 
+	
+		// Add interactions
+		MouseInputListener mia = new PanMouseInputListener(mapViewer);
+		mapViewer.addMouseListener(mia);
+		mapViewer.addMouseMotionListener(mia);
+
+		mapViewer.addMouseListener(new CenterMapListener(mapViewer));
+		
+		mapViewer.addMouseWheelListener(new ZoomMouseWheelListenerCursor(mapViewer));
+		
+		mapViewer.addKeyListener(new PanKeyListener(mapViewer));
+		
+		// Add a selection painter
+		SelectionAdapter sa = new SelectionAdapter(mapViewer); 
+		SelectionPainter sp = new SelectionPainter(sa); 
+		mapViewer.addMouseListener(sa); 
+		mapViewer.addMouseMotionListener(sa); 
+		mapViewer.setOverlayPainter(sp);
+		
+		//Multi_user("2016-01-14", "89", 1);
+		//Multi_user("2016-12-13", "51", 1);
+		
+		//List<GeoPosition> Geolist = get_geolist(Sel_date, Sel_user);
+		List<GeoPosition> Geolist = sw_temp.Geolist;
+		//Set<SwingWaypoint> waypoints = new HashSet<SwingWaypoint>(Arrays.asList()
+		RoutePainter routePainter = new RoutePainter(Geolist);
+		//mapViewer.zoomToBestFit(new HashSet<GeoPosition>(Geolist), 0.0);
+		if (state == 1){
+			mapViewer.zoomToBestFit(sw_temp.Geolist2, 0.5);
+			//mapViewer.setZoom(6);
+		}
+		
+			
+		
+		//Set<Waypoint> waypoints = get_waypoint(Sel_date, Sel_user);
+		Set<SwingWaypoint> waypoints = sw_temp.waypoints;
+		
+		//WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<Waypoint>();
+		WaypointPainter<SwingWaypoint> swingWaypointPainter = new SwingWaypointOverlayPainter();
+		//waypointPainter.setWaypoints(waypoints);
+		swingWaypointPainter.setWaypoints(waypoints);
+		// Create a compound painter that uses both the route-painter and the waypoint-painter
+
+		//painters.add(routePainter); // Line
+		//painters.add(waypointPainter); // Marker
+		painters.add(swingWaypointPainter);//Button
+	    for (SwingWaypoint w : waypoints) {
+            mapViewer.add(w.getButton());
+        }
+		CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
+		mapViewer.setOverlayPainter(painter);
+
+		return mapViewer;
 	}
 }
+
+
 
 
 

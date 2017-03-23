@@ -34,7 +34,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
@@ -54,15 +56,17 @@ public class gui extends JFrame{
 	
 	public JFrame jF;
 	public JTabbedPane tabbedPane;
-	public JPanel temperature_distribution;
+	public static JPanel temperature_distribution;
 	public JPanel panel2;
 	private JPanel panel3;
 	private JPanel Map_panel;
 	private JPanel Graph_panel;
 	private JPanel Information;
 	private JPanel Information_sheet_panel;
-	public JPanel testmapPanel;
-	public JPanel testmap;
+	public static JPanel testmapPanel;
+	public static JPanel testmap;
+	public static JPanel chart;
+	
 	
 	//private JLabel label1;
 	private JLabel label2;
@@ -90,6 +94,9 @@ public class gui extends JFrame{
 	private JComboBox<String> Combo_Date = new JComboBox();
 	private JComboBox<String> Combo_User = new JComboBox();
 	private JButton Date_Button = new JButton();
+	public static JButton Map_Button = new JButton();
+	public static JButton Temp_Button = new JButton();
+	public static JButton Back_b = new JButton();
 	private JButton U_Button2 = new JButton();
 	private JButton T_Button2 = new JButton();
 	private JButton TT_Button2 = new JButton();
@@ -112,8 +119,14 @@ public class gui extends JFrame{
 	private JLabel rangeSliderLabel4 = new JLabel();
 	private JLabel rangeSliderValue4 = new JLabel();
 	
+	public static int AGE_RangeSlider_UpperValue, AGE_RangeSlider_LowerValue;
+	public static int TEMP_RangeSlider_UpperValue, TEMP_RangeSlider_LowerValue;
+	
+	
+	
 	/////////////////////////////////////////////////////////
 	private JButton Date_Button_tp = new JButton();
+	
 	private JComboBox<String> Combo_Date_tp = new JComboBox();
 	private JComboBox<String> Combo_User_tp = new JComboBox();
 	private JButton U_Button2_tp = new JButton();
@@ -175,6 +188,7 @@ public class gui extends JFrame{
 	JButton b2;
 	JButton b3;
 	JButton b4;
+	
 
 	JComboBox<String> box1;
 	JComboBox<String> box2;
@@ -190,6 +204,7 @@ public class gui extends JFrame{
 	JRadioButton rb2;
 	JRadioButton rb3;
 	
+	
 	JRadioButton rb1_tp;
 	JRadioButton rb2_tp;
 	JRadioButton rb3_tp;
@@ -201,6 +216,8 @@ public class gui extends JFrame{
 	ButtonGroup Bgroup;
 	ButtonGroup Bgroup2;
 	ButtonGroup Bgroup3;
+	
+	int Bgroup_gender;
 	
 	Font f;
 	String date2;
@@ -221,12 +238,17 @@ public class gui extends JFrame{
 		tabbedPane  = new JTabbedPane();	
 		temperature_distribution = new JPanel();
 		
-		
+		AGE_RangeSlider_UpperValue = 100;
+		AGE_RangeSlider_LowerValue = 0;
+		TEMP_RangeSlider_UpperValue = 42; 
+		//jjjj
+		TEMP_RangeSlider_LowerValue = 0;
 		
 		b1 = new JButton();
 		b2 = new JButton();
 		b3 = new JButton();
 		b4 = new JButton();
+		
 		
 		box1 = new JComboBox<String>();
 		box2 = new JComboBox<String>();
@@ -253,6 +275,8 @@ public class gui extends JFrame{
 		Bgroup = new ButtonGroup();
 		Bgroup2 = new ButtonGroup();
 		Bgroup3 = new ButtonGroup();
+		Bgroup_gender = 1;
+		
 		
 		testmapPanel = new JPanel();
 		Graph_panel = new JPanel();
@@ -269,6 +293,7 @@ public class gui extends JFrame{
 		rangeSlider2_gp = new RangeSlider();
 		
 		testmap = new JPanel();
+		chart = new JPanel();
 		user2 = null;
 		date2 = null;
 		
@@ -285,7 +310,7 @@ public class gui extends JFrame{
 		try {
 			con = DriverManager.getConnection("jdbc:mysql://localhost?useSSL=true&verifyServerCertificate=false&serverTimezone=UTC","root", "1234");
 			st = con.createStatement();
-			rs = st.executeQuery("use newschema5");
+			rs = st.executeQuery("use Thermosafer_INU");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -301,11 +326,19 @@ public class gui extends JFrame{
 		panel2.setLayout(null);
 
 		temperature_distribution.setLayout(null);
-		temperature_distribution_init();
+		//temperature_distribution_init();
 
 		testmap = new OSM().OSM_init(null,null,0);
 		testmap.setBounds(150, 0, 1290, 800);
 		testmap.setVisible(true);
+		
+		//chart = temperature_distribution_init();
+		chart.setBounds(150, 0, 1290, 800);
+		chart.setVisible(false);
+		
+		testmapPanel.add(chart);
+		
+		
 		
 		testmapPanel.setLayout(null);
 		testmapPanel_init();
@@ -317,9 +350,18 @@ public class gui extends JFrame{
 		
 		
 		InformationPanel_init();
-		JTablePanel jTablePanel = new JTablePanel();
 		
 		
+
+		JPanel table_Panel = new JPanel();
+		JTable table = new JTablePanel().JTable_init();
+		JScrollPane pane = new JScrollPane(table);
+		pane.setVisible(true);
+		table_Panel.add(table);
+		table_Panel.add(pane);
+		table_Panel.setBounds(150,0,1280,800);
+		table_Panel.setLayout(null);
+		table_Panel.setVisible(true);
 		
 		//Information_sheet_panel.setLayout(null);
 		//Information_sheet_panel.add(jTablePanel.JTable_init());
@@ -327,7 +369,7 @@ public class gui extends JFrame{
 		//Information_sheet_panel.setVisible(true);
 		
 		Information.setLayout(null);
-		Information.add(jTablePanel.JTable_init());
+		Information.add(table_Panel);
 		//Information.add(jTablePanel.JTable_init());
 		Information.setBounds(150, 0, 1290, 800);
 		Information.setVisible(true);
@@ -355,7 +397,7 @@ public class gui extends JFrame{
 		tabbedPane.addTab("Map", testmapPanel);
 		tabbedPane.addTab("GRAPH", panel2);
 		tabbedPane.add("인원정보보기", Information);
-		tabbedPane.add("Data", temperature_distribution);
+		//tabbedPane.add("Data", temperature_distribution);
 		//tabbedPane.add("Map", panel2);
 		//tabbedPane.add("Statistics", panel3);
 		
@@ -367,9 +409,11 @@ public class gui extends JFrame{
 
 		jF = new JFrame();
 		jF.add(tabbedPane);
-		jF.setSize((int)di.getWidth(),(int)di.getWidth()-200); // Full Screen
+		//jF.setSize((int)di.getWidth(),(int)di.getWidth()-200); // Full Screen
+		jF.setSize(1440, 850);
 		jF.setTitle("Chois Tech");
-		jF.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		jF.setResizable(false);
+		//jF.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		jF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		jF.setVisible(true);
 	
@@ -377,13 +421,13 @@ public class gui extends JFrame{
 
 	public void temperature_distribution_init() throws SQLException, ClassCastException, IllegalArgumentException, IOException
 	{
-				
-		b1 = new JButton();
-		b1.setText("User List");
-		b1.setBounds(0, 0,130,50);
-		b1.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
-		b1.addActionListener(new MyActionListener2()); 
-		temperature_distribution.add(b1);
+		st = con.createStatement();
+//		b1 = new JButton();
+//		b1.setText("User List");
+//		b1.setBounds(0, 0,130,50);
+//		b1.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
+//		b1.addActionListener(new MyActionListener2()); 
+//		temperature_distribution.add(b1);
 		
 		b2 = new JButton();
 		b2.setText("Show Chart");
@@ -394,69 +438,14 @@ public class gui extends JFrame{
 		
 		b3 = new JButton();
 		b3.setText("Date List");
-		b3.setBounds(0, 100, 130, 50);
+		b3.setBounds(0, 0,130,50);
 		b3.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 		b3.addActionListener(new MyActionListener2()); 
 		temperature_distribution.add(b3);
-		
-		b4.setText("High Temp");
-		b4.setBounds(0, 270, 130, 50);
-		b4.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
-		b4.addActionListener(new MyActionListener2());
-		temperature_distribution.add(b4);
-		//b4.//
-		
-		
-		
-		//Radio Button--------------------------------------
-		
-		p3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Option", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0,0,0)));
-		p3.setBounds(5, 400, 100, 115);
-		p3.setLayout(new FlowLayout(FlowLayout.LEFT));
-		
-		rb1.setText("All");
-		//rb1.setBounds(0, 400, 70, 20);
-		rb1.setVisible(true);
-		rb1.setSelected(true);
-		//rb1.addItemListener(new SelectItemListener());
-		p3.add(rb1);
-		
-		rb2.setText("Male");
-		//rb2.setBounds(0, 450, 70, 20);
-		rb2.setVisible(true);
-		//rb2.addItemListener(new SelectItemListener());
-		p3.add(rb2);
-		
-		rb3.setText("Female");
-		//rb3.setBounds(0, 500, 70, 20);
-		rb3.setVisible(true);
-		//rb3.addItemListener(new SelectItemListener());
-		p3.add(rb3);
-		p3.setVisible(true);
-		//Bgroup.add(rb1);
-		//Bgroup.add(rb2);
-		//Bgroup.add(rb3);
-		temperature_distribution.add(p3);
-		
+	
 
-
-		rs = st.executeQuery("SELECT DISTINCT id FROM tp");
-		while(rs.next()){
-			box1.addItem(rs.getString("id"));
-		}
-		box3.addItem(36.0);
-		box3.addItem(36.5);
-		box3.addItem(37.0);
-		box3.addItem(37.5);
-		box3.addItem(38.0);
-		box3.addItem(38.5);
-		box3.addItem(39.0);
-		box3.addItem(39.5);
-		box3.addItem(40.0);
-
-
-		CP = new ChartPanel(new jPanel01().DrawMyChart2("0", "2016-04-08", 37.9));
-		CP.setBounds(130, 0, 1310, 800);
+		CP = new ChartPanel(new jPanel01().DrawMyChart2(SwingWaypoint.send_user, SwingWaypoint.send_date, 0.0));
+		CP.setBounds(130, 0, 1150, 740);
 		temperature_distribution.add(CP);
 
 		box1.setBounds(0,50,130,50);
@@ -465,8 +454,28 @@ public class gui extends JFrame{
 		
 		temperature_distribution.add(box1);
 		
-
-		box2.setBounds(0,150,130,50);
+    	box2.removeAllItems();
+		String buf_f = null;
+		String id = null;
+		
+		id = SwingWaypoint.send_user;
+		try{
+    		rs = st.executeQuery("SELECT DISTINCT date from thermo_data WHERE id="+ id +" ORDER BY date");
+    		while(rs.next()){
+    			if(rs.getString("date").substring(0, 10).equals(buf_f))
+    			{
+    				continue;
+    			}else{
+    				buf_f = rs.getString("date").substring(0, 10);
+    				box2.addItem(buf_f);
+    			}
+    		}
+		} catch (SQLException se) {
+			// TODO Auto-generated catch block
+			se.printStackTrace();
+		}
+		
+		box2.setBounds(0,50,130,50);
 		box2.setVisible(false);
 		
 		temperature_distribution.add(box2);
@@ -480,6 +489,7 @@ public class gui extends JFrame{
 		temperature_distribution.add(box3);
 
 		temperature_distribution.setVisible(true);
+		//return temperature_distribution;
 	}
 	
 	public void testmapPanel_init() // tab 1
@@ -488,12 +498,33 @@ public class gui extends JFrame{
 			st = con.createStatement();
 			
 			String buf_f = null;
-			rs = st.executeQuery("select distinct date from tp ORDER BY date");
+			rs = st.executeQuery("select distinct date from thermo_data ORDER BY date");
+			
+			Back_b.setText("Back");
+			Back_b.setBounds(0, 0, 150, 50);
+			Back_b.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
+			Back_b.addActionListener(new MyActionListener4());
+			Back_b.setVisible(false);
 			
 			Date_Button.setText("Date");
 	    	Date_Button.setBounds(0, 50, 150, 50);
 	    	Date_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 	    	Date_Button.addActionListener(new MyActionListener4());
+	    	
+	    	
+	    	Map_Button.setText("Map");
+	    	Map_Button.setBounds(150, 0, 150, 50);
+	    	Map_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
+	    	Map_Button.addActionListener(new MyActionListener4());
+	    	Map_Button.setVisible(false);
+	    	
+	    	Temp_Button.setText("Temp");
+	    	Temp_Button.setBounds(300, 0, 150, 50);
+	    	Temp_Button.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
+	    	Temp_Button.addActionListener(new MyActionListener4());
+	    	Temp_Button.setVisible(false);
+	    	
+	    	
 	    	Combo_Date.setBounds(0, 100, 150, 50);
 	    	
 	    	
@@ -507,8 +538,8 @@ public class gui extends JFrame{
 	        rangeSliderLabel2.setText("Upper value:");
 	        
 
-	        rangeSlider.setValue(3);
-	        rangeSlider.setUpperValue(7);
+	        rangeSlider.setValue(0);
+	        rangeSlider.setUpperValue(10);
 	        rangeSliderLabel0.setBounds(15, 400, 100, 20);
 	        rangeSliderLabel0.setVisible(true);
 	        rangeSliderLabel1.setBounds(15,420,100,20);
@@ -528,7 +559,7 @@ public class gui extends JFrame{
 	                RangeSlider slider = (RangeSlider) e.getSource();
 	                rangeSliderValue1.setText(String.valueOf((slider.getValue())*10));
 	                rangeSliderValue2.setText(String.valueOf((slider.getUpperValue())*10));
-	    	      
+	                
 	                rangeSlider_tp.setValue(rangeSlider.getValue());
 	    	        rangeSlider_tp.setUpperValue(rangeSlider.getUpperValue());
 	                rangeSliderValue1_tp.setText(String.valueOf((slider.getValue())*10));
@@ -538,26 +569,33 @@ public class gui extends JFrame{
 	    	        rangeSlider_gp.setUpperValue(rangeSlider.getUpperValue());
 	                rangeSliderValue1_gp.setText(String.valueOf((slider.getValue())*10));
 	                rangeSliderValue2_gp.setText(String.valueOf((slider.getUpperValue())*10));
+	                
+	                AGE_RangeSlider_UpperValue = Integer.valueOf(slider.getUpperValue()*10);
+	                AGE_RangeSlider_LowerValue = Integer.valueOf(slider.getValue()*10);
+	                
+	                //panel2.remove(Graph_panel);
+		               //make_XYBarChartPanel(AGE_RangeSlider_UpperValue,AGE_RangeSlider_LowerValue);
+	        		//panel2.add(Graph_panel);
 	            }
 	        });
 	        
 	        rangeSlider.setBounds(13, 460, 130,20);
 	        rangeSlider.setVisible(true);
 	        //testmapPanel.add(rangeSlider);
-	        rangeSliderValue1.setText("30");
-	        rangeSliderValue2.setText("70");
+	        rangeSliderValue1.setText("0");
+	        rangeSliderValue2.setText("100");
 
 	        ////////
 	    	rangeSlider2.setPreferredSize(new Dimension(100, 100));
-	        rangeSlider2.setMinimum(34);
+	        rangeSlider2.setMinimum(0);
 	        rangeSlider2.setMaximum(42);
 	        rangeSliderLabel0_2.setText("Temp Range");
 	        rangeSliderLabel3.setText("Lower value:");
 	        rangeSliderLabel4.setText("Upper value:");
 	        
 
-	        rangeSlider2.setValue(36);
-	        rangeSlider2.setUpperValue(40);
+	        rangeSlider2.setValue(0);
+	        rangeSlider2.setUpperValue(42);
 	        rangeSliderLabel0_2.setBounds(15,500, 100, 20);
 	        rangeSliderLabel0_2.setVisible(true);
 	        rangeSliderLabel3.setBounds(15,520,100,20);
@@ -587,14 +625,17 @@ public class gui extends JFrame{
 	    	        rangeSlider2_gp.setUpperValue(rangeSlider2.getUpperValue());
 	                rangeSliderValue3_gp.setText(String.valueOf(slider2.getValue()));
 	                rangeSliderValue4_gp.setText(String.valueOf(slider2.getUpperValue()));
+	                
+	                TEMP_RangeSlider_UpperValue = Integer.valueOf(slider2.getUpperValue());
+	                TEMP_RangeSlider_LowerValue = Integer.valueOf(slider2.getValue());
 	            }
 	        });
 	        
 	        rangeSlider2.setBounds(13, 560, 130,20);
 	        rangeSlider2.setVisible(true);
 	        //testmapPanel.add(rangeSlider);
-	        rangeSliderValue3.setText("36");
-	        rangeSliderValue4.setText("40");
+	        rangeSliderValue3.setText("0");
+	        rangeSliderValue4.setText("42");
 	        
 			while(rs.next()){
 				if(rs.getString("date").substring(0, 10).equals(buf_f))
@@ -604,6 +645,7 @@ public class gui extends JFrame{
 					buf_f = rs.getString("date").substring(0, 10);
 					Combo_Date.addItem(buf_f);
 					//System.out.println("test : "+buf_f);
+					
 				}
 			}
 			
@@ -613,7 +655,8 @@ public class gui extends JFrame{
 			Combo_User.setBounds(0, 200, 150, 50);
 			Combo_User.setVisible(false);
 			
-			U_Button2.setText("User");
+			//U_Button2.setText("User");
+			U_Button2.setText("Show");
 			U_Button2.setBounds(0, 150, 150, 50);
 			U_Button2.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 			U_Button2.setVisible(true);
@@ -658,6 +701,9 @@ public class gui extends JFrame{
 		
 				
 		testmapPanel.add(Date_Button);
+		testmapPanel.add(Map_Button);
+		testmapPanel.add(Temp_Button);
+		testmapPanel.add(Back_b);
 		testmapPanel.add(U_Button2);
 		testmapPanel.add(Combo_Date);
 		testmapPanel.add(Combo_User);
@@ -674,6 +720,8 @@ public class gui extends JFrame{
 		testmapPanel.add(rangeSliderValue4);
 		testmapPanel.add(rangeSlider2);
 		
+		
+		
 	}
 	
 	
@@ -683,7 +731,7 @@ public class gui extends JFrame{
 			st = con.createStatement();
 			
 			String buf_f_tp = null;
-			rs = st.executeQuery("select distinct date from tp ORDER BY date");
+			rs = st.executeQuery("select distinct date from thermo_data ORDER BY date");
 			
 			Date_Button_tp.setText("Date");
 	    	Date_Button_tp.setBounds(0, 50, 150, 50);
@@ -703,8 +751,8 @@ public class gui extends JFrame{
 	        rangeSliderLabel2_tp.setText("Upper value:");
 	        
 
-	        rangeSlider_tp.setValue(3);
-	        rangeSlider_tp.setUpperValue(7);
+	        rangeSlider_tp.setValue(0);
+	        rangeSlider_tp.setUpperValue(10);
 	        rangeSliderLabel0_tp.setBounds(15, 400, 100, 20);
 	        rangeSliderLabel0_tp.setVisible(true);
 	        rangeSliderLabel1_tp.setBounds(15,420,100,20);
@@ -734,26 +782,29 @@ public class gui extends JFrame{
 	    	        rangeSlider_gp.setUpperValue(rangeSlider_tp.getUpperValue());
 	                rangeSliderValue1_gp.setText(String.valueOf((slider_tp.getValue())*10));
 	                rangeSliderValue2_gp.setText(String.valueOf((slider_tp.getUpperValue())*10));
+	                
+	                AGE_RangeSlider_UpperValue = Integer.valueOf(slider_tp.getUpperValue()*10);
+	                AGE_RangeSlider_LowerValue = Integer.valueOf(slider_tp.getValue()*10);
 	            }
 	        });
 	        
 	        rangeSlider_tp.setBounds(13, 460, 130,20);
 	        rangeSlider_tp.setVisible(true);
 	        //testmapPanel.add(rangeSlider);
-	        rangeSliderValue1_tp.setText("30");
-	        rangeSliderValue2_tp.setText("70");
+	        rangeSliderValue1_tp.setText("0");
+	        rangeSliderValue2_tp.setText("100");
 
 	        ////////
 	    	rangeSlider2_tp.setPreferredSize(new Dimension(100, 100));
-	        rangeSlider2_tp.setMinimum(34);
+	        rangeSlider2_tp.setMinimum(0);
 	        rangeSlider2_tp.setMaximum(42);
 	        rangeSliderLabel0_2_tp.setText("Temp Range");
 	        rangeSliderLabel3_tp.setText("Lower value:");
 	        rangeSliderLabel4_tp.setText("Upper value:");
 	        
 
-	        rangeSlider2_tp.setValue(36);
-	        rangeSlider2_tp.setUpperValue(40);
+	        rangeSlider2_tp.setValue(0);
+	        rangeSlider2_tp.setUpperValue(42);
 	        rangeSliderLabel0_2_tp.setBounds(15,500, 100, 20);
 	        rangeSliderLabel0_2_tp.setVisible(true);
 	        rangeSliderLabel3_tp.setBounds(15,520,100,20);
@@ -783,14 +834,17 @@ public class gui extends JFrame{
 	    	        rangeSlider2_gp.setUpperValue(rangeSlider2_tp.getUpperValue());
 	                rangeSliderValue3_gp.setText(String.valueOf(slider2_tp.getValue()));
 	                rangeSliderValue4_gp.setText(String.valueOf(slider2_tp.getUpperValue()));
+	                
+	                TEMP_RangeSlider_UpperValue = Integer.valueOf(slider2_tp.getUpperValue());
+	                TEMP_RangeSlider_LowerValue = Integer.valueOf(slider2_tp.getValue());
 	            }
 	        });
 	        
 	        rangeSlider2_tp.setBounds(13, 560, 130,20);
 	        rangeSlider2_tp.setVisible(true);
 	        //testmapPanel.add(rangeSlider);
-	        rangeSliderValue3_tp.setText("36");
-	        rangeSliderValue4_tp.setText("40");
+	        rangeSliderValue3_tp.setText("0");
+	        rangeSliderValue4_tp.setText("42");
 	        
 			while(rs.next()){
 				if(rs.getString("date").substring(0, 10).equals(buf_f_tp))
@@ -871,13 +925,22 @@ public class gui extends JFrame{
 
 		
 	}
-	
 	public JPanel make_XYBarChartPanel(){
 		XYBarClass =  new XYBarChart("test");
 		
 		Graph_panel = XYBarClass.createXYBarChartPanel();
 		Graph_panel.setLayout(null);
-		Graph_panel.setBounds(150,0,1280,800);
+		Graph_panel.setBounds(150,0,1280,810);
+		Graph_panel.setVisible(true);
+		return Graph_panel;
+	}
+	
+	public JPanel make_XYBarChartPanel(int Upper_age, int Lower_age, int gender, String Sel_date){
+		XYBarClass =  new XYBarChart("test", Upper_age, Lower_age, gender, Sel_date);
+		
+		Graph_panel = XYBarClass.createXYBarChartPanel(Upper_age, Lower_age, gender, Sel_date);
+		Graph_panel.setLayout(null);
+		Graph_panel.setBounds(150,0,1280,810);
 		Graph_panel.setVisible(true);
 		return Graph_panel;
 	}
@@ -898,12 +961,12 @@ public class gui extends JFrame{
 			st = con.createStatement();
 			
 			String buf_f_gp = null;
-			rs = st.executeQuery("select distinct date from tp ORDER BY date");
+			rs = st.executeQuery("select distinct date from thermo_data ORDER BY date");
 			
 			Date_Button_gp.setText("Date");
 	    	Date_Button_gp.setBounds(0, 50, 150, 50);
 	    	Date_Button_gp.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
-	    	Date_Button_gp.addActionListener(new MyActionListener4());
+	    	Date_Button_gp.addActionListener(new MyActionListener3());
 	    	Combo_Date_gp.setBounds(0, 100, 150, 50);
 	    	
 	    	
@@ -918,8 +981,8 @@ public class gui extends JFrame{
 	        rangeSliderLabel2_gp.setText("Upper value:");
 	        
 
-	        rangeSlider_gp.setValue(3);
-	        rangeSlider_gp.setUpperValue(7);
+	        rangeSlider_gp.setValue(0);
+	        rangeSlider_gp.setUpperValue(10);
 	        rangeSliderLabel0_gp.setBounds(15, 400, 100, 20);
 	        rangeSliderLabel0_gp.setVisible(true);
 	        rangeSliderLabel1_gp.setBounds(15,420,100,20);
@@ -949,26 +1012,29 @@ public class gui extends JFrame{
 	    	        rangeSlider_tp.setUpperValue(rangeSlider_gp.getUpperValue());
 	                rangeSliderValue1_tp.setText(String.valueOf((slider_gp.getValue())*10));
 	                rangeSliderValue2_tp.setText(String.valueOf((slider_gp.getUpperValue())*10));
+	                
+	                AGE_RangeSlider_UpperValue = Integer.valueOf(slider_gp.getUpperValue()*10);
+	                AGE_RangeSlider_LowerValue = Integer.valueOf(slider_gp.getValue()*10);
 	            }
 	        });
 	        
 	        rangeSlider_gp.setBounds(13, 460, 130,20);
 	        rangeSlider_gp.setVisible(true);
 	        //testmapPanel.add(rangeSlider);
-	        rangeSliderValue1_gp.setText("30");
-	        rangeSliderValue2_gp.setText("70");
+	        rangeSliderValue1_gp.setText("0");
+	        rangeSliderValue2_gp.setText("100");
 
 	        ////////
 	    	rangeSlider2_gp.setPreferredSize(new Dimension(100, 100));
-	        rangeSlider2_gp.setMinimum(34);
+	        rangeSlider2_gp.setMinimum(0);
 	        rangeSlider2_gp.setMaximum(42);
 	        rangeSliderLabel0_2_gp.setText("Temp Range");
 	        rangeSliderLabel3_gp.setText("Lower value:");
 	        rangeSliderLabel4_gp.setText("Upper value:");
 	        
 
-	        rangeSlider2_gp.setValue(36);
-	        rangeSlider2_gp.setUpperValue(40);
+	        rangeSlider2_gp.setValue(0);
+	        rangeSlider2_gp.setUpperValue(42);
 	        rangeSliderLabel0_2_gp.setBounds(15,500, 100, 20);
 	        rangeSliderLabel0_2_gp.setVisible(true);
 	        rangeSliderLabel3_gp.setBounds(15,520,100,20);
@@ -998,14 +1064,17 @@ public class gui extends JFrame{
 	    	        rangeSlider2_tp.setUpperValue(rangeSlider2_gp.getUpperValue());
 	                rangeSliderValue3_tp.setText(String.valueOf(slider2_gp.getValue()));
 	                rangeSliderValue4_tp.setText(String.valueOf(slider2_gp.getUpperValue()));
+	                
+	                AGE_RangeSlider_UpperValue = Integer.valueOf(slider2_gp.getUpperValue());
+	                AGE_RangeSlider_LowerValue = Integer.valueOf(slider2_gp.getValue());
 	            }
 	        });
 	        
 	        rangeSlider2_gp.setBounds(13, 560, 130,20);
 	        rangeSlider2_gp.setVisible(true);
 	        //testmapPanel.add(rangeSlider);
-	        rangeSliderValue3_gp.setText("36");
-	        rangeSliderValue4_gp.setText("40");
+	        rangeSliderValue3_gp.setText("0");
+	        rangeSliderValue4_gp.setText("42");
 	        
 			while(rs.next()){
 				if(rs.getString("date").substring(0, 10).equals(buf_f_gp))
@@ -1013,10 +1082,12 @@ public class gui extends JFrame{
 					continue;
 				}else{
 					buf_f_gp = rs.getString("date").substring(0, 10);
-					Combo_Date_tp.addItem(buf_f_gp);
+					Combo_Date_gp.addItem(buf_f_gp);
 					//System.out.println("test : "+buf_f);
 				}
 			}
+			
+
 			
 			//rangeSlider.setBounds(x, y, width, height);
 			
@@ -1024,11 +1095,11 @@ public class gui extends JFrame{
 			Combo_User_gp.setBounds(0, 200, 150, 50);
 			Combo_User_gp.setVisible(false);
 			
-			U_Button2_gp.setText("User");
+			U_Button2_gp.setText("Show");
 			U_Button2_gp.setBounds(0, 150, 150, 50);
 			U_Button2_gp.setFont( new Font( "Dialog", Font.BOLD , 15 ) );
 			U_Button2_gp.setVisible(true);
-			U_Button2_gp.addActionListener(new MyActionListener4());
+			U_Button2_gp.addActionListener(new MyActionListener3());
 			
 			//Radio Button--------------------------------------
 			
@@ -1083,6 +1154,8 @@ public class gui extends JFrame{
 		panel2.add(rangeSliderValue3_gp);
 		panel2.add(rangeSliderValue4_gp);
 		panel2.add(rangeSlider2_gp);
+		//	public static int AGE_RangeSlider_UpperValue, AGE_RangeSlider_LowerValue;
+		//public static int TEMP_RangeSlider_UpperValue, TEMP_RangeSlider_LowerValue;
 		make_XYBarChartPanel();
 		panel2.add(Graph_panel);
 		
@@ -1094,7 +1167,7 @@ public class gui extends JFrame{
 			st = con.createStatement();
 			
 			String buf_f = null;
-			rs = st.executeQuery("select distinct date from tp");
+			rs = st.executeQuery("select distinct date from thermo_data");
 			
 			D_Button.setText("Date");
 	    	D_Button.setBounds(0, 0, 150, 50);
@@ -1114,7 +1187,7 @@ public class gui extends JFrame{
 			
 			combo_d.setVisible(false);
 			
-			rs = st.executeQuery("select distinct id from tp");
+			rs = st.executeQuery("select distinct id from thermo_data");
 			
 			U_Button.setText("User");
 			U_Button.setBounds(0, 150, 150, 50);
@@ -1167,8 +1240,9 @@ public class gui extends JFrame{
 	
 	
 	*/
-	public void re_paint(String Sel_date, String Sel_user){
+	public static void re_paint(String Sel_date, String Sel_user){
 		testmapPanel.remove(testmap);
+		testmapPanel.remove(temperature_distribution);
 		testmap.setVisible(false);
 		testmap.removeAll();
 		testmap = new OSM().OSM_init(Sel_date, Sel_user, 1);
@@ -1178,6 +1252,25 @@ public class gui extends JFrame{
 		testmapPanel.repaint();
 		testmapPanel.setVisible(true);
 	}
+	
+	public void re_paint_chart(String Sel_date, String Sel_user){
+		testmapPanel.remove(testmap);
+		temperature_distribution.setVisible(false);
+		temperature_distribution.removeAll();
+		try {
+			temperature_distribution_init();
+		} catch (ClassCastException | IllegalArgumentException | SQLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		temperature_distribution.setBounds(150, 50, 1290, 820);
+		temperature_distribution.setVisible(true);
+		testmapPanel.add(temperature_distribution);
+		testmapPanel.repaint();
+		testmapPanel.setVisible(true);
+	}
+	
+	
 	
 		
     private class SelectItemListener  implements ItemListener {
@@ -1192,14 +1285,16 @@ public class gui extends JFrame{
                        rb1.setSelected(true);
                        rb1_tp.setSelected(true);
                        rb1_gp.setSelected(true);
+                       Bgroup_gender = 1;
            			                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-           			
+           				
                    }
                    else if ( sel.getText().equals( "Male" ) )
                    {
                        rb2.setSelected(true);
                        rb2_tp.setSelected(true);
                        rb2_gp.setSelected(true);
+                       Bgroup_gender = 2;
                 	  // box2.setSelectedIndex(1);;
                    }
                    else if ( sel.getText().equals( "Female" ) )
@@ -1207,6 +1302,7 @@ public class gui extends JFrame{
                        rb3.setSelected(true);
                        rb3_tp.setSelected(true);
                        rb3_gp.setSelected(true);
+                       Bgroup_gender = 3;
                 	  // box2.setSelectedIndex(2);;
                    }
             }
@@ -1237,7 +1333,7 @@ public class gui extends JFrame{
     	
     	try {
 			st = con.createStatement();			
-			rs = st.executeQuery("select id,date from tp");
+			rs = st.executeQuery("select id,date from thermo_data");
 			
 			while(rs.next()){
 				
@@ -1280,7 +1376,7 @@ public class gui extends JFrame{
         		
         		id = box1.getSelectedItem().toString();
         		try{
-	        		rs = st.executeQuery("SELECT DISTINCT date FROM tp WHERE id="+ id +" ORDER BY date");
+	        		rs = st.executeQuery("SELECT DISTINCT date from thermo_data WHERE id="+ id +" ORDER BY date");
 	        		while(rs.next()){
 	        			if(rs.getString("date").substring(0, 10).equals(buf_f))
 	        			{
@@ -1311,18 +1407,18 @@ public class gui extends JFrame{
 
             	//Float[][] new_data = new Float[1][1000];
 
-            	System.out.println("Redraw");
+            	//System.out.println("Redraw");
             
             	try {
 					//new_data = database_load.dload(box1.getSelectedItem().toString(), box2.getSelectedItem().toString());
-					System.out.println(box1.getSelectedItem().toString() + " / " + box2.getSelectedItem().toString());
+					//System.out.println(box1.getSelectedItem().toString() + " / " + box2.getSelectedItem().toString());
 					//ChartPanel NCP = new ChartPanel(new jPanel01().DrawMyChart(new_data));
 					//NCP.setBounds(300, 10, 1610, 980);
 					temperature_distribution.remove(CP);
 					
-					CP = new ChartPanel(new jPanel01().DrawMyChart2(box1.getSelectedItem().toString(), box2.getSelectedItem().toString(), 36.0));
+					CP = new ChartPanel(new jPanel01().DrawMyChart2(SwingWaypoint.send_user, box2.getSelectedItem().toString(), 37.0));
 					
-					CP.setBounds(130, 0, 1310, 800);
+					CP.setBounds(130, 0, 1150, 740);
 					temperature_distribution.add(CP);
 					temperature_distribution.repaint();
 					temperature_distribution.setVisible(true);
@@ -1369,7 +1465,7 @@ public class gui extends JFrame{
 					e1.printStackTrace();
 				}
 				
-				CP.setBounds(130, 0, 1310, 800);
+				CP.setBounds(130, 0, 1280, 700);
 				temperature_distribution.add(CP);
 				temperature_distribution.repaint();
 				temperature_distribution.setVisible(true);
@@ -1380,74 +1476,25 @@ public class gui extends JFrame{
 	
 	private class MyActionListener3 implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            JRadioButton rb = (JRadioButton) e.getSource();
-            if (rb.getText().equals("All"))
-            {
-        		try {
-        			box1.removeAllItems();
-					rs = st.executeQuery("SELECT DISTINCT id FROM tp");
-					while(rs.next()){
-	        			box1.addItem(rs.getString("id"));
-	        		}
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-            }
-            else if (rb.getText().equals("Male"))
-            {
-        		try {
-        			box1.removeAllItems();
-					rs = st.executeQuery("SELECT DISTINCT id FROM tp WHERE sex = 0");
-					while(rs.next()){
-	        			box1.addItem(rs.getString("id"));
-	        		}
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-            }
-            
-            else if (rb.getText().equals("Female"))
-            {
-        		try {
-        			box1.removeAllItems();
-					rs = st.executeQuery("SELECT DISTINCT id FROM tp WHERE sex = 1");
-					while(rs.next()){
-	        			box1.addItem(rs.getString("id"));
-	        		}
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-            }
-        }
-	}
-	
-	
-	
-	
-    public class MyActionListener4 implements ActionListener { // Map Panel Action Listener
-        public void actionPerformed(ActionEvent e) {
 
         	//------------------date-----------------
             JButton b = (JButton) e.getSource();
             if (b.getText().equals("Date")){
             	b.setText("Date select");
-            	Combo_Date.setVisible(true);
+            	Combo_Date_gp.setVisible(true);
             }      	
             else if(b.getText().equals("Date select")){
             	b.setText("Date");
             	
-            	date2 = Combo_Date.getSelectedItem().toString();            
-            	Combo_Date.setVisible(false);
-            	Combo_User.removeAllItems();
+            	date2 = Combo_Date_gp.getSelectedItem().toString();            
+            	Combo_Date_gp.setVisible(false);
+            	Combo_User_gp.removeAllItems();
 
         		try {
-        			st.executeQuery("use newschema5;");
-					rs = st.executeQuery("SELECT DISTINCT id FROM tp WHERE LEFT(date,10) = '" + date2 + "'");
+        			st.executeQuery("use Thermosafer_INU;");
+					rs = st.executeQuery("SELECT DISTINCT id from thermo_data WHERE LEFT(date,10) = '" + date2 + "'");
 					while(rs.next()){
-						Combo_User.addItem(rs.getString("id"));
+						Combo_User_gp.addItem(rs.getString("id"));
 	        		}
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -1456,19 +1503,45 @@ public class gui extends JFrame{
         		sel_state = 0;
             }
             
+            if (b.getText().equals("Show")){
+//            	testmapPanel.remove(testmap);
+//            	testmap.setVisible(false);
+//            	testmap.removeAll();
+//            	
+//            	testmap = new OSM().OSM_init(date2, Bgroup_gender, 1 );
+                panel2.remove(Graph_panel);
+                
+	            make_XYBarChartPanel(AGE_RangeSlider_UpperValue, AGE_RangeSlider_LowerValue, Bgroup_gender , date2);
+        		panel2.add(Graph_panel);
+        		panel2.repaint();
+        		panel2.setVisible(true);
+            	/*
+        		testmap.repaint();
+        		testmap.setBounds(150, 0, 1290, 800);
+        		testmap.setVisible(true);
+        		
+        		testmapPanel.add(testmap);
+        		testmapPanel.repaint();
+        		testmapPanel.setVisible(true);*/
+        		
+            }
+            /*
             //---------------user---------------------
             if (b.getText().equals("User")){
             		b.setText("User select");
-                	Combo_User.setVisible(true);
+                	Combo_User_gp.setVisible(true);
                 	sel_state2 = 1;
+                	testmap = new OSM().OSM_init(date2, 1, 1 );
+                	
             }      	
             else if(b.getText().equals("User select")){
             	b.setText("User");
-            	user2 = Combo_User.getSelectedItem().toString();
+            	user2 = Combo_User_gp.getSelectedItem().toString();
             	setTitle(b.getText());
             	
           		//combo_u.removeAllItems();
-          		Combo_User.setVisible(false);
+          		Combo_User_gp.setVisible(false);
+          		
           		
             	if (sel_state2 == 1)
             	{
@@ -1477,7 +1550,8 @@ public class gui extends JFrame{
 	            	testmap.removeAll();
 	            	if (sel_state == 0)
 	            	{
-	            		testmap = new OSM().OSM_init(date2,user2,1);
+
+	            		testmap = new OSM().OSM_init(date2, 1, 1 );
 	            	}
 	            	else if (sel_state == 1)
 	            	{
@@ -1509,8 +1583,182 @@ public class gui extends JFrame{
 	            	Runnable r = new runnableImplements();
 	            	Thread t = new Thread(r);
 	            	t.start();
-            	}
+            	}*/
+            
+            
+            //--------------temp-----------------
+            
+            
+             
+            
+
+            //System.out.println("state1 : " + sel_state + " / state2 : " + sel_state2);
+        }
+	}
+	
+	
+	
+	
+    public class MyActionListener4 implements ActionListener { // Map Panel Action Listener
+        public void actionPerformed(ActionEvent e) {
+
+        	//------------------date-----------------
+            JButton b = (JButton) e.getSource();
+            if (b.getText().equals("Date")){
+            	b.setText("Date select");
+            	Combo_Date.setVisible(true);
+            }      	
+            else if(b.getText().equals("Date select")){
+            	b.setText("Date");
+            	
+            	date2 = Combo_Date.getSelectedItem().toString();            
+            	Combo_Date.setVisible(false);
+            	Combo_User.removeAllItems();
+
+        		try {
+        			st.executeQuery("use Thermosafer_INU;");
+					rs = st.executeQuery("SELECT DISTINCT id from thermo_data WHERE LEFT(date,10) = '" + date2 + "'");
+					while(rs.next()){
+						Combo_User.addItem(rs.getString("id"));
+	        		}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+        		sel_state = 0;
             }
+            
+            if (b.getText().equals("Show")){
+            	testmapPanel.remove(testmap);
+            	testmap.setVisible(false);
+            	testmap.removeAll();
+            	
+            	testmap = new OSM().OSM_init(date2, Bgroup_gender,AGE_RangeSlider_UpperValue,AGE_RangeSlider_LowerValue,  1 );
+            	
+        		testmap.repaint();
+        		testmap.setBounds(150, 0, 1290, 800);
+        		testmap.setVisible(true);
+        		
+        		testmapPanel.add(testmap);
+        		testmapPanel.repaint();
+        		testmapPanel.setVisible(true);
+        		
+        		Map_Button.setVisible(false);
+        		Temp_Button.setVisible(false);
+        		temperature_distribution.setVisible(false);
+        		Back_b.setVisible(false);
+        		
+        		b2.setVisible(false);
+        		b3.setVisible(false);
+        		
+        		
+            }
+            if (b.getText().equals("Back")){
+            	testmapPanel.remove(testmap);
+            	testmap.setVisible(false);
+            	testmap.removeAll();
+        		/*
+        		 * (String Sel_date, int gender, int Upper_age, int Lower_age,int state)
+        		 * AGE_RangeSlider_UpperValue, AGE_RangeSlider_LowerValue;
+        		*/
+            	testmap = new OSM().OSM_init(date2, Bgroup_gender,AGE_RangeSlider_UpperValue,AGE_RangeSlider_LowerValue,  1 );
+            	
+        		testmap.repaint();
+        		testmap.setBounds(150, 0, 1290, 800);
+        		testmap.setVisible(true);
+        		
+        		testmapPanel.add(testmap);
+        		testmapPanel.repaint();
+        		testmapPanel.setVisible(true);
+        		
+        		Map_Button.setVisible(false);
+        		Temp_Button.setVisible(false);
+        		temperature_distribution.setVisible(false);
+        		Back_b.setVisible(false);
+        		
+        		b2.setVisible(false);
+        		b3.setVisible(false);
+        		
+        		
+            }
+            
+            
+            
+            if (b.getText().equals("Temp")){
+
+            	re_paint_chart(SwingWaypoint.send_date, SwingWaypoint.send_user);
+        		
+            }
+            
+            if (b.getText().equals("Map")){
+            	re_paint(SwingWaypoint.send_date, SwingWaypoint.send_user);
+            	
+        		
+            }
+            /*
+            //---------------user---------------------
+            if (b.getText().equals("User")){
+            		b.setText("User select");
+                	Combo_User.setVisible(true);
+                	sel_state2 = 1;
+                	testmap = new OSM().OSM_init(date2, 1, 1 );
+                	
+            }      	
+            else if(b.getText().equals("User select")){
+            	b.setText("User");
+            	user2 = Combo_User.getSelectedItem().toString();
+            	setTitle(b.getText());
+            	
+          		//combo_u.removeAllItems();
+          		Combo_User.setVisible(false);
+          		
+          		
+            	if (sel_state2 == 1)
+            	{
+	            	testmapPanel.remove(testmap);
+	            	testmap.setVisible(false);
+	            	testmap.removeAll();
+	            	if (sel_state == 0)
+	            	{
+	            		//testmap = new OSM().OSM_init(date2,user2,1);
+	            		
+	            		testmap = new OSM().OSM_init(date2, 1, 1 );
+	            	}
+	            	else if (sel_state == 1)
+	            	{
+	            		testmap = new OSM().OSM_init(user_date, 1);
+	            	}
+	        		testmap.repaint();
+	        		
+	        		testmap.setBounds(150, 0, 1290, 800);
+	        		testmap.setVisible(true);
+	        		
+	
+	        		testmapPanel.add(testmap);
+	        		testmapPanel.repaint();
+	        		testmapPanel.setVisible(true);
+            	}
+            	else if (sel_state2 == 2)
+            	{
+	    			testmapPanel.remove(testmap);
+	    			testmap.setVisible(false);
+	    			testmap.removeAll();
+	    			if (sel_state == 0)
+	    			{
+	    				testmap = new OSM().OSM_init(date2,user2,1);
+	    			}
+	    			else if (sel_state == 1)
+	    			{
+	    				testmap = new OSM().OSM_init(user_date, 1);
+	    			}
+	            	Runnable r = new runnableImplements();
+	            	Thread t = new Thread(r);
+	            	t.start();
+            	}*/
+            	
+            	
+            	
+            
             
             //--------------temp-----------------
             

@@ -35,6 +35,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.annotations.XYTitleAnnotation;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
+import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.block.BlockBorder;
@@ -99,7 +100,7 @@ public class jPanel01 {
 			con = DriverManager.getConnection(dbURL,"root", "1234");
 			st = con.createStatement();
 			rs = null;
-			st.execute("USE newschema5;");
+			st.execute("USE Thermosafer_INU;");
 			//st.execute("USE testschema;");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -112,7 +113,7 @@ public class jPanel01 {
 		int SAMPLE_NUM = database_load.COUNT;
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();                // bar chart 1
 		try {
-			rs = st.executeQuery("SELECT Distinct sex, birth FROM tp WHERE id = "+ User_num +" AND LEFT(date,10) = '" + Date + "';" );
+			rs = st.executeQuery("SELECT Distinct sex, birth from thermo_data WHERE id = "+ User_num +" AND LEFT(date,10) = '" + Date + "';" );
 			rs.next();
 			int num = rs.getInt(1);
 			if (num == 0)
@@ -190,7 +191,7 @@ public class jPanel01 {
 	public JFreeChart DrawMyChart2(String User_num, String Date, Double mark_temp) throws IOException, SQLException
 	{
 		try {
-			rs = st.executeQuery("SELECT Distinct sex, birth FROM tp WHERE id = "+ User_num +" AND LEFT(date,10) = '" + Date + "';" );
+			rs = st.executeQuery("SELECT Distinct sex, birth from thermo_data WHERE id = "+ User_num +" AND LEFT(date,10) = '" + Date + "';" );
 			rs.next();
 			int num = rs.getInt(1);
 			if (num == 0)
@@ -216,8 +217,11 @@ public class jPanel01 {
 		
 
 		for(int i=0;i<288;i++){
-               series.add(i*300000-32400000,arrdata[0][i]);
-               //series2.add(i*300000-32400000,Mark_temp[i]);
+			
+			//series.add(database_load.Date_array[i], arrdata[0][i]);
+			series.add(i*300000-32400000,arrdata[0][i]);
+			//series2.add(i*300000-32400000,Mark_temp[i]);
+			
         }
 
 		dataset.addSeries(series);
@@ -255,10 +259,12 @@ public class jPanel01 {
 
 	    plot.addRangeMarker(marker);
 	    ValueAxis domain = plot.getDomainAxis();
+	    domain.setVisible(false);
+	    DateAxis axis = (DateAxis) plot.getDomainAxis();
 	    domain.setAutoRange(true);       
 	    // ValueAxis rangeAxis = plot.getRangeAxis();
 	    //rangeAxis.setAutoRange(true);
-
+	    
 	    return chart;
 	}
 }
