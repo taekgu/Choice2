@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Vector;
 
@@ -21,11 +22,11 @@ public class JTablePanel
 {
 	//JFrame jFrame = new JFrame("JTable 예제");
 	JPanel jPanel;
-	String[] columnNames = { "ID", "Birth", "Temperature", "GPS"};
+	String[] columnNames = { "ID", "Birth", "Temperature", "GPS Latitude", "GPS Longtitude"};
 	Vector<String> column1 = new Vector<String>();
 	
 	String[][] rowData = null;
-	String[] data = {"ID", "Birth", "Temperature", "GPS"};
+	String[] data = { "ID", "Birth", "Temperature", "GPS Latitude", "GPS Longtitude"};
 	JTable jTable;
 	JScrollPane jScrollPane;
 	JPanel jPanel1;
@@ -55,10 +56,11 @@ public class JTablePanel
 		gps = null;
 		cnt = 0;
 		//String[] data = {"ID", "Birth", "Temperature", "GPS"};
-		column1.add("ID");
-		column1.add("Birth");
-		column1.add("Temperature");
-		column1.add("GPS");
+		column1.addElement("ID");
+		column1.addElement("Birth");
+		column1.addElement("Temperature");
+		column1.addElement("GPS Latitude");
+		column1.addElement("GPS Longtitude");
 		jb1 = new JButton();
 		jPanel1 = new JPanel();
 		
@@ -80,7 +82,7 @@ public class JTablePanel
 			 * 
 			 */
 			private static final long serialVersionUID = 1L;
-			String[] name = {"ID", "Birth", "Temperature", "GPS"}; 
+			String[] name = {"ID", "Birth", "Temperature", "GPS Latitude", "GPS Longtitude"};
 
             @Override 
             public int getColumnCount() { 
@@ -98,23 +100,27 @@ public class JTablePanel
 		try {
 			cnt = 0;
 			rs = st.executeQuery("SELECT date, id, birth, temp, sex, gps_lat, gps_har from thermo_data ORDER BY ID, date DESC;");
-			
+			//model.addRow(column1);
 			while(rs.next()){
 				New = rs.getString("id");
 				if (New.equals(SET)){
 					continue;
 				}
 				Vector<String> row = new Vector<String>();
+				//ArrayList<String> row2 = new ArrayList<String>();
 				SET = rs.getString("id");
 				str = rs.getString("id"); //getString(컬럼 번호) 
 		          //여기서 컬럼번호는 1부터 시작
 				//row.removeAllElements();
+				
 				row.addElement(str);
 				str = rs.getString("birth");
 				row.addElement(str);
 				str = rs.getString("temp");
 				row.addElement(str);
-				str = rs.getString("gps_lat") +" / "+ rs.getString("gps_har");
+				str = rs.getString("gps_lat");
+				row.addElement(str);
+				str =  rs.getString("gps_har");
 				row.addElement(str);
 				System.out.println(row);
 				model.addRow(row);
@@ -133,9 +139,11 @@ public class JTablePanel
 			JTableHeader header = jTable.getTableHeader();
 			header.setBackground(Color.yellow);
 			
-			//jScrollPane = new JScrollPane(jTable);
+			jScrollPane = new JScrollPane(jTable);
+			jTable.setFillsViewportHeight(true); 
+			jTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 			jTable.setFont(new Font( "Serif", 0 , 20 ));
-			jTable.setBounds(0,0,1290,800);
+			jTable.setBounds(0,0,1190,800);
 			jTable.setVisible(true);
 			
 			//jb1.setBounds(150, 0, 150, 50);
@@ -147,7 +155,7 @@ public class JTablePanel
 			
 			
 		
-			jPanel1.setBounds(0,0,1290, 800);
+			jPanel1.setBounds(0,0,1190, 800);
 			//jPanel1.add(jScrollPane);
 			jPanel1.add(jTable);
 			jPanel1.setVisible(true);

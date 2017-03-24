@@ -350,28 +350,8 @@ public class gui extends JFrame{
 		
 		
 		InformationPanel_init();
-		
-		
-
-		JPanel table_Panel = new JPanel();
-		JTable table = new JTablePanel().JTable_init();
-		JScrollPane pane = new JScrollPane(table);
-		pane.setVisible(true);
-		table_Panel.add(table);
-		table_Panel.add(pane);
-		table_Panel.setBounds(150,0,1280,800);
-		table_Panel.setLayout(null);
-		table_Panel.setVisible(true);
-		
-		//Information_sheet_panel.setLayout(null);
-		//Information_sheet_panel.add(jTablePanel.JTable_init());
-		//Information_sheet_panel.setBounds(150, 0, 1140, 800);
-		//Information_sheet_panel.setVisible(true);
-		
-		Information.setLayout(null);
-		Information.add(table_Panel);
-		//Information.add(jTablePanel.JTable_init());
-		Information.setBounds(150, 0, 1290, 800);
+		Information.setBounds(150, 0, 1190, 800);
+		//Information.setLayout(new BorderLayout());
 		Information.setVisible(true);
 /////////////////////////////////////////////////////
 		//Map_panel = p2.Map_init("0","0","init");
@@ -903,7 +883,33 @@ public class gui extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+		JPanel table_Panel = new JPanel();
+		JTable table = new JTablePanel().JTable_init();
+		JScrollPane pane2 = new JTablePanel2().JTable_init();
+		pane2.setVisible(true);
+		pane2.setBounds(150,0,1180,700);
+		JScrollPane pane = new JScrollPane(table);
+		pane.setVisible(true);
+		table_Panel.add(table);
+		table_Panel.add(pane);
+		table_Panel.setBounds(150,0,1190,800);
+		table_Panel.setLayout(null);
+		table_Panel.setVisible(true);
 	
+		Information.setLayout(null);
+		pane2.setLayout(null);
+		pane2.setBounds(150,0,1180,700);
+		//pane2.setViewportBorder(null);
+		pane2.setVisible(true);
+
+		Information.add(pane2);
+		
+		//Information.add
+		//pane2.setViewportView();
+		//Information.setBounds(150, 0, 1190, 800);
+		//Information.setVisible(true);
 		
 				
 		Information.add(Date_Button_tp);
