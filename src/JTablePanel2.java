@@ -119,6 +119,7 @@ public class JTablePanel2 {
 				//jTable.setFillsViewportHeight(true);
 				
 				//JPContainer.add(scrollPane);
+				jTable.setBounds(150,0,1180,700);
 				pane.setViewportView(jTable);
 				pane.add(jTable);
 		}catch (SQLException e) {

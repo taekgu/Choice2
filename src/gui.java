@@ -889,7 +889,7 @@ public class gui extends JFrame{
 		JTable table = new JTablePanel().JTable_init();
 		JScrollPane pane2 = new JTablePanel2().JTable_init();
 		pane2.setVisible(true);
-		pane2.setBounds(150,0,1180,700);
+		//pane2.setBounds(150,0,1180,700);
 		JScrollPane pane = new JScrollPane(table);
 		pane.setVisible(true);
 		table_Panel.add(table);

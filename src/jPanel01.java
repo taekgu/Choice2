@@ -181,7 +181,7 @@ public class jPanel01 {
 		plot.setRangeAxis(new NumberAxis());                 // Y�� ���� ����
 		plot.getRangeAxis().setTickLabelFont(axisF);  // Y�� ���ݶ� ��Ʈ ����
 		//plot.getRangeAxis().setRange(((double)database_load.Min_val)-0.1, ((double)database_load.Max_val)+0.1);
-		plot.getRangeAxis().setRange(((double)33.0), ((double)42.0));
+		plot.getRangeAxis().setRange(((double)10.0), ((double)42.0));
 		JFreeChart chart = new JFreeChart(plot);
 
 	
@@ -251,13 +251,13 @@ public class jPanel01 {
 	    
 	    plot.getRenderer().setSeriesPaint(0, Color.BLUE);	    
 	    plot.getRenderer().setSeriesPaint(1, Color.RED);
-	    plot.getRangeAxis().setRange(((double)33.0), ((double)42.0));
+	    plot.getRangeAxis().setRange(((double)10.0), ((double)42.0));
 	    
-	    ValueMarker marker = new ValueMarker(mark_temp);  // position is the value on the axis
-	    marker.setPaint(Color.RED);
+	    //ValueMarker marker = new ValueMarker(mark_temp);  // position is the value on the axis
+	    //marker.setPaint(Color.RED);
 	    //marker.setLabel("here"); // see JavaDoc for labels, colors, strokes
 
-	    plot.addRangeMarker(marker);
+	    //plot.addRangeMarker(marker);
 	    ValueAxis domain = plot.getDomainAxis();
 	    domain.setVisible(false);
 	    DateAxis axis = (DateAxis) plot.getDomainAxis();
