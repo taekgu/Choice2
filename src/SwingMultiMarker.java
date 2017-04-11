@@ -1,5 +1,3 @@
-
-
 import org.jxmapviewer.viewer.DefaultWaypoint;
 import org.jxmapviewer.viewer.GeoPosition;
 
@@ -12,11 +10,6 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-/**
- * A waypoint that is represented by a button on the map.
- *
- * @author Daniel Stahr
- */
 
 public class SwingMultiMarker extends DefaultWaypoint {
     private final JButton button;

@@ -11,7 +11,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class JTablePanel2 {
-	
+/*	
 	Connection con;
 	java.sql.Statement st;
 	ResultSet rs;
@@ -59,9 +59,7 @@ public class JTablePanel2 {
 		
 		DefaultTableModel model = new DefaultTableModel(){
 
-			/**
-			 * 
-			 */
+		
 			private static final long serialVersionUID = -2170712284827305637L;
 			String[] name = {"ID", "Birth", "Temperature", "GPS Latitude", "GPS Longtitude"};
 
@@ -108,9 +106,7 @@ public class JTablePanel2 {
 				}
 				jTable = new JTable(model)
 				{
-			        /**
-					 * 
-					 */
+			 
 					private static final long serialVersionUID = 7706704291500662144L;
 					public boolean isCellEditable(int row, int column) {                
 						return false;               
@@ -128,5 +124,5 @@ public class JTablePanel2 {
 		}
 		JScrollPane scrollPane = new JScrollPane(jTable);
 		return scrollPane;
-	}
+	}*/
 }
